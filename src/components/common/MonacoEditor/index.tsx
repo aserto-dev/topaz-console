@@ -1,29 +1,40 @@
 import * as monaco from 'monaco-editor'
 import React from 'react'
 import Editor, { Monaco } from '@monaco-editor/react'
+import YamlWorker from './yaml.worker.js?worker'
 
 import { theme } from '../../../theme'
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-window.MonacoEnvironment = {
-  getWorker(moduleId: unknown, label: string) {
+self.MonacoEnvironment = {
+  getWorker: function (workerId, label) {
+    const getWorkerModule = (moduleUrl: string, label: string) => {
+      const workerUrl = self.MonacoEnvironment?.getWorkerUrl?.(
+        workerId,
+        moduleUrl,
+      )
+      if (!workerUrl) {
+        throw new Error('Failed to get worker URL')
+      }
+      return new Worker(workerUrl, {
+        name: label,
+        type: 'module',
+      })
+    }
     switch (label) {
-      case 'editorWorkerService':
-        return new Worker(new URL('monaco-editor/esm/vs/editor/editor.worker', import.meta.url))
       case 'yaml':
-        return new Worker(new URL('monaco-yaml/yaml.worker', import.meta.url))
-      case 'json':
-        return new Worker(
-          new URL('monaco-editor/esm/vs/language/json/json.worker', import.meta.url)
-        )
+        return new YamlWorker()
       default:
-        throw new Error(`Unknown label ${label} for moduleId: ${moduleId}`)
+        return getWorkerModule(
+          '/monaco-editor/esm/vs/editor/editor.worker?worker',
+          label,
+        )
     }
   },
 }
 
-const VsCodeAserto = [
+const VsCodeTopaz = [
   { token: '', foreground: '#5c6773' },
   { token: 'invalid', foreground: theme.mojoAccent2 },
   { token: 'emphasis', fontStyle: 'italic' },
@@ -79,7 +90,10 @@ type MonacoEditorProps = {
   modelPath?: string
   themeRules?: monaco.editor.ITokenThemeRule[]
   beforeMount?: (monaco: Monaco) => void
-  onMount?: (editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) => void
+  onMount?: (
+    editor: monaco.editor.IStandaloneCodeEditor,
+    monaco: Monaco,
+  ) => void
 }
 
 const MonacoEditor: React.FC<MonacoEditorProps> = ({
@@ -94,10 +108,10 @@ const MonacoEditor: React.FC<MonacoEditorProps> = ({
   const handleEditorWillMount = (monaco: Monaco) => {
     monaco.editor.getModels().forEach((model) => model.dispose())
     beforeMount?.(monaco)
-    monaco.editor.defineTheme('aserto', {
+    monaco.editor.defineTheme('topaz', {
       base: 'vs-dark',
       inherit: true,
-      rules: [...VsCodeAserto, ...(themeRules || [])],
+      rules: [...VsCodeTopaz, ...(themeRules || [])],
       colors: {
         'editor.background': theme.primaryBlack,
         'editor.foreground': '#5c6773',

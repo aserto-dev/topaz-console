@@ -3,7 +3,7 @@ import { useConfig } from '../../services/ConfigProvider/hooks'
 import { useBaseClient } from './base'
 import { QueryParams } from './queryParams'
 
-type AsertoRestClient<T> = (data: {
+type DirectoryRestClient<T> = (data: {
   url: string
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'HEAD'
   params?: QueryParams
@@ -13,7 +13,7 @@ type AsertoRestClient<T> = (data: {
   signal?: AbortSignal
 }) => Promise<T>
 
-const useRestDirectoryClient = <T>(directoryServiceUrl: string): AsertoRestClient<T> => {
+const useRestDirectoryClient = <T>(directoryServiceUrl: string): DirectoryRestClient<T> => {
   const { directoryApiKey } = useConfig()
 
   const headers: Record<string, string> = {}
@@ -89,17 +89,17 @@ const useRestDirectoryClient = <T>(directoryServiceUrl: string): AsertoRestClien
   }
 }
 
-export const useDirectoryReaderClient = <T>(): AsertoRestClient<T> => {
+export const useDirectoryReaderClient = <T>(): DirectoryRestClient<T> => {
   const { directoryReaderServiceUrl, directoryServiceUrl } = useConfig()
   return useRestDirectoryClient(directoryReaderServiceUrl || directoryServiceUrl || '')
 }
 
-export const useDirectoryWriterClient = <T>(): AsertoRestClient<T> => {
+export const useDirectoryWriterClient = <T>(): DirectoryRestClient<T> => {
   const { directoryWriterServiceUrl, directoryServiceUrl } = useConfig()
   return useRestDirectoryClient(directoryWriterServiceUrl || directoryServiceUrl || '')
 }
 
-export const useDirectoryModelClient = <T>(): AsertoRestClient<T> => {
+export const useDirectoryModelClient = <T>(): DirectoryRestClient<T> => {
   const { directoryModelServiceUrl, directoryServiceUrl } = useConfig()
   return useRestDirectoryClient(directoryModelServiceUrl || directoryServiceUrl || '')
 }

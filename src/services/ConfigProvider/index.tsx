@@ -12,7 +12,7 @@ const ConfigProvider: React.FC<PropsWithChildren> = ({ children }) => {
     if (error) {
       showError(
         new InformationalError(
-          'This may be a temporary error. Please try reloading this page. If the error persists, contact support@aserto.com.',
+          'This may be a temporary error. Please try reloading this page.',
           'Looks like we are having issues with our services :(',
         ),
       )

@@ -10,7 +10,7 @@ export function computeColor(s: string) {
   return colorListByType[s]
 }
 
-// Predefined Aserto Object Types
+// Predefined Object Types
 const colorListByType: ColorType = {
   object: {
     backgroundColor: theme.cooperAccent1,

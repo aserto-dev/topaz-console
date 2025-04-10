@@ -120,7 +120,7 @@ const ModelEditor: React.FC = () => {
 
   const handleEditorDidMount = useCallback(
     (editor: editor.IStandaloneCodeEditor, monaco: Monaco) => {
-      monaco.editor.setTheme('aserto')
+      monaco.editor.setTheme('topaz')
       editorRef.current = editor
       editorRef.current?.onDidChangeModelContent(() => {
         handleOnChange(editorRef.current?.getValue())
