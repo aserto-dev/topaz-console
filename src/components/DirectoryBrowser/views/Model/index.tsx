@@ -9,7 +9,6 @@ import { useDirectoryModelContext } from '../../../../services/DirectoryContextP
 import Delayed from '../../../common/Delayed'
 import ModelEditor from './Editor'
 import ModelGraph from './Graph'
-import { useDirectoryReaderV3ObjectsListInfinite } from '../../../../api/v3/directory'
 
 const Container = styled.div`
   width: calc(100vw - 100px);
@@ -25,23 +24,6 @@ const Model: React.FC = () => {
   const { visible } = useDirectoryModelContext()
   const { isLoading } = useManifestData()
 
-  const { data } = useDirectoryReaderV3ObjectsListInfinite(
-    {
-      object_type: 'user',
-      'page.size': 1,
-      'page.token': 'user:jerry@the-smiths.com',
-    },
-    {
-      query: {
-        getNextPageParam: (lastPage) => {
-          return lastPage.page?.next_token
-        },
-      },
-    },
-  )
-
-  console.log({ users: data })
-
   if (isLoading) {
     return null
   }
@@ -55,7 +37,9 @@ const Model: React.FC = () => {
           </Delayed>
         </Allotment.Pane>
         <Allotment.Pane minSize={400} preferredSize="40%" visible={visible}>
-          {visible ? <ModelEditor></ModelEditor> : null}
+          <Delayed waitBeforeShow={150}>
+            {visible ? <ModelEditor></ModelEditor> : null}
+          </Delayed>
         </Allotment.Pane>
       </Allotment>
     </Container>
