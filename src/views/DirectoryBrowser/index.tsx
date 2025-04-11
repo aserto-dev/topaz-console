@@ -4,11 +4,18 @@ import Frame from '../../components/DirectoryBrowser/views/Directory'
 import Directory from '../../components/DirectoryBrowser/views/Directory'
 import Model from '../../components/DirectoryBrowser/views/Model'
 import Relations from '../../components/DirectoryBrowser/views/Relations'
+import Objects from '../../components/DirectoryBrowser/views/Objects'
+import ObjectInstance from '../../components/DirectoryBrowser/views/ObjectInstance'
 
 const DirectoryBrowser = () => {
   return (
     <Suspense fallback={<Frame />}>
       <Routes>
+        <Route element={<Directory />} path="objects">
+          <Route element={<Objects />} path=":objectType" />
+          <Route element={<ObjectInstance />} path=":objectType/:objectId/*" />
+          <Route element={<Navigate replace to="user" />} index />
+        </Route>
         <Route element={<Directory />} path="model">
           <Route element={<Model />} path="" />
         </Route>

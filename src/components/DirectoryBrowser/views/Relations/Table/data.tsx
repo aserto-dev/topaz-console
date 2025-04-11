@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { CellProps, Column, TableInstance } from 'react-table'
 
 import NoObjectsImage from '../../../../../assets/shapes.svg'
-import { useDirectoryDataContext } from '../../../../../services/DirectoryContextProvider'
+import { useDirectoryDataContext } from '../../../../../services/DirectoryContextProvider/context'
 import { V3Relation } from '../../../../../types/directory'
 import DataTable from '../../../../common/DataTable'
 import EmptyTablePlaceholder from '../../../../common/EmptyTablePlaceholder'
@@ -28,6 +28,7 @@ import {
 } from '../styles'
 import { useIsScrollable } from '../../Directory/useIsScrollable'
 import {
+  getNextPage,
   useDirectoryV3ObjectTypesList,
   useDirectoryV3RelationTypesList,
 } from '../../../../../api/directory/customQuery'
@@ -113,9 +114,7 @@ const RelationsTable: React.FC = () => {
     },
     {
       query: {
-        getNextPageParam: (lastPage) => {
-          return lastPage.page?.next_token
-        },
+        getNextPageParam: getNextPage,
         enabled: isFilter,
         placeholderData: keepPreviousData,
       },

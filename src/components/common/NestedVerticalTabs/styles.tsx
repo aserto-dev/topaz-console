@@ -1,6 +1,6 @@
-import { NavLink } from "react-router";
-import styled from "styled-components";
-import { theme } from "../../../theme";
+import { NavLink } from 'react-router'
+import styled, { css } from 'styled-components'
+import { theme } from '../../../theme'
 
 export const TabContainer = styled.div`
   width: 100%;
@@ -13,12 +13,12 @@ export const TabContainer = styled.div`
   &:last-child {
     border-bottom: none;
   }
-`;
+`
 
 export const TabSectionOptions = styled.div<{ $show: boolean }>`
-  display: ${({ $show }) => ($show ? "block" : "none")};
-`;
-export const VerticalTab = styled(NavLink)<{ depth: number }>`
+  display: ${({ $show }) => ($show ? 'block' : 'none')};
+`
+export const VerticalTab = styled(NavLink)<{ $depth: number }>`
   align-items: center;
   color: ${theme.grey70};
   cursor: pointer;
@@ -43,7 +43,25 @@ export const VerticalTab = styled(NavLink)<{ depth: number }>`
       visibility: visible;
     }
   }
-`;
+
+  ${({ $depth }) => {
+    return $depth === 0
+      ? css`
+          border-bottom: 1px solid ${theme.grey20};
+          padding: 8px 0px;
+          color: ${theme.grey70};
+          :nth-child(odd) {
+            margin-top: -1px;
+          }
+          &.active {
+            color: ${theme.grey100};
+            background-color: ${theme.grey20};
+            border-left: 5px solid ${theme.lochivarAccent3};
+          }
+        `
+      : undefined
+  }}
+`
 
 export const AddTypeButton = styled.div`
   color: ${theme.grey70};
@@ -57,4 +75,4 @@ export const AddTypeButton = styled.div`
   &:hover {
     color: ${theme.grey100};
   }
-`;
+`

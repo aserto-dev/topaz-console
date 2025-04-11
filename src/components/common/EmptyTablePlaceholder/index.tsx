@@ -24,8 +24,8 @@ const ForegroundImage = styled.img`
   margin-top: 159px;
 `
 
-const HeaderText = styled.span<{ hasButton?: boolean }>`
-  margin-top: ${({ hasButton }) => (hasButton ? '0' : '27')}px;
+const HeaderText = styled.span<{ $hasButton?: boolean }>`
+  margin-top: ${({ $hasButton }) => ($hasButton ? '0' : '27')}px;
   height: 31px;
   background-size: cover;
   font-family: Roboto;
@@ -65,10 +65,12 @@ const EmptyTablePlaceholder: React.FC<EmptyTablePlaceholderProps> = ({
 }) => {
   return (
     <Container>
-      {!node && <BackgroundImage alt="background radial gradient" src={radial} />}
+      {!node && (
+        <BackgroundImage alt="background radial gradient" src={radial} />
+      )}
       <Container>
         <ForegroundImage alt={imgAlt} src={imgSrc} />
-        <HeaderText hasButton={!!node}>
+        <HeaderText $hasButton={!!node}>
           <b>{header}</b>
         </HeaderText>
         {node}

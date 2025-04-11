@@ -30,17 +30,6 @@ export type V3GetObjectTypesResponse = {
   results: ObjectType[] | undefined
 }
 
-// //Params
-// export type ObjectsListParams = DirectoryReaderV3ObjectsListParams & {
-//   displayNamePart?: string
-//   id?: string
-// }
-
-// export type RelationsListParams = DirectoryReaderV3RelationsListParams & {
-//   objectIdPart?: string
-//   subjectIdPart?: string
-// }
-
 // // Request
 export type V3ObjectTypesListRequest = {
   name?: string

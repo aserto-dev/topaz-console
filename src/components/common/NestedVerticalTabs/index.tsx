@@ -1,57 +1,57 @@
-import React, { PropsWithChildren } from "react";
-import { To, useMatch, useResolvedPath } from "react-router";
+import React, { PropsWithChildren } from 'react'
+import { To, useMatch, useResolvedPath } from 'react-router'
 
-import blank from "./assets/selected_blank.svg";
-import circle from "./assets/selected_circle.svg";
+import blank from './assets/selected_blank.svg'
+import circle from './assets/selected_circle.svg'
 import {
   AddTypeButton,
   TabContainer,
   TabSectionOptions,
   VerticalTab,
-} from "./styles";
+} from './styles'
 
 type TabOption =
   | {
-      label: string;
-      value: string;
-      redirects: true;
-      onClick?: () => void;
+      label: string
+      value: string
+      redirects: true
+      onClick?: () => void
     }
   | {
-      label: string;
-      onClick: () => void;
-      redirects: false;
-    };
+      label: string
+      onClick: () => void
+      redirects: false
+    }
 
 interface NestedTabOptions {
-  label: string;
-  value: string;
-  isDisabled?: boolean;
-  redirects: true;
+  label: string
+  value: string
+  isDisabled?: boolean
+  redirects: true
 }
 
 interface NestedTabButton {
-  value: string;
-  label: string;
-  onClick: () => void;
-  redirects: false;
+  value: string
+  label: string
+  onClick: () => void
+  redirects: false
 }
 
 export interface VerticalTabOptions {
-  section: NestedTabOptions;
-  subOptions?: (NestedTabOptions | NestedTabButton)[];
+  section: NestedTabOptions
+  subOptions?: (NestedTabOptions | NestedTabButton)[]
 }
 
 export type VerticalTabsProps = {
-  options: VerticalTabOptions[];
-  selectedValue?: string;
-};
+  options: VerticalTabOptions[]
+  selectedValue?: string
+}
 
 type VerticalTabParams = {
-  depth: number;
-  to: To;
-  subLinks?: TabOption[];
-};
+  depth: number
+  to: To
+  subLinks?: TabOption[]
+}
 
 const NestedVerticalTab: React.FC<PropsWithChildren<VerticalTabParams>> = ({
   children,
@@ -59,23 +59,23 @@ const NestedVerticalTab: React.FC<PropsWithChildren<VerticalTabParams>> = ({
   subLinks,
   to,
 }) => {
-  const resolved = useResolvedPath(to);
-  const active = useMatch({ path: `${resolved.pathname}/*`, end: false });
+  const resolved = useResolvedPath(to)
+  const active = useMatch({ path: `${resolved.pathname}/*`, end: false })
 
-  let icon: string;
+  let icon: string
 
   switch (depth) {
     case 0:
-      icon = blank;
-      break;
+      icon = blank
+      break
     default:
-      icon = circle;
-      break;
+      icon = circle
+      break
   }
 
   return (
     <>
-      <VerticalTab depth={depth} to={to}>
+      <VerticalTab $depth={depth} to={to}>
         <img alt="show" src={icon} />
         {children}
       </VerticalTab>
@@ -90,12 +90,12 @@ const NestedVerticalTab: React.FC<PropsWithChildren<VerticalTabParams>> = ({
             <AddTypeButton key={s.label} onClick={s.onClick}>
               <span>{s.label}</span>
             </AddTypeButton>
-          )
+          ),
         )}
       </TabSectionOptions>
     </>
-  );
-};
+  )
+}
 
 export const VerticalTabs: React.FC<VerticalTabsProps> = ({ options }) => {
   return (
@@ -111,8 +111,8 @@ export const VerticalTabs: React.FC<VerticalTabsProps> = ({ options }) => {
               {option.section.label}
             </NestedVerticalTab>
           </div>
-        );
+        )
       })}
     </TabContainer>
-  );
-};
+  )
+}

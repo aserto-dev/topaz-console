@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { QueryKey, useQueries, useQuery, UseQueryOptions } from '@tanstack/react-query'
 
-import { RpcStatus, V3CheckRequest, V3CheckResponse } from '../../types/directory'
+import { RpcStatus, V3CheckRequest, V3CheckResponse, V3PaginationResponse } from '../../types/directory'
 import { useParsedManifest } from './parsers/manifest'
 import {
   CheckResult,
@@ -142,4 +142,8 @@ export const useDirectoryV3ChecksListQuery = (
       }
     }),
   }) as CheckResult[]
+}
+
+export const getNextPage = (lastPage: { page?: V3PaginationResponse  | undefined}) => {
+  return lastPage?.page?.next_token || undefined
 }
