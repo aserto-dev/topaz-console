@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
+  <defs>
+    <clipPath id="clip-Copy-to-clipboard">
+      <rect width="16" height="16"/>
+    </clipPath>
+  </defs>
+  <g id="Copy-to-clipboard" clip-path="url(#clip-Copy-to-clipboard)">
+    <g id="Group_1" data-name="Group 1" transform="translate(-13 133)">
+      <g id="File_Paste_Copy" data-name="File, Paste, Copy" transform="translate(13 -133)">
+        <path id="Path_1" data-name="Path 1" d="M6.692,14.691H4.231V4.231h8.615a.615.615,0,1,0,0-1.231H3.615A.615.615,0,0,0,3,3.615V15.306a.615.615,0,0,0,.615.615H6.692a.615.615,0,0,0,0-1.231Z" transform="translate(-3 -3)" fill="#a0a0a0"/>
+        <path id="Path_2" data-name="Path 2" d="M21.845,8h-9.23A.615.615,0,0,0,12,8.615V20.306a.615.615,0,0,0,.615.615h9.23a.615.615,0,0,0,.615-.615V8.615A.615.615,0,0,0,21.845,8ZM21.23,19.691h-8V9.231h8Z" transform="translate(-6.462 -4.923)" fill="#a0a0a0"/>
+        <path id="Path_3" data-name="Path 3" d="M17.615,17.231h3.077a.615.615,0,1,0,0-1.231H17.615a.615.615,0,1,0,0,1.231Z" transform="translate(-8.385 -8.001)" fill="#a0a0a0"/>
+        <path id="Path_4" data-name="Path 4" d="M17.615,21.231h3.077a.615.615,0,1,0,0-1.231H17.615a.615.615,0,1,0,0,1.231Z" transform="translate(-8.385 -9.54)" fill="#a0a0a0"/>
+      </g>
+    </g>
+  </g>
+</svg>

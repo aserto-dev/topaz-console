@@ -6,6 +6,7 @@ import Model from '../../components/DirectoryBrowser/views/Model'
 import Relations from '../../components/DirectoryBrowser/views/Relations'
 import Objects from '../../components/DirectoryBrowser/views/Objects'
 import ObjectInstance from '../../components/DirectoryBrowser/views/ObjectInstance'
+import DirectoryEvaluator from '../../components/DirectoryBrowser/views/Evaluator'
 
 const DirectoryBrowser = () => {
   return (
@@ -21,6 +22,9 @@ const DirectoryBrowser = () => {
         </Route>
         <Route element={<Directory />} path="relations">
           <Route element={<Relations />} path="" />
+        </Route>
+        <Route element={<Directory />} path="evaluator">
+          <Route element={<DirectoryEvaluator />} path="" />
         </Route>
         <Route element={<Navigate replace to="model" />} index />
       </Routes>
