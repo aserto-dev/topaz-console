@@ -15,7 +15,6 @@ type DirectoryRestClient<T> = (data: {
 
 const useRestDirectoryClient = <T>(directoryServiceUrl: string): DirectoryRestClient<T> => {
   const { directoryApiKey } = useConfig()
-
   const headers: Record<string, string> = {}
   if (directoryApiKey) {
     headers['authorization'] = `basic ${directoryApiKey}`

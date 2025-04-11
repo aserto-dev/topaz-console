@@ -7,7 +7,7 @@ import PageHeaderContent from '../../../../components/common/PageHeaderContent'
 import {
   useDirectoryDisplayState,
   useDirectoryModelContext,
-} from '../../../../services/DirectoryContextProvider/context'
+} from '../../../../services/DirectoryContextProvider/hooks'
 import EvaluateDisplayState from '../../../common/EvaluateDisplayState'
 import { EditButton, EditImage, Header } from './styles'
 

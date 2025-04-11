@@ -1,7 +1,7 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
-import { theme } from "../../theme.ts";
-import Button from "../common/Button/index.tsx";
+import { theme } from '../../theme'
+import Button from '../common/Button/index'
 
 export const Grid = styled.div`
   width: 100%;
@@ -11,9 +11,9 @@ export const Grid = styled.div`
   grid-template-rows: 0 50px 1fr;
   gap: 0px 0px;
   grid-template-areas:
-    "header"
-    "sidebar"
-    "content";
+    'header'
+    'sidebar'
+    'content';
 
   @media (min-width: 913px) {
     display: grid;
@@ -21,11 +21,11 @@ export const Grid = styled.div`
     grid-template-rows: 0 1.7fr 1fr;
     gap: 0px 0px;
     grid-template-areas:
-      "header header header"
-      "sidebar content content"
-      "sidebar content content";
+      'header header header'
+      'sidebar content content'
+      'sidebar content content';
   }
-`;
+`
 
 export const Sidebar = styled.div`
   position: fixed;
@@ -35,13 +35,13 @@ export const Sidebar = styled.div`
   @media (min-width: 913px) {
     grid-area: sidebar;
   }
-`;
+`
 
 export const Content = styled.div`
   grid-area: content;
   display: flex;
   width: 100%;
-`;
+`
 
 export const ObjectHeaderContainer = styled.div`
   padding: 12px 20px;
@@ -62,12 +62,12 @@ export const ObjectHeaderContainer = styled.div`
     border-bottom: 1px solid ${theme.grey20};
     margin: 20px 0;
   }
-`;
+`
 
 export const HeaderButtonContainer = styled.div`
   display: flex;
   gap: 10px;
-`;
+`
 
 export const ImageButton = styled.div`
   display: flex;
@@ -88,11 +88,11 @@ export const ImageButton = styled.div`
   span {
     font-weight: 400;
   }
-`;
+`
 
 export const AddButton = styled(Button)`
   align-items: center;
   display: flex;
   flex-direction: row;
   gap: 5px;
-`;
+`

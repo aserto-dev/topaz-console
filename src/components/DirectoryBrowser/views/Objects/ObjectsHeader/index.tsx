@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 
 import plus from '../../../../../assets/plus.svg'
-import { useDirectoryDisplayState } from '../../../../../services/DirectoryContextProvider/context'
+import { useDirectoryDisplayState } from '../../../../../services/DirectoryContextProvider/hooks'
 import EvaluateDisplayState from '../../../../common/EvaluateDisplayState'
 import { AddButton } from '../../../styles'
 import AddObjectModal from '../AddObjectModal'

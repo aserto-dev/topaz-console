@@ -10,7 +10,7 @@ import { Row } from '../../../../components/common/Row'
 import SelectDirectory, {
   SelectOption,
 } from '../../../../components/common/SelectDirectory'
-import { useDirectoryDisplayState } from '../../../../services/DirectoryContextProvider/context'
+import { useDirectoryDisplayState } from '../../../../services/DirectoryContextProvider/hooks'
 import { LeftContainer, SelectContainerDirectory } from './styles'
 import { useDirectoryV3ObjectTypesList } from '../../../../api/directory/customQuery'
 

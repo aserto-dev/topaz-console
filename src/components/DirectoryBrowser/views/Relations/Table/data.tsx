@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { CellProps, Column, TableInstance } from 'react-table'
 
 import NoObjectsImage from '../../../../../assets/shapes.svg'
-import { useDirectoryDataContext } from '../../../../../services/DirectoryContextProvider/context'
+import { useDirectoryDataContext } from '../../../../../services/DirectoryContextProvider/hooks'
 import { V3Relation } from '../../../../../types/directory'
 import DataTable from '../../../../common/DataTable'
 import EmptyTablePlaceholder from '../../../../common/EmptyTablePlaceholder'

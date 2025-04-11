@@ -6,7 +6,7 @@ import { QueryKey } from '@tanstack/react-query'
 import { SelectOption } from '../../components/common/Select'
 import { V3CheckRequest } from '../../types/directory'
 import { useDirectoryReaderV3ObjectGet } from '../../api/v3/directory'
-import { DirectoryContext, DisplayStateMap } from './context'
+import { DirectoryContext, DisplayStateMap } from './hooks'
 
 const DirectoryContextProvider = ({
   displayState,

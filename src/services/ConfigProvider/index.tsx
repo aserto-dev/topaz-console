@@ -20,7 +20,12 @@ const ConfigProvider: React.FC<PropsWithChildren> = ({ children }) => {
   }, [error, showError])
 
   return !config ? null : (
-    <ConfigContext.Provider value={config.configs[0]}>
+    <ConfigContext.Provider
+      value={{
+        authenticationType: config.authenticationType || 'anonymous',
+        ...config.configs[0],
+      }}
+    >
       {children}
     </ConfigContext.Provider>
   )

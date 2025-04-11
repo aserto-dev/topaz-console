@@ -5,7 +5,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { useManifestData } from '../../../../api/directory/parsers/manifest'
-import { useDirectoryModelContext } from '../../../../services/DirectoryContextProvider/context'
+import { useDirectoryModelContext } from '../../../../services/DirectoryContextProvider/hooks'
 import Delayed from '../../../common/Delayed'
 import ModelEditor from './Editor'
 import ModelGraph from './Graph'

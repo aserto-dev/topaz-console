@@ -40,7 +40,7 @@ import GetGraphData from './Data'
 import parseManifest from './manifestParser'
 import mapNodePath from './mapNodePath'
 import { GraphData, markerEnd } from './Data/graphData'
-import { useDirectoryModelContext } from '../../../../../services/DirectoryContextProvider/context'
+import { useDirectoryModelContext } from '../../../../../services/DirectoryContextProvider/hooks'
 
 const ReactFlowContainer = styled.div`
   height: calc(100vh - 160px);

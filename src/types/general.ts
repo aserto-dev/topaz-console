@@ -33,4 +33,5 @@ export type Config = {
   directoryWriterServiceUrl?: string
   directoryModelServiceUrl?: string
   directoryApiKey?: string
+  authenticationType: string
 }

@@ -9,7 +9,7 @@ import DataTable from '../../../../../components/common/DataTable'
 import {
   useDirectoryDataContext,
   useDirectoryDisplayState,
-} from '../../../../../services/DirectoryContextProvider/context'
+} from '../../../../../services/DirectoryContextProvider/hooks'
 import { useShowError } from '../../../../../services/ErrorModalProvider'
 import {
   V3GetRelationsResponseObjects,

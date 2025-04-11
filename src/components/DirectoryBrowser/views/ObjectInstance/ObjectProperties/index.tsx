@@ -3,7 +3,7 @@ import { useQueryClient } from '@tanstack/react-query'
 
 import Button from '../../../../../components/common/Button'
 import CodeEditor from '../../../../../components/common/CodeEditor'
-import { useDirectoryDisplayState } from '../../../../../services/DirectoryContextProvider/context'
+import { useDirectoryDisplayState } from '../../../../../services/DirectoryContextProvider/hooks'
 import { useShowError } from '../../../../../services/ErrorModalProvider'
 import { V3Object } from '../../../../../types/directory'
 import EvaluateDisplayState from '../../../../common/EvaluateDisplayState'
@@ -19,7 +19,7 @@ import {
   ErrorMessage,
   PropertiesContainer,
 } from './styles'
-import { useShowSuccessMessage } from '../../../../../services/SuccessBannerProvider'
+import { useShowSuccessMessage } from '../../../../../services/SuccessBannerProvider/hooks'
 
 const ObjectProperties: React.FC<{ object?: V3Object }> = ({ object }) => {
   const queryClient = useQueryClient()

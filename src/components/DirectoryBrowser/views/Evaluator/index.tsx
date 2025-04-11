@@ -5,7 +5,7 @@ import Label from '../../../../components/common/Label'
 import { PlayButton } from '../../../../components/common/PlayButton'
 import { Row } from '../../../../components/common/Row'
 import Select from '../../../../components/common/Select'
-import { useDirectoryEvaluatorContext } from '../../../../services/DirectoryContextProvider/context'
+import { useDirectoryEvaluatorContext } from '../../../../services/DirectoryContextProvider/hooks'
 import { colourStyles } from '../../../common/Select/colourStyles'
 import { useCopyCurlRest } from './copyCurlRest'
 import {

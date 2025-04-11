@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-import { useDirectoryModelContext } from '../../../../services/DirectoryContextProvider/context'
+import { useDirectoryModelContext } from '../../../../services/DirectoryContextProvider/hooks'
 import { useShowError } from '../../../../services/ErrorModalProvider'
-import { useShowSuccessMessage } from '../../../../services/SuccessBannerProvider'
+import { useShowSuccessMessage } from '../../../../services/SuccessBannerProvider/hooks'
 import { theme } from '../../../../theme'
 import Button from '../../../common/Button'
 import DeleteConfirmationModal from '../../../common/DeleteConfirmationModal'

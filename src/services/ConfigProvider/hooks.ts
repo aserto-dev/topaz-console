@@ -9,6 +9,7 @@ const emptyConfig = {
   directoryWriterServiceUrl: '',
   directoryModelServiceUrl: '',
   directoryApiKey: '',
+  authenticationType: ''
 }
 export const ConfigContext = React.createContext<Config>(emptyConfig)
 
