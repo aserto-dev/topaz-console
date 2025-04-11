@@ -68,7 +68,7 @@ export const DirectorySidebar: React.FC = () => {
   verticalTabOptions.push({
     section: {
       label: 'API Browser',
-      value: '/ui/directory/apidocs',
+      value: '/ui/directory/docs',
       redirects: true,
     },
   })

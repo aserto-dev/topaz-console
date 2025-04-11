@@ -8,6 +8,7 @@ import Objects from '../../components/DirectoryBrowser/views/Objects'
 import ObjectInstance from '../../components/DirectoryBrowser/views/ObjectInstance'
 import DirectoryEvaluator from '../../components/DirectoryBrowser/views/Evaluator'
 import DirectoryApiDocs from '../../components/DirectoryBrowser/views/ApiDocs'
+import DangerZone from '../../components/DirectoryBrowser/views/DangerZone'
 
 const DirectoryBrowser = () => {
   return (
@@ -28,8 +29,11 @@ const DirectoryBrowser = () => {
           <Route element={<DirectoryEvaluator />} path="" />
         </Route>
 
-        <Route element={<Directory />} path="apidocs">
+        <Route element={<Directory />} path="docs">
           <Route element={<DirectoryApiDocs />} path="" />
+        </Route>
+        <Route element={<Directory />} path="danger">
+          <Route element={<DangerZone />} path="" />
         </Route>
         <Route element={<Navigate replace to="model" />} index />
       </Routes>
