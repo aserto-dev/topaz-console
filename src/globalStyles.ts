@@ -6,10 +6,12 @@ export const GlobalStyle = createGlobalStyle`
   #root,
   #app {
     height: 100%;
+    width: 100%;
   }
   html,
   body {
     height: 100%;
+    width: 100%;
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
     'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;

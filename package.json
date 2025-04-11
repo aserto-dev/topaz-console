@@ -21,6 +21,7 @@
     "monaco-yaml": "^5.3.1",
     "prism-themes": "^1.9.0",
     "prismjs": "^1.30.0",
+    "rapidoc": "^9.3.8",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.9",
     "react-dom": "^19.0.0",

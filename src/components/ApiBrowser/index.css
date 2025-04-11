@@ -1,0 +1,22 @@
+rapi-doc::part(section-main-content){
+  padding-left: 16px;
+}
+
+
+rapi-doc::part(section-overview){
+  display: none;
+}
+
+rapi-doc::part(section-navbar-active-item){
+  border-radius: 0px;
+}
+
+rapi-doc {
+  @media (min-width: 912px) {
+    height: calc(-140px + 100vh);
+  }
+  @media (max-width: 911px) {
+    padding-top: 12px;
+    height: calc(-192px + 100vh);
+  }
+}
