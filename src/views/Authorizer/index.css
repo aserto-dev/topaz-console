@@ -1,0 +1,28 @@
+
+rapi-doc {
+  @media (max-width: 1327px) {
+    margin-top: -20px;
+    height: calc(-205px + 100vh)!important;
+  }
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .light-pills.nav-link {
+  color: #e7e7e7 !important;
+
+  background-color: #595959 !important;
+  border-radius: 4px !important;
+  font-size: 14px !important;
+}
+
+.nav-pills .nav-link, .nav-pills .show > .light-pills.nav-link {
+  width: 100%;
+  /*padding: 20px;*/
+  color: #a0a0a0 !important;
+  background-color: #2a2a2a !important;
+  border-radius: 5px !important;
+  font-size: 14px !important;
+}
+
+.nav-pills .nav-link:hover, .nav-pills .show > .light-pills.nav-link {
+  background-color: #414141 !important;
+}

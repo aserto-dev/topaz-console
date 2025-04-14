@@ -15,6 +15,7 @@ import ConfigProvider from './services/ConfigProvider/index'
 import SuccessBannerProvider from './services/SuccessBannerProvider/index'
 import ErrorModalProvider from './services/ErrorModalProvider/provider'
 import AuthProvider from './services/AuthProvider/index'
+import { PolicyEvaluatorContextProvider } from './services/PolicyEvaluatorContextProvider'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -39,7 +40,9 @@ createRoot(document.getElementById('root')!).render(
                       canEditAssertion: { enabled: true, visible: true },
                     }}
                   >
-                    <App />
+                    <PolicyEvaluatorContextProvider>
+                      <App />
+                    </PolicyEvaluatorContextProvider>
                   </DirectoryContextProvider>
                 </AuthProvider>
               </ConfigProvider>

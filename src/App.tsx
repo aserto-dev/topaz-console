@@ -5,7 +5,8 @@ import { Route, Routes } from 'react-router'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { NavBar } from './components/NavBar'
 
-const DirectoryBrowser = React.lazy(() => import('./views/DirectoryBrowser'))
+const Directory = React.lazy(() => import('./views/Directory'))
+const Authorizer = React.lazy(() => import('./views/Authorizer'))
 
 function App() {
   return (
@@ -13,7 +14,10 @@ function App() {
       <NavBar />
       <Suspense fallback={<></>}>
         <Routes>
-          <Route element={<DirectoryBrowser />} path="/ui/directory/*" />
+          <Route element={<Directory />} path="/ui/directory/*" />
+        </Routes>
+        <Routes>
+          <Route element={<Authorizer />} path="/ui/authorizer/*" />
         </Routes>
       </Suspense>
       <ReactQueryDevtools initialIsOpen={false} />

@@ -17,7 +17,7 @@ The JSON representation for `NullValue` is JSON `null`.
 export type ProtobufNullValue = typeof ProtobufNullValue[keyof typeof ProtobufNullValue];
 
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
+ 
 export const ProtobufNullValue = {
   NULL_VALUE: 'NULL_VALUE',
 } as const;

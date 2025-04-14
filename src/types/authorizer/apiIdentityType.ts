@@ -18,7 +18,7 @@
 export type ApiIdentityType = typeof ApiIdentityType[keyof typeof ApiIdentityType];
 
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
+ 
 export const ApiIdentityType = {
   IDENTITY_TYPE_UNKNOWN: 'IDENTITY_TYPE_UNKNOWN',
   IDENTITY_TYPE_NONE: 'IDENTITY_TYPE_NONE',

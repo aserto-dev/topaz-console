@@ -1,0 +1,21 @@
+
+textarea.form-control {
+  background-color: #161719;
+  color: #d7d8d8;
+  border-color: #595959;
+  font-family: 'Ubuntu', monospace;
+}
+
+/* focus for textarea */
+textarea.form-control:focus {
+  background-color: #161719;
+  color: #d7d8d8;
+  outline: none;
+  border-color: #7d7a7a;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.form-control::placeholder { 
+  color: #666e75;
+}

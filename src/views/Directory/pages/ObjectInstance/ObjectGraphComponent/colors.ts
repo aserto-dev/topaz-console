@@ -12,7 +12,7 @@ const colorListByType: ColorType = {
   application: theme.indogoAccent3,
   group: theme.appleAccent3,
   identity: theme.mojoAccent3,
-  resource: theme.lochivarAccent3,
+  resource: theme.indogoAccent3,
   user: theme.plumAccent4,
 }
 

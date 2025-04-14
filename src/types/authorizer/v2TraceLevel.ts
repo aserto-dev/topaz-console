@@ -9,7 +9,7 @@
 export type V2TraceLevel = typeof V2TraceLevel[keyof typeof V2TraceLevel];
 
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
+ 
 export const V2TraceLevel = {
   TRACE_LEVEL_UNKNOWN: 'TRACE_LEVEL_UNKNOWN',
   TRACE_LEVEL_OFF: 'TRACE_LEVEL_OFF',

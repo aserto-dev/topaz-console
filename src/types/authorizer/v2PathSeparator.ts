@@ -9,7 +9,7 @@
 export type V2PathSeparator = typeof V2PathSeparator[keyof typeof V2PathSeparator];
 
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
+ 
 export const V2PathSeparator = {
   PATH_SEPARATOR_UNKNOWN: 'PATH_SEPARATOR_UNKNOWN',
   PATH_SEPARATOR_DOT: 'PATH_SEPARATOR_DOT',

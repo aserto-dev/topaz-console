@@ -32,7 +32,7 @@ const ApiBrowser: React.FC<ApiBrowserProps> = ({ openApiUrl, apiKeys }) => {
       bg-color={theme.primaryBlack}
       id="docs"
       nav-bg-color={theme.grey10}
-      primary-color={theme.primary}
+      primary-color={theme.indogo100}
       render-style="read"
       show-header="false"
       spec-url={openApiUrl}
