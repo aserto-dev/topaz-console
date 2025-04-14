@@ -419,6 +419,7 @@ const ObjectGraphComponent: React.FC<ObjectGraphComponentProps> = ({
         }
         setObject(object)
       }}
+      snapToGrid={true}
     >
       <Panel
         hidden={!objectTypeFilter}
@@ -444,7 +445,7 @@ const ObjectGraphComponent: React.FC<ObjectGraphComponentProps> = ({
           x
         </ResetFilter>
       </Panel>
-      <Controls position="top-right" />
+      <Controls position="top-right" showInteractive={false} />
     </ReactFlow>
   )
 }

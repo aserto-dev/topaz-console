@@ -1,6 +1,6 @@
-import { Modal } from "react-bootstrap";
-import styled from "styled-components";
-import { theme } from "../../theme";
+import { Modal } from 'react-bootstrap'
+import styled from 'styled-components'
+import { theme } from '../../theme'
 
 export const TabContainer = styled.ul`
   display: flex;
@@ -8,10 +8,10 @@ export const TabContainer = styled.ul`
   border-bottom: 1px solid #414141;
   list-style-type: none;
   padding: 0;
-`;
+`
 
 interface TabProps {
-  checked: boolean;
+  checked: boolean
 }
 export const Tab = styled.li<TabProps>`
   cursor: pointer;
@@ -19,7 +19,7 @@ export const Tab = styled.li<TabProps>`
   width: 111px;
   border-bottom: 1px solid ${({ checked }) => (checked ? `#ff4a4a` : `#414141`)};
   color: ${({ checked }) => (checked ? `#e7e7e7` : `#a0a0a0`)};
-`;
+`
 
 export const CardModalContainer = styled(Modal)`
   overflow-x: hidden;
@@ -27,7 +27,7 @@ export const CardModalContainer = styled(Modal)`
   .modal-content {
     border-radius: 20px;
   }
-`;
+`
 
 export const CardContent = styled.div`
   padding: 20px;
@@ -44,14 +44,14 @@ export const CardContent = styled.div`
   }
   flex-basis: 100%;
   width: 100%;
-`;
+`
 export const BodyContainer = styled.div`
   flex-basis: 100%;
-`;
+`
 
 export const SadAxoLotl = styled.div`
   display: flex;
-`;
+`
 
 export const MessageContainer = styled.div`
   display: flex;
@@ -62,7 +62,7 @@ export const MessageContainer = styled.div`
   width: 80%;
   height: 332px;
   overflow-y: scroll;
-`;
+`
 
 export const ButtonContainer = styled.div`
   button {
@@ -70,13 +70,13 @@ export const ButtonContainer = styled.div`
     margin-left: 10px;
     margin-bottom: 10px;
   }
-`;
+`
 
 export const MessageText = styled.span`
   margin-bottom: 15px;
   a {
-    color: ${theme.lochivarAccent4};
+    color: ${theme.indogoAccent4};
   }
   word-break: break-word;
   white-space: pre-wrap;
-`;
+`

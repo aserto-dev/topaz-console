@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from "react";
-import { useLocation } from "react-router";
+import React, { useCallback, useState } from 'react'
+import { useLocation } from 'react-router'
 import ReactSelect, {
   components,
   GroupBase,
@@ -8,14 +8,14 @@ import ReactSelect, {
   Props,
   SelectInstance,
   StylesConfig,
-} from "react-select";
-import styled from "styled-components";
+} from 'react-select'
+import styled from 'styled-components'
 
-import { theme } from "../../../theme";
-import transparent_circle from "../../common/NestedVerticalTabs/assets/selected_blank.svg";
-import circle from "../../common/NestedVerticalTabs/assets/selected_circle.svg";
-import Label from "../Label";
-import { UndecoratedLink } from "../UndecoratedLink";
+import { theme } from '../../../theme'
+import transparent_circle from '../../common/NestedVerticalTabs/assets/selected_blank.svg'
+import circle from '../../common/NestedVerticalTabs/assets/selected_circle.svg'
+import Label from '../Label'
+import { UndecoratedLink } from '../UndecoratedLink'
 
 const ImageContainer = styled.div`
 display: flex:
@@ -25,41 +25,41 @@ img{
 padding-right: 5px;
 margin-left: 5px;
 }
-`;
+`
 const CircleContainer = styled.div`
   display: flex;
   gap: 8px;
-`;
+`
 export type SelectOption = {
-  value: string | number;
-  label: string;
-  group: string;
-  shouldStopPropagation?: boolean;
-  onClick?: () => void;
-  hide?: boolean;
-};
+  value: string | number
+  label: string
+  group: string
+  shouldStopPropagation?: boolean
+  onClick?: () => void
+  hide?: boolean
+}
 
-type ReactSelectElement = SelectInstance<SelectOption>;
+type ReactSelectElement = SelectInstance<SelectOption>
 
 export interface SelectProps
   extends Omit<
     Props<SelectOption, false>,
-    "isDisabled" | "inputId" | "styles" | "formatGroupId" | "components"
+    'isDisabled' | 'inputId' | 'styles' | 'formatGroupId' | 'components'
   > {
-  defaultValue?: SelectOption;
-  disabled?: boolean;
-  label?: string;
-  value?: SelectOption | null;
-  style?: React.CSSProperties;
+  defaultValue?: SelectOption
+  disabled?: boolean
+  label?: string
+  value?: SelectOption | null
+  style?: React.CSSProperties
   modifyCustomStyle?: (
-    styles: StylesConfig<SelectOption, false>
-  ) => StylesConfig<SelectOption, false>;
-  disableLabel?: boolean;
+    styles: StylesConfig<SelectOption, false>,
+  ) => StylesConfig<SelectOption, false>
+  disableLabel?: boolean
 }
 
 const formatGroupLabel = (group: GroupBase<SelectOption>) => (
   <div>{group.label}</div>
-);
+)
 
 const SelectDirectory: React.ForwardRefExoticComponent<
   SelectProps & React.RefAttributes<ReactSelectElement>
@@ -76,53 +76,53 @@ const SelectDirectory: React.ForwardRefExoticComponent<
       modifyCustomStyle,
       ...props
     },
-    ref
+    ref,
   ) => {
-    const { pathname } = useLocation();
+    const { pathname } = useLocation()
     const defaultSelectedGroup = pathname.substring(
-      pathname.lastIndexOf("/") + 1
-    );
-    const [selectedGroup, setSelectedGroup] = useState(defaultSelectedGroup);
-    const [menuIsOpen, setMenuIsOpen] = useState(false);
+      pathname.lastIndexOf('/') + 1,
+    )
+    const [selectedGroup, setSelectedGroup] = useState(defaultSelectedGroup)
+    const [menuIsOpen, setMenuIsOpen] = useState(false)
 
     const removeFocusBox = {
-      outline: "none",
-      webkitBoxShadow: "none",
-      boxShadow: "none",
-    };
+      outline: 'none',
+      webkitBoxShadow: 'none',
+      boxShadow: 'none',
+    }
     const Option = useCallback((props: OptionProps<SelectOption, false>) => {
       return (
-        <ImageContainer style={{ display: !props.data.label ? "none" : "" }}>
+        <ImageContainer style={{ display: !props.data.label ? 'none' : '' }}>
           <components.Option
             {...props}
             innerProps={{
               ...props.innerProps,
               onMouseDown: (e) => {
-                setSelectedGroup("");
+                setSelectedGroup('')
                 if (props.data.shouldStopPropagation) {
-                  e.stopPropagation();
-                  props.data?.onClick?.();
+                  e.stopPropagation()
+                  props.data?.onClick?.()
                 }
               },
             }}
           >
-            {props.isSelected && <img alt="plus" src={circle} />}{" "}
+            {props.isSelected && <img alt="plus" src={circle} />}{' '}
             {props.children}
           </components.Option>
         </ImageContainer>
-      );
-    }, []);
+      )
+    }, [])
     const GroupHeading = (
-      props: GroupHeadingProps<SelectOption, false, GroupBase<SelectOption>>
+      props: GroupHeadingProps<SelectOption, false, GroupBase<SelectOption>>,
     ) => {
       return (
         <UndecoratedLink
           to={String(props.data.options[0].value)}
           onClick={() => {
-            setMenuIsOpen(false);
+            setMenuIsOpen(false)
             setSelectedGroup(
-              props.data.options.length <= 1 ? props.data.label || "" : ""
-            );
+              props.data.options.length <= 1 ? props.data.label || '' : '',
+            )
           }}
         >
           <components.GroupHeading {...props}>
@@ -137,29 +137,29 @@ const SelectDirectory: React.ForwardRefExoticComponent<
             </CircleContainer>
           </components.GroupHeading>
         </UndecoratedLink>
-      );
-    };
+      )
+    }
 
     const colourStyles: StylesConfig<SelectOption, false> = {
       control: (styles, { isDisabled, isFocused }) => {
         return {
           ...styles,
           marginLeft: 24,
-          overflowY: "hidden",
+          overflowY: 'hidden',
           minHeight: 36,
           backgroundColor: isDisabled ? theme.grey40 : theme.primaryBlack,
           color: isDisabled ? theme.grey40 : theme.grey100,
-          borderColor: isFocused ? theme.lochivarAccent2 : theme.grey40,
+          borderColor: isFocused ? theme.indogoAccent2 : theme.grey40,
           opacity: isDisabled ? 0.6 : 1,
-          outline: isFocused ? "none" : "",
-          boxShadow: "none",
-          ":hover": {
-            ...styles[":hover"],
+          outline: isFocused ? 'none' : '',
+          boxShadow: 'none',
+          ':hover': {
+            ...styles[':hover'],
             backgroundColor: theme.grey10,
-            borderColor: theme.lochivarAccent1,
+            borderColor: theme.indogoAccent1,
             color: theme.grey100,
           },
-        };
+        }
       },
       option: (styles, { isDisabled, isSelected }) => {
         return {
@@ -169,20 +169,20 @@ const SelectDirectory: React.ForwardRefExoticComponent<
             : isSelected
               ? theme.grey20
               : theme.grey20,
-          ":hover": {
+          ':hover': {
             backgroundColor: theme.grey40,
             color: theme.grey100,
           },
-          height: "100%",
+          height: '100%',
           minHeight: 30,
           fontSize: 14,
-          paddingLeft: isSelected ? "16px" : "38px",
-          cursor: isDisabled ? "not-allowed" : "default",
-          ":active": {
-            ...styles[":active"],
+          paddingLeft: isSelected ? '16px' : '38px',
+          cursor: isDisabled ? 'not-allowed' : 'default',
+          ':active': {
+            ...styles[':active'],
             backgroundColor: theme.grey40,
           },
-        };
+        }
       },
       groupHeading: (styles) => {
         return {
@@ -191,26 +191,26 @@ const SelectDirectory: React.ForwardRefExoticComponent<
           margin: 0,
           minHeight: 40,
           fontSize: 14,
-          height: "100%",
+          height: '100%',
           color: theme.grey100,
           backgroundColor: theme.grey20,
-          ":hover": {
+          ':hover': {
             backgroundColor: theme.grey40,
           },
-        };
+        }
       },
       group: (styles) => {
         return {
           ...styles,
           padding: 0,
-        };
+        }
       },
       input: (styles) => {
         return {
           ...styles,
           color: theme.grey100,
           borderColor: theme.grey60,
-        };
+        }
       },
       placeholder: (styles, { isDisabled }) => ({
         ...styles,
@@ -220,18 +220,18 @@ const SelectDirectory: React.ForwardRefExoticComponent<
         ...styles,
         marginLeft: 23,
         zIndex: 2,
-        width: "96%",
+        width: '96%',
         marginTop: 1,
         backgroundColor: theme.grey20,
-        boxShadow: "0px 2px 6px 4px rgba(0,0,0,0.3)",
+        boxShadow: '0px 2px 6px 4px rgba(0,0,0,0.3)',
       }),
       menuList: (style) => ({
         ...style,
         zIndex: 5,
         padding: 0,
         border: `1px solid ${theme.grey40}`,
-        borderBottomLeftRadius: "4px",
-        borderBottomRightRadius: "2px",
+        borderBottomLeftRadius: '4px',
+        borderBottomRightRadius: '2px',
         minHeight: 284,
       }),
       dropdownIndicator: (styles, { isDisabled }) => ({
@@ -262,7 +262,7 @@ const SelectDirectory: React.ForwardRefExoticComponent<
         color: isDisabled ? theme.grey40 : theme.grey100,
         ...removeFocusBox,
       }),
-    };
+    }
 
     return (
       <div style={style}>
@@ -290,7 +290,7 @@ const SelectDirectory: React.ForwardRefExoticComponent<
           }
         />
       </div>
-    );
-  }
-);
-export default SelectDirectory;
+    )
+  },
+)
+export default SelectDirectory

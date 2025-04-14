@@ -16,7 +16,7 @@ export const NavTab = styled.span<{ $active?: boolean; $disabled?: boolean }>`
   cursor: pointer;
   text-decoration: none;
   white-space: nowrap;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 14px;
   &:hover {
     color: ${theme.grey100};
@@ -26,7 +26,7 @@ export const NavTab = styled.span<{ $active?: boolean; $disabled?: boolean }>`
   ${({ $active }) => {
     if ($active) {
       return css`
-        border-bottom: 1px solid ${theme.lochivarAccent4};
+        border-bottom: 1px solid ${theme.indogoAccent4};
         color: ${theme.grey100};
       `
     }

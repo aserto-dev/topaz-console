@@ -26,7 +26,6 @@ export const DataRow = styled.div`
 `
 
 export const DataLabel = styled.span`
-  font-family: Ubuntu Mono;
   font-weight: bold;
   font-size: 14px;
   color: ${theme.grey100};
@@ -34,7 +33,6 @@ export const DataLabel = styled.span`
 `
 
 export const DataValue = styled.span`
-  font-family: Ubuntu Mono;
   font-weight: 100;
   font-size: 16px;
   color: ${theme.grey70};
@@ -81,7 +79,7 @@ export const Tr = styled(RowComponent)<{ active: boolean }>`
     css`
       background-color: ${theme.grey20};
       color: ${theme.grey100};
-      box-shadow: inset 4px 0px 0px -1px ${theme.lochivarAccent4} !important;
+      box-shadow: inset 4px 0px 0px -1px ${theme.indogoAccent4} !important;
     `}}
 `
 
@@ -130,7 +128,7 @@ export const RelationCard = styled.div`
   margin: 10px 10px 0 0;
   border-radius: 6px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
   cursor: pointer;
   > div {
     flex-direction: column;

@@ -20,9 +20,9 @@ const ButtonPath = styled.path<{ $disabled?: boolean }>`
   stroke-width: 0;
   stroke-linecap: butt;
   stroke-linejoin: miter;
-  fill: ${({ $disabled }) => (!$disabled ? theme.lochivar70 : theme.grey20)};
+  fill: ${({ $disabled }) => (!$disabled ? theme.indogo70 : theme.grey20)};
   &:hover {
-    fill: ${({ $disabled }) => !$disabled && theme.lochivar100};
+    fill: ${({ $disabled }) => !$disabled && theme.indogo100};
   }
 `
 

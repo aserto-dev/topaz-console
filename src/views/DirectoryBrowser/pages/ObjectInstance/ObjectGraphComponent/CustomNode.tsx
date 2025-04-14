@@ -69,7 +69,7 @@ export const ResetFilter = styled(Button)`
   background-color: ${theme.grey40};
   color: ${theme.grey100};
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
   padding: 0px 8px;
   height: 27px;
   line-height: 14px;

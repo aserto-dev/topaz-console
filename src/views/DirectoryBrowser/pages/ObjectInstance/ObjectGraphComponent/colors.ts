@@ -9,10 +9,10 @@ export function computeColor(s: string) {
 
 // Predefined Aserto Object Types
 const colorListByType: ColorType = {
-  application: theme.lochivarAccent3,
+  application: theme.indogoAccent3,
   group: theme.appleAccent3,
   identity: theme.mojoAccent3,
-  resource: theme.indogoAccent3,
+  resource: theme.lochivarAccent3,
   user: theme.plumAccent4,
 }
 

@@ -20,7 +20,7 @@ export const StyledCodeEditor = styled(Editor)<{
   color: ${theme.grey100};
   font-family: 'Fira Code', monospace;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
   max-width: 100%;
   min-width: 200px;
   width: max-content;
@@ -29,7 +29,7 @@ export const StyledCodeEditor = styled(Editor)<{
     color: ${theme.grey100};
     box-shadow: none;
     border-color: ${({ $hasError }) =>
-      $hasError ? theme.mojoAccent3 : theme.lochivarAccent2};
+      $hasError ? theme.mojoAccent3 : theme.indogoAccent2};
     -webkit-box-shadow: none;
   }
   &:disabled {

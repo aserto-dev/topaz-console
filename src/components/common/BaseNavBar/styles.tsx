@@ -1,11 +1,11 @@
-import { Navbar } from "react-bootstrap";
-import styled from "styled-components";
+import { Navbar } from 'react-bootstrap'
+import styled from 'styled-components'
 
-import { theme } from "../../../theme";
+import { theme } from '../../../theme'
 
 export const NavBarContainer = styled.div<{
-  $topPosition?: number;
-  $expand?: number;
+  $topPosition?: number
+  $expand?: number
 }>`
   position: fixed;
   width: 100%;
@@ -53,7 +53,7 @@ export const NavBarContainer = styled.div<{
   }
 
   .navbar .active {
-    border-bottom: 1px solid ${theme.lochivarAccent4};
+    border-bottom: 1px solid ${theme.indogoAccent4};
     color: ${theme.grey100} !important;
   }
 
@@ -97,7 +97,7 @@ export const NavBarContainer = styled.div<{
     }
 
     .nav-item .nav-link.active::before {
-      background: ${theme.lochivarAccent3};
+      background: ${theme.indogoAccent3};
     }
 
       .nav-item .nav-link.active {
@@ -110,13 +110,13 @@ export const NavBarContainer = styled.div<{
     }
   }
 
-`;
+`
 
-export const NavBarBrand = Navbar.Brand;
+export const NavBarBrand = Navbar.Brand
 
 export const Separator = styled.img<{ $hideBreakpoint?: number }>`
   margin-right: 30px;
   @media (max-width: ${({ $hideBreakpoint }) => $hideBreakpoint}px) {
     display: none;
   }
-`;
+`

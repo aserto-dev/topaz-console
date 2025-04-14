@@ -13,7 +13,7 @@ export const GlobalStyle = createGlobalStyle`
     height: 100%;
     width: 100%;
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
+    font-family: -apple-system, 'Roboto', BlinkMacSystemFont, 'Segoe UI', 'Oxygen', 'Ubuntu', 'Cantarell',
     'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -50,17 +50,17 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   code {
-    font-family: 'Ubuntu Mono', source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-    color: ${theme.lochivarAccent4};
+    font-family: 'Roboto Mono', 'Ubuntu Mono', source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+    color: ${theme.indogoAccent4};
   }
 
   /* link treatment */
   a {
-    color: ${theme.lochivarAccent4};
+    color: ${theme.indogoAccent4};
   }
   a:hover {
     text-decoration: underline;
-    color: ${theme.lochivarAccent3}
+    color: ${theme.indogoAccent3}
   }
 
   textarea {

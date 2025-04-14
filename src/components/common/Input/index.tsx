@@ -44,7 +44,7 @@ const getInputValueForState = (
   if (isUnavailable) {
     return `border-color: ${theme.mojoAccent3} !important;background-image: url("${unavailable}") !important; background-size: calc(5.2em + 0.375rem) calc(1em + 0.375rem) !important;`
   } else if (isValid) {
-    return `border-color: ${theme.lochivarAccent2} !important;background-image: url("${valid}") !important; background-size: calc(4.2em + 0.375rem) calc(1em + 0.375rem) !important;`
+    return `border-color: ${theme.indogoAccent2} !important;background-image: url("${valid}") !important; background-size: calc(4.2em + 0.375rem) calc(1em + 0.375rem) !important;`
   } else if (isInvalid) {
     return `border-color: ${theme.mojoAccent3} !important;background-image: url("${invalid}") !important; background-size: calc(3em + 0.375rem) calc(1em + 0.375rem) !important;`
   }
@@ -69,7 +69,7 @@ const CustomInput = styled(FormControl)<{
     color: ${theme.grey100};
     outline: none;
     box-shadow: none;
-    border-color: ${theme.lochivarAccent2};
+    border-color: ${theme.indogoAccent2};
     -webkit-box-shadow: none;
   }
   &:disabled {

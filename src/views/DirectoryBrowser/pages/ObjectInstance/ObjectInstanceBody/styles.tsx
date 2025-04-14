@@ -26,7 +26,7 @@ export const NavTab = styled(NavLink)`
     }
   }
   &.active {
-    border-bottom: 1px solid ${theme.lochivarAccent4};
+    border-bottom: 1px solid ${theme.indogoAccent4};
   }
   img {
     margin: 0 8px 2px 0;

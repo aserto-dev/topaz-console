@@ -8,7 +8,7 @@ const BaseButton = styled(BootstrapButton)<{ size?: 'sm' | 'md' | 'lg' }>`
   border-radius: 4px;
   font-size: 14px;
   text-align: center;
-  font-weight: 500;
+  font-weight: 400;
   font-family: 'Roboto', 'Open Sans', sans-serif;
   ${({ size }) => {
     if (size === 'sm') {
@@ -31,12 +31,12 @@ const BaseButton = styled(BootstrapButton)<{ size?: 'sm' | 'md' | 'lg' }>`
 `
 
 export const PrimaryButton = styled(BaseButton)`
-  background-color: ${theme.lochivar60};
+  background-color: ${theme.indogo60};
   color: ${theme.fullWhite};
   &:hover:not(:disabled),
   &:visited,
   &:focus {
-    background-color: ${theme.lochivar90};
+    background-color: ${theme.indogo90};
     box-shadow: none !important;
   }
   &:active:enabled {
@@ -46,7 +46,7 @@ export const PrimaryButton = styled(BaseButton)`
     img {
       filter: brightness(50%);
     }
-    background-color: ${theme.lochivar30};
+    background-color: ${theme.indogo30};
     color: ${theme.grey70};
   }
 `
@@ -116,13 +116,13 @@ export const SecondaryBorderlessButton = styled(BaseButton)`
   }
 `
 export const PrimaryOutline = styled(BaseButton)`
-  border: 1px solid ${theme.lochivar60};
+  border: 1px solid ${theme.indogo60};
   font-weight: 400;
   background-color: ${theme.primaryBlack};
   &:hover:not(:disabled),
   &:visited,
   &:focus {
-    border: 1px solid ${theme.lochivar90};
+    border: 1px solid ${theme.indogo90};
     background-color: ${theme.grey40};
     box-shadow: none !important;
   }

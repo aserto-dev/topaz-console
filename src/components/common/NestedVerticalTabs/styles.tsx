@@ -56,7 +56,7 @@ export const VerticalTab = styled(NavLink)<{ $depth: number }>`
           &.active {
             color: ${theme.grey100};
             background-color: ${theme.grey20};
-            border-left: 5px solid ${theme.lochivarAccent3};
+            border-left: 5px solid ${theme.indogoAccent3};
           }
         `
       : undefined
