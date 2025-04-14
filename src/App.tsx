@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.css'
 
 import React, { Suspense } from 'react'
-import { Route, Routes } from 'react-router'
+import { Navigate, Route, Routes } from 'react-router'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { NavBar } from './components/NavBar'
 
@@ -15,9 +15,9 @@ function App() {
       <Suspense fallback={<></>}>
         <Routes>
           <Route element={<Directory />} path="/ui/directory/*" />
-        </Routes>
-        <Routes>
           <Route element={<Authorizer />} path="/ui/authorizer/*" />
+          <Route element={<Navigate replace to="ui/directory/model" />} index />
+          <Route element={<Navigate replace to="/" />} path="*" />
         </Routes>
       </Suspense>
       <ReactQueryDevtools initialIsOpen={false} />

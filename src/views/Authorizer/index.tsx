@@ -1,27 +1,24 @@
 import './index.css'
 
-import React, { Suspense } from 'react'
+import { Suspense } from 'react'
 
 import Frame from './Frame'
 import { Navigate, Route, Routes } from 'react-router'
 import AuthorizerApiDocs from './pages/ApiDocs'
-
-const Evaluator = React.lazy(() => import('./pages/Evaluator'))
-const Modules = React.lazy(() => import('./pages/Modules'))
+import Evaluator from './pages/Evaluator'
+import Modules from './pages/Modules'
 
 const PolicyInstanceDetails = () => {
   return (
-    <Suspense fallback={<Frame></Frame>}>
+    <Suspense fallback={<Frame />}>
       <Routes>
         <Route element={<Evaluator />} path="/evaluator" />
         <Route element={<Modules />} path="/modules" />
         <Route
           element={
-            <>
-              <Frame>
-                <AuthorizerApiDocs />
-              </Frame>
-            </>
+            <Frame>
+              <AuthorizerApiDocs />
+            </Frame>
           }
           path="/docs"
         />
