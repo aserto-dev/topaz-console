@@ -65,13 +65,13 @@ export const useAuthorizerCompileHook = () => {
           );
         }, [authorizerCompile])
       }
-    
+
 
 
 export const useAuthorizerCompileMutationOptions = <TError = RpcStatus,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useAuthorizerCompileHook>>>, TError,{data: V2CompileRequest}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useAuthorizerCompileHook>>>, TError,{data: V2CompileRequest}, TContext> => {
-    
+
 const mutationKey = ['authorizerCompile'];
 const {mutation: mutationOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
@@ -88,7 +88,7 @@ const {mutation: mutationOptions} = options ?
           return  authorizerCompile(data,)
         }
 
-        
+
 
 
   return  { mutationFn, ...mutationOptions }}
@@ -113,7 +113,7 @@ export const useAuthorizerCompile = <TError = RpcStatus,
 
       return useMutation(mutationOptions , queryClient);
     }
-    
+
 /**
  * Returns decision tree for given identity context.
  * @summary Decision tree
@@ -133,13 +133,13 @@ export const useAuthorizerDecisionTreeHook = () => {
           );
         }, [authorizerDecisionTree])
       }
-    
+
 
 
 export const useAuthorizerDecisionTreeMutationOptions = <TError = RpcStatus,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useAuthorizerDecisionTreeHook>>>, TError,{data: V2DecisionTreeRequest}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useAuthorizerDecisionTreeHook>>>, TError,{data: V2DecisionTreeRequest}, TContext> => {
-    
+
 const mutationKey = ['authorizerDecisionTree'];
 const {mutation: mutationOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
@@ -156,7 +156,7 @@ const {mutation: mutationOptions} = options ?
           return  authorizerDecisionTree(data,)
         }
 
-        
+
 
 
   return  { mutationFn, ...mutationOptions }}
@@ -181,7 +181,7 @@ export const useAuthorizerDecisionTree = <TError = RpcStatus,
 
       return useMutation(mutationOptions , queryClient);
     }
-    
+
 /**
  * Determines if identity context is authorized to access the resource guarded by the given policy.
  * @summary Is (authorized)
@@ -201,13 +201,13 @@ export const useAuthorizerIsHook = () => {
           );
         }, [authorizerIs])
       }
-    
+
 
 
 export const useAuthorizerIsMutationOptions = <TError = RpcStatus,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useAuthorizerIsHook>>>, TError,{data: V2IsRequest}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useAuthorizerIsHook>>>, TError,{data: V2IsRequest}, TContext> => {
-    
+
 const mutationKey = ['authorizerIs'];
 const {mutation: mutationOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
@@ -224,7 +224,7 @@ const {mutation: mutationOptions} = options ?
           return  authorizerIs(data,)
         }
 
-        
+
 
 
   return  { mutationFn, ...mutationOptions }}
@@ -249,7 +249,7 @@ export const useAuthorizerIs = <TError = RpcStatus,
 
       return useMutation(mutationOptions , queryClient);
     }
-    
+
 /**
  * Executes a rego query on the loaded policy runtime.
  * @summary Query
@@ -269,13 +269,13 @@ export const useAuthorizerQueryHook = () => {
           );
         }, [authorizerQuery])
       }
-    
+
 
 
 export const useAuthorizerQueryMutationOptions = <TError = RpcStatus,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useAuthorizerQueryHook>>>, TError,{data: V2QueryRequest}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useAuthorizerQueryHook>>>, TError,{data: V2QueryRequest}, TContext> => {
-    
+
 const mutationKey = ['authorizerQuery'];
 const {mutation: mutationOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
@@ -292,7 +292,7 @@ const {mutation: mutationOptions} = options ?
           return  authorizerQuery(data,)
         }
 
-        
+
 
 
   return  { mutationFn, ...mutationOptions }}
@@ -317,7 +317,7 @@ export const useAuthorizerQuery = <TError = RpcStatus,
 
       return useMutation(mutationOptions , queryClient);
     }
-    
+
 /**
  * Return version information.
  * @summary Info
@@ -326,7 +326,7 @@ export const useInfoGetHook = () => {
         const infoGet = useAuthorizerClient<V2InfoResponse>();
 
         return useCallback((
-    
+
  signal?: AbortSignal
 ) => {
         return infoGet(
@@ -335,13 +335,13 @@ export const useInfoGetHook = () => {
           );
         }, [infoGet])
       }
-    
+
 
 export const getInfoGetQueryKey = () => {
     return [`/api/v2/info`] as const;
     }
 
-    
+
 export const useInfoGetQueryOptions = <TData = Awaited<ReturnType<ReturnType<typeof useInfoGetHook>>>, TError = RpcStatus>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<ReturnType<typeof useInfoGetHook>>>, TError, TData>>, }
 ) => {
 
@@ -353,9 +353,9 @@ const {query: queryOptions} = options ?? {};
 
     const queryFn: QueryFunction<Awaited<ReturnType<ReturnType<typeof useInfoGetHook>>>> = ({ signal }) => infoGet(signal);
 
-      
 
-      
+
+
 
    return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<ReturnType<typeof useInfoGetHook>>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
@@ -394,7 +394,7 @@ export function useInfoGet<TData = Awaited<ReturnType<ReturnType<typeof useInfoG
 
 export function useInfoGet<TData = Awaited<ReturnType<ReturnType<typeof useInfoGetHook>>>, TError = RpcStatus>(
   options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<ReturnType<typeof useInfoGetHook>>>, TError, TData>>, }
- , queryClient?: QueryClient 
+ , queryClient?: QueryClient
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
   const queryOptions = useInfoGetQueryOptions(options)
@@ -427,13 +427,13 @@ export const usePoliciesListHook = () => {
           );
         }, [policiesList])
       }
-    
+
 
 export const getPoliciesListQueryKey = (params?: PoliciesListParams,) => {
     return [`/api/v2/policies`, ...(params ? [params]: [])] as const;
     }
 
-    
+
 export const usePoliciesListQueryOptions = <TData = Awaited<ReturnType<ReturnType<typeof usePoliciesListHook>>>, TError = RpcStatus>(params?: PoliciesListParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<ReturnType<typeof usePoliciesListHook>>>, TError, TData>>, }
 ) => {
 
@@ -445,9 +445,9 @@ const {query: queryOptions} = options ?? {};
 
     const queryFn: QueryFunction<Awaited<ReturnType<ReturnType<typeof usePoliciesListHook>>>> = ({ signal }) => policiesList(params, signal);
 
-      
 
-      
+
+
 
    return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<ReturnType<typeof usePoliciesListHook>>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
@@ -486,7 +486,7 @@ export function usePoliciesList<TData = Awaited<ReturnType<ReturnType<typeof use
 
 export function usePoliciesList<TData = Awaited<ReturnType<ReturnType<typeof usePoliciesListHook>>>, TError = RpcStatus>(
  params?: PoliciesListParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<ReturnType<typeof usePoliciesListHook>>>, TError, TData>>, }
- , queryClient?: QueryClient 
+ , queryClient?: QueryClient
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
   const queryOptions = usePoliciesListQueryOptions(params,options)
@@ -520,14 +520,14 @@ export const usePoliciesGetHook = () => {
           );
         }, [policiesGet])
       }
-    
+
 
 export const getPoliciesGetQueryKey = (id: string,
     params?: PoliciesGetParams,) => {
     return [`/api/v2/policies/${id}`, ...(params ? [params]: [])] as const;
     }
 
-    
+
 export const usePoliciesGetQueryOptions = <TData = Awaited<ReturnType<ReturnType<typeof usePoliciesGetHook>>>, TError = RpcStatus>(id: string,
     params?: PoliciesGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<ReturnType<typeof usePoliciesGetHook>>>, TError, TData>>, }
 ) => {
@@ -540,9 +540,9 @@ const {query: queryOptions} = options ?? {};
 
     const queryFn: QueryFunction<Awaited<ReturnType<ReturnType<typeof usePoliciesGetHook>>>> = ({ signal }) => policiesGet(id,params, signal);
 
-      
 
-      
+
+
 
    return  { queryKey, queryFn, enabled: !!(id), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<ReturnType<typeof usePoliciesGetHook>>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
@@ -585,7 +585,7 @@ export function usePoliciesGet<TData = Awaited<ReturnType<ReturnType<typeof useP
 export function usePoliciesGet<TData = Awaited<ReturnType<ReturnType<typeof usePoliciesGetHook>>>, TError = RpcStatus>(
  id: string,
     params?: PoliciesGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<ReturnType<typeof usePoliciesGetHook>>>, TError, TData>>, }
- , queryClient?: QueryClient 
+ , queryClient?: QueryClient
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
   const queryOptions = usePoliciesGetQueryOptions(id,params,options)

@@ -129,6 +129,7 @@ export const PolicyEvaluatorContent: React.FC<PolicyEvaluatorProps> = ({
     JSON.stringify(requestBody),
     requestPath || REQUEST_PATHS['IS'],
   )
+
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null)
 
   const {
@@ -152,33 +153,33 @@ export const PolicyEvaluatorContent: React.FC<PolicyEvaluatorProps> = ({
         ? [
             {
               label: 'Check ',
-              value: 'CHECK',
+              value: AuthorizerOperation.CHECK,
             },
             {
               label: 'Is',
-              value: 'IS',
+              value: AuthorizerOperation.IS,
             },
             {
               label: 'decisiontree',
-              value: 'DECISIONTREE',
+              value: AuthorizerOperation.DECISIONTREE,
             },
             {
               label: 'query',
-              value: 'QUERY',
+              value: AuthorizerOperation.QUERY,
             },
           ]
         : [
             {
               label: 'Is',
-              value: 'IS',
+              value: AuthorizerOperation.IS,
             },
             {
               label: 'decisiontree',
-              value: 'DECISIONTREE',
+              value: AuthorizerOperation.DECISIONTREE,
             },
             {
               label: 'query',
-              value: 'QUERY',
+              value: AuthorizerOperation.QUERY,
             },
           ],
     [isRebac],
@@ -188,7 +189,7 @@ export const PolicyEvaluatorContent: React.FC<PolicyEvaluatorProps> = ({
     editor: editor.IStandaloneCodeEditor,
     monaco: Monaco,
   ) => {
-    monaco.editor.setTheme('aserto')
+    monaco.editor.setTheme('topaz')
     editorRef.current = editor
   }
 
@@ -235,7 +236,7 @@ export const PolicyEvaluatorContent: React.FC<PolicyEvaluatorProps> = ({
 
   useEffect(() => {
     let outputString: string
-    if (request === 'QUERY') {
+    if (request === AuthorizerOperation.QUERY) {
       outputString = JSON.stringify(queryOutput, null, 2)
     } else {
       outputString = JSON.stringify(output, null, 2)
@@ -333,7 +334,7 @@ export const PolicyEvaluatorContent: React.FC<PolicyEvaluatorProps> = ({
         <Container>
           <ContentContainer>
             <SideContent $left>
-              {request === 'CHECK' ? (
+              {request === AuthorizerOperation.CHECK ? (
                 <RebacEvaluator />
               ) : (
                 <Row $centered>
@@ -346,16 +347,18 @@ export const PolicyEvaluatorContent: React.FC<PolicyEvaluatorProps> = ({
                       )}
                       onChange={(option) => {
                         if (option?.value) {
-                          if (option.value === 'IDENTITY_TYPE_NONE') {
+                          if (
+                            option.value === ApiIdentityType.IDENTITY_TYPE_NONE
+                          ) {
                             setSubjectInstance(null)
                           }
-                          setType(option?.value as ApiIdentityType)
+                          setType(option.value as ApiIdentityType)
                           setIdentity(null)
                         }
                       }}
                     />
                   </FieldContainer>
-                  {type === 'IDENTITY_TYPE_SUB' && (
+                  {type === ApiIdentityType.IDENTITY_TYPE_SUB && (
                     <>
                       <SeparationDots>:</SeparationDots>
                       <FieldContainer $marginTop={32}>
@@ -368,8 +371,8 @@ export const PolicyEvaluatorContent: React.FC<PolicyEvaluatorProps> = ({
                     </>
                   )}
 
-                  {(type === 'IDENTITY_TYPE_MANUAL' ||
-                    type === 'IDENTITY_TYPE_JWT') && (
+                  {(type === ApiIdentityType.IDENTITY_TYPE_MANUAL ||
+                    type === ApiIdentityType.IDENTITY_TYPE_JWT) && (
                     <>
                       <SeparationDots>:</SeparationDots>
                       <FieldContainer $marginTop={32}>
@@ -384,11 +387,13 @@ export const PolicyEvaluatorContent: React.FC<PolicyEvaluatorProps> = ({
                 </Row>
               )}
 
-              {request === 'DECISIONTREE' && <PolicyDecisiontreeFields />}
-              {request === 'IS' && !!policyModules && (
+              {request === AuthorizerOperation.DECISIONTREE && (
+                <PolicyDecisiontreeFields />
+              )}
+              {request === AuthorizerOperation.IS && !!policyModules && (
                 <PolicyIsFields policyModules={policyModules} />
               )}
-              {request === 'QUERY' && <PolicyQueryFields />}
+              {request === AuthorizerOperation.QUERY && <PolicyQueryFields />}
             </SideContent>
             <SideContent $right>
               <EvaluatorContainer>
@@ -407,33 +412,36 @@ export const PolicyEvaluatorContent: React.FC<PolicyEvaluatorProps> = ({
                   {JSON.stringify(requestBody, null, 2)}
                 </Highlight>
               </TextBox>
-              {(request === 'IS' || request === 'CHECK') && output && (
-                <>
-                  <ResultsLabel>Results</ResultsLabel>
-                  <ResultsTextBox>
-                    <HighlightedOutput>
-                      <MonacoEditor
-                        defaultLanguage="json"
-                        defaultValue={JSON.stringify(output, null, 2)}
-                        layoutOptions={{
-                          automaticLayout: true,
-                          fontSize: 14,
-                          lineNumbers: 'off',
-                          minimap: { autohide: true },
-                          readOnly: true,
-                          scrollBeyondLastLine: false,
-                        }}
-                        themeRules={MonacoTheme}
-                        onMount={handleEditorDidMount}
-                      />
-                    </HighlightedOutput>
-                  </ResultsTextBox>
-                </>
-              )}
-              {request === 'DECISIONTREE' && isDecisionTreeResponse(output) && (
-                <DecisionTreeTable data={output} />
-              )}
-              {request === 'QUERY' && queryOutput && (
+              {(request === AuthorizerOperation.IS ||
+                request === AuthorizerOperation.CHECK) &&
+                output && (
+                  <>
+                    <ResultsLabel>Results</ResultsLabel>
+                    <ResultsTextBox>
+                      <HighlightedOutput>
+                        <MonacoEditor
+                          defaultLanguage="json"
+                          defaultValue={JSON.stringify(output, null, 2)}
+                          layoutOptions={{
+                            automaticLayout: true,
+                            fontSize: 14,
+                            lineNumbers: 'off',
+                            minimap: { autohide: true },
+                            readOnly: true,
+                            scrollBeyondLastLine: false,
+                          }}
+                          themeRules={MonacoTheme}
+                          onMount={handleEditorDidMount}
+                        />
+                      </HighlightedOutput>
+                    </ResultsTextBox>
+                  </>
+                )}
+              {request === AuthorizerOperation.DECISIONTREE &&
+                isDecisionTreeResponse(output) && (
+                  <DecisionTreeTable data={output} />
+                )}
+              {request === AuthorizerOperation.QUERY && queryOutput && (
                 <>
                   <TabGroup>
                     <Tab

@@ -48,10 +48,10 @@ export const PolicyDecisiontreeFields = () => {
         <Row $centered $marginLeft={20}>
           <FieldContainer>
             <Input
-              defaultValue={pathFreeText}
+              value={pathFreeText}
               label="Path"
               placeholder="Policy path"
-              onChange={(e) => setPathFreeText(e.target.value)}
+              onChange={(e) => setPathFreeText(e.target.value || '')}
             />
           </FieldContainer>
         </Row>

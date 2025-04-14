@@ -2,7 +2,13 @@ import React, { useContext } from "react"
 import { V2PathSeparator, V2TraceLevel, ApiIdentityType } from "../../types/authorizer"
 import { SelectOption } from "../../components/common/Select"
 
-export type AuthorizerOperation = 'QUERY' | 'DECISIONTREE' | 'IS' | 'CHECK'
+export type AuthorizerOperation = typeof AuthorizerOperation[keyof typeof AuthorizerOperation];
+export const AuthorizerOperation = {
+  CHECK: 'CHECK',
+  DECISIONTREE: 'DECISIONTREE',
+  IS: 'IS',
+  QUERY: 'QUERY',
+} as const;
 
 type PolicyEvaluatorContextProps =
   | PolicyEvaluatorContextForIsProps

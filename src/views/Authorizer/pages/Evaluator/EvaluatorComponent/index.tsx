@@ -21,12 +21,6 @@ import {
   usePolicyEvaluatorErrorContext,
 } from '../../../../../services/PolicyEvaluatorContextProvider/hooks'
 import ensureError from '../../../../../lib/error/ensureError'
-export type AuthorizerPolicyInstance = {
-  policyInstanceName?: string
-  policyInstanceLabel?: string
-  authorizerInstance?: string
-}
-
 type EvaluatorProps = {
   isRebac?: boolean
   selectedModuleId?: string | null
@@ -127,7 +121,7 @@ export const Evaluator: React.FC<EvaluatorProps> = ({
   const generatePolicyContext = useCallback(() => {
     setPolicyContextError(undefined)
     try {
-      if (request === 'CHECK') {
+      if (request === AuthorizerOperation.CHECK) {
         return {
           policy_context: {
             decisions: ['allowed'],
@@ -178,14 +172,14 @@ export const Evaluator: React.FC<EvaluatorProps> = ({
 
     const payload = {
       ...identityContextRequest,
-      ...(request === 'DECISIONTREE' && {
+      ...(request === AuthorizerOperation.DECISIONTREE && {
         options: {
           path_separator: options,
         },
       }),
-      ...(request === 'QUERY' && query && { query }),
-      ...(request === 'QUERY' && input && { input }),
-      ...(request === 'QUERY' && {
+      ...(request === AuthorizerOperation.QUERY && query && { query }),
+      ...(request === AuthorizerOperation.QUERY && input && { input }),
+      ...(request === AuthorizerOperation.QUERY && {
         options: queryOptions,
       }),
       ...resourceContextRequest,

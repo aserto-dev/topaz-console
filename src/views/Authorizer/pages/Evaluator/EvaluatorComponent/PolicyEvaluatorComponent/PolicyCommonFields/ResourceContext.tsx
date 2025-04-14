@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useMemo } from 'react'
 
 import { FieldContainer, ResourceTextArea } from '../styles'
 import {
@@ -7,11 +7,9 @@ import {
   useRebacPolicyEvaluatorContext,
 } from '../../../../../../../services/PolicyEvaluatorContextProvider/hooks'
 import {
-  getNextPage,
   useDirectoryV3PermissionsList,
   useDirectoryV3RelationTypesList,
 } from '../../../../../../../api/directory/customQuery'
-import { useDirectoryReaderV3ObjectsListInfinite } from '../../../../../../../api/v3/directory'
 import Label from '../../../../../../../components/common/Label'
 import { SelectOption } from '../../../../../../../components/common/Select'
 
@@ -52,32 +50,6 @@ export const ResourceContext = () => {
         .map((n) => ({ label: n.displayName || n.name, value: n.name })) || []
     )
   }, [objectType, relationTypesData?.results])
-
-  const { data: objectsData } = useDirectoryReaderV3ObjectsListInfinite(
-    {
-      object_type: objectType,
-      'page.size': 100,
-    },
-    {
-      query: {
-        getNextPageParam: getNextPage,
-      },
-    },
-  )
-  const objectInstances = useMemo(
-    () =>
-      objectsData?.pages
-        .map((page) => page.results || [])
-        .flat()
-        .map((object) => {
-          return { label: object.display_name || object.id, value: object.id }
-        }) ?? [],
-    [objectsData?.pages],
-  )
-
-  useEffect(() => {
-    setObjectInstance(objectInstances[0] || null)
-  }, [objectInstances, setObjectInstance])
 
   return (
     <FieldContainer>

@@ -18,7 +18,7 @@ export const PolicyEvaluatorContextProvider = ({
     string | undefined
   >()
   const [policyContextState, setPolicyContextState] = useState<string>('{}')
-  const [policyInstance, setPolicyInstance] = useState('')
+  const [policyInstance, setPolicyInstance] = useState('topaz')
 
   const getFieldContextState = useCallback(
     (fieldName: string) => {

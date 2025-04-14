@@ -30,10 +30,14 @@ const Icon = styled.svg`
   stroke-width: 2px;
 `
 
-const StyledCheckbox = styled.div<{ checked: boolean; $disabled?: boolean; hasLabel: boolean }>`
+const StyledCheckbox = styled.div<{
+  checked: boolean
+  $disabled?: boolean
+  $hasLabel: boolean
+}>`
   display: inline-block;
   border: 1px solid ${(props) => (props.checked ? theme.primary : theme.grey50)};
-  ${({ hasLabel }) => (hasLabel ? 'margin-right: 10px;' : '')}
+  ${({ $hasLabel: hasLabel }) => (hasLabel ? 'margin-right: 10px;' : '')}
   width: 16px;
   height: 16px;
   background: ${(props) => (props.checked ? theme.primary : 'transparent')};
@@ -76,10 +80,8 @@ const Checkbox: React.FC<CheckboxProps> = ({
   className,
   ...checkboxProps
 }) => {
-  const onCheckboxChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
-    (event) => onChange?.(event.target.checked),
-    [onChange]
-  )
+  const onCheckboxChange: React.ChangeEventHandler<HTMLInputElement> =
+    useCallback((event) => onChange?.(event.target.checked), [onChange])
 
   return (
     <CheckboxContainer>
@@ -94,7 +96,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
           $disabled={disabled}
           checked={checked === undefined ? false : checked}
           className={className}
-          hasLabel={!!label}
+          $hasLabel={!!label}
         >
           {checked && (
             <Icon viewBox="0 0 24 24">
