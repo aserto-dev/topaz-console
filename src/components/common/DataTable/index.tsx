@@ -33,7 +33,7 @@ export type DataTableProps<Data extends object> = {
   paging?: DataTablePagingProps<Data>
   renderRowSubComponent?: SubComponent<Data>
   rowComponent?: React.ComponentType<
-    TableRowProps & { isExpanded: boolean; row: Row<Data> }
+    TableRowProps & { isExpanded: boolean; $row: Row<Data> }
   >
   initialState?: Partial<TableState<Data>>
   mRef?: React.RefObject<TableInstance<Data> | null>

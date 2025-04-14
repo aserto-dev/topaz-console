@@ -417,9 +417,9 @@ const ObjectRelations: React.FC<{
                 <Tr
                   {...rowProps}
                   active={
-                    rowProps.row.original.relationObjectTypeName ===
+                    rowProps.$row.original.relationObjectTypeName ===
                       relationSubject &&
-                    rowProps.row.original.name === relationType
+                    rowProps.$row.original.name === relationType
                   }
                 />
               )}
