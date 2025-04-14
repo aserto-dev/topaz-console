@@ -1,6 +1,7 @@
-import styled from "styled-components";
-import Button from "../../components/common/Button";
-import { theme } from "../../theme";
+import styled from 'styled-components'
+
+import { theme } from '../../theme'
+import Button from '../../components/common/Button'
 
 export const Grid = styled.div`
   width: 100%;
@@ -10,9 +11,9 @@ export const Grid = styled.div`
   grid-template-rows: 0 50px 1fr;
   gap: 0px 0px;
   grid-template-areas:
-    "header"
-    "sidebar"
-    "content";
+    'header'
+    'sidebar'
+    'content';
 
   @media (min-width: 913px) {
     display: grid;
@@ -20,30 +21,30 @@ export const Grid = styled.div`
     grid-template-rows: 0 1.7fr 1fr;
     gap: 0px 0px;
     grid-template-areas:
-      "header header header"
-      "sidebar content content"
-      "sidebar content content";
+      'header header header'
+      'sidebar content content'
+      'sidebar content content';
   }
-`;
+`
 
 export const Sidebar = styled.div`
+  position: fixed;
+  width: 100%;
+  background-color: ${theme.primaryBlack};
+  z-index: 2;
   @media (min-width: 913px) {
     grid-area: sidebar;
   }
-`;
+`
 
 export const Content = styled.div`
   grid-area: content;
   display: flex;
   width: 100%;
-  @media (max-width: 912px) {
-    display: inline;
-    padding: 25px;
-  }
-`;
+`
 
 export const ObjectHeaderContainer = styled.div`
-  padding: 20px;
+  padding: 12px 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -53,16 +54,20 @@ export const ObjectHeaderContainer = styled.div`
   z-index: 1;
   position: -webkit-sticky;
   position: sticky;
-  top: 181px;
+  top: 140px;
   @media (max-width: 912px) {
-    top: 170px;
+    position: fixed;
+    top: 184px;
+    width: 100%;
+    border-bottom: 1px solid ${theme.grey20};
+    margin: 20px 0;
   }
-`;
+`
 
 export const HeaderButtonContainer = styled.div`
   display: flex;
   gap: 10px;
-`;
+`
 
 export const ImageButton = styled.div`
   display: flex;
@@ -76,32 +81,18 @@ export const ImageButton = styled.div`
   &:hover:not(:disabled) {
     color: ${theme.grey100};
     cursor: pointer;
-    svg {
-      fill: ${theme.grey100};
+    img {
+      filter: brightness(150%);
     }
-  }
-  svg {
-    fill: ${theme.grey70};
-    height: 20px;
   }
   span {
     font-weight: 400;
   }
-`;
+`
 
 export const AddButton = styled(Button)`
   align-items: center;
   display: flex;
   flex-direction: row;
   gap: 5px;
-`;
-export const EmptyTextContainerWithoutPadding = styled.div`
-  padding-left: 25px;
-`;
-export const SaveButtonContainer = styled.div<{ $show?: boolean }>`
-  ${({ $show }) => {
-    return $show ? "display: block" : "visibility: hidden";
-  }};
-  display: flex;
-  gap: 5px;
-`;
+`
