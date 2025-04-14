@@ -41,7 +41,7 @@ type TableBodyProps<Data extends object> = {
   prepareRow: (row: Row<Data>) => void
   renderRowSubComponent?: SubComponent<Data>
   rowComponent?: React.ComponentType<
-    TableRowProps & { isExpanded: boolean; row: Row<Data> }
+    TableRowProps & { isExpanded: boolean; $row: Row<Data> }
   >
   rows: Row<Data>[]
   visibleColumns: Array<ColumnInstance<Data>>
@@ -61,10 +61,10 @@ const TableBody = <Data extends object>({
       prepareRow(row)
       const shouldShowSubRow = !!renderRowSubComponent && row.isExpanded
       const Tr = rowComponent || RowComponent
-      const rowProps = row.getRowProps()
+      const { key, ...rowProps } = row.getRowProps()
       return (
-        <React.Fragment key={rowProps.key}>
-          <Tr isExpanded={row.isExpanded} row={row} {...rowProps}>
+        <React.Fragment key={key}>
+          <Tr key={key} isExpanded={row.isExpanded} $row={row} {...rowProps}>
             {row.cells.map((cell) => {
               const customCellProps = getCellProps ? getCellProps(cell) : {}
               const cellProps = cell.getCellProps()

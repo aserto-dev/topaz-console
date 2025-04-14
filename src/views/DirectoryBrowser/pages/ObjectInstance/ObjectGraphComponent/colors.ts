@@ -21,7 +21,7 @@ const colorList = [
   theme.apple100,
   theme.appleAccent1,
   theme.berry100,
-  theme.berryAccent1,
+  theme.berryAccent2,
   theme.berryAccent3,
   theme.buckthorn100,
   theme.buckthornAccent1,
