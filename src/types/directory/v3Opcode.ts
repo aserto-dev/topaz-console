@@ -9,7 +9,7 @@
 export type V3Opcode = typeof V3Opcode[keyof typeof V3Opcode];
 
 
- 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const V3Opcode = {
   OPCODE_UNKNOWN: 'OPCODE_UNKNOWN',
   OPCODE_SET: 'OPCODE_SET',
