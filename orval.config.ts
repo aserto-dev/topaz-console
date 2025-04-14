@@ -1,14 +1,3 @@
-// Model:
-// 'directory.v3.manifest.get',
-// 'directory.writer.v3.manifest.set',
-// 'directory.writer.v3.manifest.delete',
-
-// Writer:
-// 'directory.writer.v3.object.set',
-// 'directory.writer.v3.object.delete',
-// 'directory.writer.v3.relation.delete',
-// 'directory.writer.v3.relation.set',
-
 import { defineConfig } from 'orval';
 
 export default defineConfig({
@@ -98,4 +87,25 @@ export default defineConfig({
         : 'https://directory.prod.aserto.com/openapi.json',
     },
   },
+  authorizer: {
+    output: {
+      mode: 'single',
+      target: 'src/api/v3/authorizer.ts',
+      schemas: 'src/types/authorizer',
+      client: 'react-query',
+      clean: false,
+      mock: false,
+      override: {
+        mutator: {
+          path: 'src/api/clients/rest.ts',
+          name: 'useAuthorizerClient',
+        },
+      },
+    },
+    input: {
+      target: process.env.AUTHORIZER_SERVICE_URL
+        ? `${process.env.AUTHORIZER_SERVICE_URL}/openapi.json`
+        : `https://raw.githubusercontent.com/aserto-dev/openapi-authorizer/refs/heads/main/publish/authorizer/openapi.json`,
+    },
+  }
 })

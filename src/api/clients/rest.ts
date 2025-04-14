@@ -1,9 +1,9 @@
 
 import { useConfig } from '../../services/ConfigProvider/hooks'
-import { useBaseClient } from './base'
+import { BaseClient, useBaseClient } from './base'
 import { QueryParams } from './queryParams'
 
-type DirectoryRestClient<T> = (data: {
+type RestClient<T> = (data: {
   url: string
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'HEAD'
   params?: QueryParams
@@ -13,7 +13,19 @@ type DirectoryRestClient<T> = (data: {
   signal?: AbortSignal
 }) => Promise<T>
 
-const useRestDirectoryClient = <T>(directoryServiceUrl: string): DirectoryRestClient<T> => {
+export const useAuthorizerClient = <T>(): RestClient<T> => {
+  const { authorizerApiKey, authorizerServiceUrl } = useConfig()
+  const headers: Record<string, string> = {}
+  if (authorizerApiKey) {
+    headers['authorization'] = `basic ${authorizerApiKey}`
+  }
+
+  const client = useBaseClient(authorizerServiceUrl!, headers)
+
+  return restClient<T>(client)
+}
+
+const useRestDirectoryClient = <T>(directoryServiceUrl: string): RestClient<T> => {
   const { directoryApiKey } = useConfig()
   const headers: Record<string, string> = {}
   if (directoryApiKey) {
@@ -22,6 +34,25 @@ const useRestDirectoryClient = <T>(directoryServiceUrl: string): DirectoryRestCl
 
   const client = useBaseClient(directoryServiceUrl, headers)
 
+  return restClient<T>(client)
+}
+
+
+export const useDirectoryReaderClient = <T>(): RestClient<T> => {
+  const { directoryReaderServiceUrl, directoryServiceUrl } = useConfig()
+  return useRestDirectoryClient(directoryReaderServiceUrl || directoryServiceUrl || '')
+}
+
+export const useDirectoryWriterClient = <T>(): RestClient<T> => {
+  const { directoryWriterServiceUrl, directoryServiceUrl } = useConfig()
+  return useRestDirectoryClient(directoryWriterServiceUrl || directoryServiceUrl || '')
+}
+
+export const useDirectoryModelClient = <T>(): RestClient<T> => {
+  const { directoryModelServiceUrl, directoryServiceUrl } = useConfig()
+  return useRestDirectoryClient(directoryModelServiceUrl || directoryServiceUrl || '')
+}
+function restClient<T>(client: BaseClient): RestClient<T> {
   return async ({ url, method, params, data, signal, responseType }) => {
     const path = url.replace('/', '')
     const queryParams = params
@@ -88,17 +119,3 @@ const useRestDirectoryClient = <T>(directoryServiceUrl: string): DirectoryRestCl
   }
 }
 
-export const useDirectoryReaderClient = <T>(): DirectoryRestClient<T> => {
-  const { directoryReaderServiceUrl, directoryServiceUrl } = useConfig()
-  return useRestDirectoryClient(directoryReaderServiceUrl || directoryServiceUrl || '')
-}
-
-export const useDirectoryWriterClient = <T>(): DirectoryRestClient<T> => {
-  const { directoryWriterServiceUrl, directoryServiceUrl } = useConfig()
-  return useRestDirectoryClient(directoryWriterServiceUrl || directoryServiceUrl || '')
-}
-
-export const useDirectoryModelClient = <T>(): DirectoryRestClient<T> => {
-  const { directoryModelServiceUrl, directoryServiceUrl } = useConfig()
-  return useRestDirectoryClient(directoryModelServiceUrl || directoryServiceUrl || '')
-}
