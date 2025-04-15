@@ -16,8 +16,8 @@ const TabContainer = styled.div`
   }
 `
 
-const TabItem = styled.div<{ disabled?: boolean; selected?: boolean; }>`
-  padding: 12px 20px;
+const TabItem = styled.div<{ disabled?: boolean; selected?: boolean }>`
+  padding: 12px 18px;
   ${({ disabled }) => {
     return disabled
       ? css`

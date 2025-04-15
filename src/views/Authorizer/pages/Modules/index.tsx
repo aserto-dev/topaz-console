@@ -3,7 +3,6 @@ import { Nav } from 'react-bootstrap'
 
 import { usePoliciesList } from '../../../../api/v3/authorizer'
 import Highlight from '../../../../components/common/Highlight'
-import Frame from '../../Frame'
 import { Column, Content, ContentHeader, PillLineItem } from './styles'
 
 const Modules: React.FC = () => {
@@ -54,38 +53,36 @@ const Modules: React.FC = () => {
   }
 
   if (isLoading) {
-    return <Frame />
+    return null
   }
 
   return (
-    <Frame>
-      <>
-        <Column style={{ marginLeft: 20 }}>
-          <ContentHeader>Module Name</ContentHeader>
-          <Content $flex $paddingTop={18}>
-            <Nav
-              activeKey={moduleId!}
-              className="flex-column"
-              defaultActiveKey={moduleId!}
-              variant="pills"
-              onSelect={(key) => {
-                setModuleId(key || '')
-              }}
-            >
-              <LeftSideItems />
-            </Nav>
+    <>
+      <Column style={{ marginLeft: 20 }}>
+        <ContentHeader>Module Name</ContentHeader>
+        <Content $flex $paddingTop={18}>
+          <Nav
+            activeKey={moduleId!}
+            className="flex-column"
+            defaultActiveKey={moduleId!}
+            variant="pills"
+            onSelect={(key) => {
+              setModuleId(key || '')
+            }}
+          >
+            <LeftSideItems />
+          </Nav>
+        </Content>
+      </Column>
+      <Column>
+        <>
+          <ContentHeader>Definition</ContentHeader>
+          <Content $flex $hasBorderLeft $paddingTop={18}>
+            <Highlight language="rego">{fetchContent(moduleId!)}</Highlight>
           </Content>
-        </Column>
-        <Column>
-          <>
-            <ContentHeader>Definition</ContentHeader>
-            <Content $flex $hasBorderLeft $paddingTop={18}>
-              <Highlight language="rego">{fetchContent(moduleId!)}</Highlight>
-            </Content>
-          </>
-        </Column>
-      </>
-    </Frame>
+        </>
+      </Column>
+    </>
   )
 }
 
