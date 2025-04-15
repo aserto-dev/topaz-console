@@ -2,7 +2,6 @@ import React, { PropsWithChildren, useMemo } from 'react'
 
 import { RpcStatus } from '../../../types/directory'
 import { useStorage } from '../../StorageProvider/hooks'
-import GenericIdentityProvider from '../GenericIdentityProvider'
 import ApiKeyLogin from './login'
 
 type ApiKeyContextProps = {
@@ -39,22 +38,7 @@ export const ApiKeyIdentityProvider: React.FC<
   )
 
   if (apiKey) {
-    return (
-      <GenericIdentityProvider
-        identity={{
-          getAccessToken: () => Promise.resolve(`Basic ${apiKey}`),
-          logout: () => {
-            localStorage.removeItem('apiKey')
-            window.location.href = '/'
-          },
-          user: {
-            name: 'API Key',
-          },
-        }}
-      >
-        {children!}
-      </GenericIdentityProvider>
-    )
+    return children
   }
   return (
     <ApiKeyContext.Provider value={value}>
