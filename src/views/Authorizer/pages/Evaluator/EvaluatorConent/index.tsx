@@ -1,31 +1,32 @@
 import { editor } from 'monaco-editor'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { Dispatch, useEffect, useMemo, useRef, useState } from 'react'
 
 import { Monaco } from '@monaco-editor/react'
 
-import { PolicyEvaluatorProps } from '.'
-import Highlight from '../../../../../../components/common/Highlight'
-import Label from '../../../../../../components/common/Label'
-import MonacoEditor from '../../../../../../components/common/MonacoEditor'
-import { PlayButton } from '../../../../../../components/common/PlayButton'
-import { Row } from '../../../../../../components/common/Row'
-import Select, {
-  SelectOption,
-} from '../../../../../../components/common/Select'
+import Highlight from '../../../../../components/common/Highlight'
+import Label from '../../../../../components/common/Label'
+import MonacoEditor from '../../../../../components/common/MonacoEditor'
+import { PlayButton } from '../../../../../components/common/PlayButton'
+import { Row } from '../../../../../components/common/Row'
+import Select, { SelectOption } from '../../../../../components/common/Select'
 import {
   AuthorizerOperation,
   useContentPolicyEvaluatorContext,
   usePolicyEvaluatorErrorContext,
   useRebacPolicyEvaluatorContext,
-} from '../../../../../../services/PolicyEvaluatorContextProvider/hooks'
-import { theme } from '../../../../../../theme'
+} from '../../../../../services/PolicyEvaluatorContextProvider/hooks'
+import { theme } from '../../../../../theme'
 import {
   ApiIdentityType,
+  ApiModule,
+  V2DecisionTreeRequest,
   V2DecisionTreeResponse,
+  V2IsRequest,
   V2IsResponse,
+  V2QueryRequest,
   V2QueryResponse,
-} from '../../../../../../types/authorizer'
-import { TextBox } from '../../../../../Directory/pages/Evaluator/styles'
+} from '../../../../../types/authorizer'
+import { TextBox } from '../../../../Directory/pages/Evaluator/styles'
 import { useCopyCurl } from './copyCurl'
 import { DecisionTreeTable } from './DecisionTreeTable'
 import { PolicyDecisiontreeFields } from './PolicyDecisiontreeFields'
@@ -51,6 +52,25 @@ import {
   Tab,
   TabGroup,
 } from './styles'
+
+type PolicyEvaluatorProps = {
+  fetchNextUsersData?: () => object
+  filter?: string
+  hasMoreUsers?: boolean
+  isRebac?: boolean
+  onRequestChange?: () => void
+  onSubmit: () => void
+  output:
+    | string
+    | undefined
+    | V2DecisionTreeResponse
+    | V2IsResponse
+    | V2QueryResponse
+  policyModules: Array<ApiModule> | undefined
+  requestBody?: V2DecisionTreeRequest | V2IsRequest | V2QueryRequest
+  selectedModuleId?: null | string
+  setFilter?: Dispatch<React.SetStateAction<string>>
+}
 
 const identityOptions: Array<SelectOption> = [
   {
@@ -116,7 +136,7 @@ function isDecisionTreeResponse(
   return (output as V2DecisionTreeResponse)?.path !== undefined
 }
 
-export const PolicyEvaluatorContent: React.FC<PolicyEvaluatorProps> = ({
+const PolicyEvaluatorContent: React.FC<PolicyEvaluatorProps> = ({
   isRebac,
   onRequestChange,
   onSubmit,
@@ -502,3 +522,5 @@ export const PolicyEvaluatorContent: React.FC<PolicyEvaluatorProps> = ({
     </>
   )
 }
+
+export default PolicyEvaluatorContent

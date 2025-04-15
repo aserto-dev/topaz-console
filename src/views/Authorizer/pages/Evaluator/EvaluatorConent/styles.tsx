@@ -1,11 +1,11 @@
 import styled, { css } from 'styled-components'
 
-import Button from '../../../../../../components/common/Button'
-import Input from '../../../../../../components/common/Input'
-import Label from '../../../../../../components/common/Label'
-import TextArea from '../../../../../../components/common/TextArea'
-import { theme } from '../../../../../../theme'
-import { TextBox } from '../../../../../Directory/pages/Evaluator/styles'
+import Button from '../../../../../components/common/Button'
+import Input from '../../../../../components/common/Input'
+import Label from '../../../../../components/common/Label'
+import TextArea from '../../../../../components/common/TextArea'
+import { theme } from '../../../../../theme'
+import { TextBox } from '../../../../Directory/pages/Evaluator/styles'
 
 export const Container = styled.div`
   position: relative;
