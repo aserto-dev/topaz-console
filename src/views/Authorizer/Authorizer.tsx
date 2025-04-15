@@ -1,11 +1,12 @@
-import React, { PropsWithChildren } from 'react'
+import React from 'react'
+import { Outlet } from 'react-router'
 
 import PaddedContent from '../../components/common/PaddedContent'
 import HeaderComponent from './Header'
 import AuthorizerSidebar from './Sidebar'
 import { Content, Grid, Sidebar } from './styles'
 
-const Frame: React.FC<PropsWithChildren<object>> = ({ children }) => {
+const Frame: React.FC = () => {
   return (
     <PaddedContent>
       <Grid>
@@ -13,7 +14,9 @@ const Frame: React.FC<PropsWithChildren<object>> = ({ children }) => {
         <Sidebar>
           <AuthorizerSidebar />
         </Sidebar>
-        <Content>{children}</Content>
+        <Content>
+          <Outlet />
+        </Content>
       </Grid>
     </PaddedContent>
   )
