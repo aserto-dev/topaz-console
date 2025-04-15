@@ -56,7 +56,7 @@ type DataProps = {
   >
 }
 
-export type DirectoryContextProps = {
+type DirectoryContextProps = {
   model: ModelProps
   evaluator: EvaluatorProps
   data: DataProps
@@ -68,7 +68,7 @@ const DEFAULT_STATE = {
   visible: true,
 } as const
 
-export const useDirectoryContext = () => useContext(DirectoryContext)
+const useDirectoryContext = () => useContext(DirectoryContext)
 export const useDirectoryModelContext = () => useDirectoryContext().model
 export const useDirectoryEvaluatorContext = () =>
   useDirectoryContext().evaluator

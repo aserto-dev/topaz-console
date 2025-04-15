@@ -5,7 +5,7 @@ import GenericIdentityProvider from '../GenericIdentityProvider'
 import ApiKeyLogin from './login'
 import { useStorage } from '../../StorageProvider/hooks'
 
-export type ApiKeyContextProps = {
+type ApiKeyContextProps = {
   apiKey: string | undefined
   setApiKey: (apiKey: string) => void
   loginFunc: (key: string) => Promise<RpcStatus | Error | undefined>

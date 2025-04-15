@@ -20,7 +20,7 @@ type PolicyEvaluatorContextProps =
   | PolicyEvaluatorErrorContextProps
   | PolicyEvaluatorActiveInstanceProps
 
-export type PolicyEvaluatorContextForContentProps = {
+type PolicyEvaluatorContextForContentProps = {
   decisions: string
   identity: string | null
   input: string
@@ -39,11 +39,11 @@ export type PolicyEvaluatorContextForContentProps = {
   setType: React.Dispatch<React.SetStateAction<ApiIdentityType>>
   type: ApiIdentityType
 }
-export type PolicyEvaluatorActiveInstanceProps = {
+ type PolicyEvaluatorActiveInstanceProps = {
   policyInstance: string
   setPolicyInstance: React.Dispatch<React.SetStateAction<string>>
 }
-export type PolicyEvaluatorErrorContextProps = {
+ type PolicyEvaluatorErrorContextProps = {
   resourceContextError: string | undefined
   setResourceContextError: React.Dispatch<
     React.SetStateAction<string | undefined>
@@ -54,7 +54,7 @@ export type PolicyEvaluatorErrorContextProps = {
   >
 }
 
-export type PolicyEvaluatorContextForRebacProps = {
+ type PolicyEvaluatorContextForRebacProps = {
   subjectType: string
   subjectInstance: SelectOption | null
   permission: SelectOption | null
@@ -170,5 +170,3 @@ export const useRebacPolicyEvaluatorContext = () =>
 export const useContentPolicyEvaluatorContext = () =>
   useContext(PolicyEvaluatorContext) as PolicyEvaluatorContextForContentProps
 
-export const useActivePolicyInstanceContext = () =>
-  useContext(PolicyEvaluatorContext) as PolicyEvaluatorActiveInstanceProps

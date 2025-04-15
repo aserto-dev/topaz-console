@@ -1,6 +1,6 @@
-import React, { useContext } from "react"
+import React from "react"
 
-export type User = {
+ type User = {
   sub?: string
   email?: string
   name?: string
@@ -23,18 +23,3 @@ export const identityProviderContext = React.createContext<
   IdentityProviderContextProps | undefined
 >(undefined)
 
-export const useIdentity = () => {
-  const identity = useContext(identityProviderContext)
-  if (identity === undefined) {
-    throw Error(
-      'Identity must be retrieved in the context of an "IdentityProvider"',
-    )
-  }
-
-  return (
-    identity || {
-      getAccessToken: () => {},
-      logout: () => () => {},
-    }
-  )
-}

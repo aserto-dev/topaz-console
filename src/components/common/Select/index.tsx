@@ -17,9 +17,9 @@ export type SelectOption = {
   onClick?: () => void
 }
 
-export type ReactSelectElement = SelectInstance<SelectOption>
+type ReactSelectElement = SelectInstance<SelectOption>
 
-export interface SelectProps
+interface SelectProps
   extends Omit<
     Props<SelectOption, false>,
     'isDisabled' | 'inputId' | 'styles' | 'formatGroupId' | 'components'
@@ -30,7 +30,7 @@ export interface SelectProps
   value?: SelectOption | null
   style?: React.CSSProperties
   modifyCustomStyle?: (
-    styles: StylesConfig<SelectOption, false>
+    styles: StylesConfig<SelectOption, false>,
   ) => StylesConfig<SelectOption, false>
   disableLabel?: boolean
 }
@@ -39,8 +39,18 @@ const Select: React.ForwardRefExoticComponent<
   SelectProps & React.RefAttributes<ReactSelectElement>
 > = React.forwardRef(
   (
-    { onChange, label, disabled, style, value, disableLabel, name, modifyCustomStyle, ...props },
-    ref
+    {
+      onChange,
+      label,
+      disabled,
+      style,
+      value,
+      disableLabel,
+      name,
+      modifyCustomStyle,
+      ...props
+    },
+    ref,
   ) => {
     const Option = useCallback((props: OptionProps<SelectOption, false>) => {
       return (
@@ -79,10 +89,12 @@ const Select: React.ForwardRefExoticComponent<
           {...props}
           components={{ Option }}
           menuShouldScrollIntoView={false}
-          styles={modifyCustomStyle ? modifyCustomStyle(colourStyles) : colourStyles}
+          styles={
+            modifyCustomStyle ? modifyCustomStyle(colourStyles) : colourStyles
+          }
         />
       </div>
     )
-  }
+  },
 )
 export default Select

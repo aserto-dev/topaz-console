@@ -46,7 +46,7 @@ const ButtonsContainer = styled.div`
   }
 `
 
-export type EditObjectModalProps = {
+type EditObjectModalProps = {
   onSuccess?: (object: V3Object) => void
   showDataChangedModal: () => void
   objectInstance: V3Object

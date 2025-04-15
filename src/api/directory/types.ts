@@ -1,6 +1,3 @@
-import { UseQueryResult } from "@tanstack/react-query";
-import { RpcStatus, V3CheckResponse } from "../../types/directory";
-
 export type ObjectType = {
   name: string
   displayName: string
@@ -44,5 +41,3 @@ export type V3PermissionsListRequest = {
   name?: string
   objectType?: string
 }
-
-export type CheckResult = UseQueryResult<V3CheckResponse, RpcStatus>

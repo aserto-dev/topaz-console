@@ -4,14 +4,14 @@ import styled from 'styled-components'
 import { theme } from '../../../theme'
 import { Link } from '../UndecoratedLink'
 
-export type BreadCrumbPart = {
+type BreadCrumbPart = {
   text: string
   url?: string
 }
 
 type Variant = 'large' | 'small'
 
-export type BreadcrumbProps = {
+type BreadcrumbProps = {
   breadcrumbParts?: BreadCrumbPart[]
   testId?: string
   title?: string

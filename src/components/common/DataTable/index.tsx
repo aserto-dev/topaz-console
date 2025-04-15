@@ -25,7 +25,7 @@ type DataTablePagingProps<Data extends object> = Omit<
   loadingContent: Data[]
 }
 
-export type DataTableProps<Data extends object> = {
+type DataTableProps<Data extends object> = {
   columns: readonly Column<Data>[]
   data: readonly Data[]
   hideHeaders?: boolean
@@ -40,7 +40,7 @@ export type DataTableProps<Data extends object> = {
   sticky?: boolean
 }
 
-export const TableContainer = styled.div<{
+const TableContainer = styled.div<{
   $sticky?: boolean
   $topDistance?: number
 }>`

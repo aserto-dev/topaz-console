@@ -1,9 +1,9 @@
 export type Configurations = { readOnly: boolean; configs: Configuration[] } & EnvConfig
 
-export type EnvConfig = {
+ type EnvConfig = {
   authenticationType: string
 }
-export type BaseConfiguration = {
+ type BaseConfiguration = {
   authorizerServiceUrl?: string
   authorizerApiKey?: string
   directoryServiceUrl?: string
@@ -14,7 +14,7 @@ export type BaseConfiguration = {
   directoryModelServiceUrl?: string
 }
 
-export type Configuration = {
+ type Configuration = {
   name: string
   configurationType: string
   address?: string

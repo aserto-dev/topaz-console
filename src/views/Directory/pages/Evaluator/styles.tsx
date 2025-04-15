@@ -1,37 +1,8 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 import Button from '../../../../components/common/Button'
 import { theme } from '../../../../theme'
 import Label from '../../../../components/common/Label'
-
-export const NavContainer = styled.div`
-  background-color: ${theme.grey10};
-  margin-top: 4px;
-  padding: 12px 0px;
-  width: 100%;
-`
-export const NavTab = styled.span<{ $active?: boolean; $disabled?: boolean }>`
-  margin-left: 24px;
-  padding: 12px 6px;
-  cursor: pointer;
-  text-decoration: none;
-  white-space: nowrap;
-  font-weight: 400;
-  font-size: 14px;
-  &:hover {
-    color: ${theme.grey100};
-  }
-  ${({ $disabled }) => !!$disabled && `pointer-events: none;`}
-
-  ${({ $active }) => {
-    if ($active) {
-      return css`
-        border-bottom: 1px solid ${theme.indogoAccent4};
-        color: ${theme.grey100};
-      `
-    }
-  }}
-`
 
 export const Container = styled.div`
   width: 100%;
@@ -107,13 +78,6 @@ export const ButtonsContainer = styled.div`
   display: flex;
   margin-right: -8px;
   margin-top: 17px;
-`
-
-export const ResultButtonsContainer = styled.div`
-  display: flex;
-  margin-right: -8px;
-  margin-top: 8px;
-  align-items: center;
 `
 
 export const ObjectDiv = styled.div`

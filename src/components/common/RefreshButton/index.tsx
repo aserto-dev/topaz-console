@@ -44,17 +44,26 @@ const LoadKeyFrame = keyframes`
 const SpinAnimator = styled.div<{ $spin: boolean }>`
   margin: auto;
   width: 50%;
-  animation: ${LoadKeyFrame} ${({ $spin }) => ($spin ? '1000ms' : '0ms')} infinite linear;
+  animation: ${LoadKeyFrame} ${({ $spin }) => ($spin ? '1000ms' : '0ms')}
+    infinite linear;
 `
 
-export type RefreshButtonProps = {
+type RefreshButtonProps = {
   load?: () => void
   loading?: boolean
   testId?: string
 }
 
-const RefreshButton: React.FC<RefreshButtonProps> = ({ load, loading, testId }) => (
-  <RefreshButtonContainer data-testid={testId} variant="secondary" onClick={load}>
+const RefreshButton: React.FC<RefreshButtonProps> = ({
+  load,
+  loading,
+  testId,
+}) => (
+  <RefreshButtonContainer
+    data-testid={testId}
+    variant="secondary"
+    onClick={load}
+  >
     {loading ? (
       <SpinAnimator $spin={loading}>
         <i className="fa fa-refresh" />

@@ -1,10 +1,9 @@
 import { useMemo } from 'react'
-import { QueryKey, useQueries, useQuery, UseQueryOptions } from '@tanstack/react-query'
+import { QueryKey, useQuery, UseQueryOptions } from '@tanstack/react-query'
 
 import { RpcStatus, V3CheckRequest, V3CheckResponse, V3PaginationResponse } from '../../types/directory'
 import { useParsedManifest } from './parsers/manifest'
 import {
-  CheckResult,
   Permission,
   RelationType,
   V3GetObjectTypesResponse,
@@ -115,33 +114,6 @@ export const useDirectoryV3PermissionsList = (params?: V3PermissionsListRequest)
     promise: newPromise || promise,
     ...all,
   }
-}
-
-export const useDirectoryV3ChecksListQuery = (
-  params: V3CheckRequest[],
-  options?: Omit<
-    UseQueryOptions<V3CheckResponse, RpcStatus, V3CheckResponse, QueryKey>,
-    'queryKey' | 'queryFn' | 'retry' | 'staleTime'
-  >
-) => {
-  const directoryV3Check = useDirectoryReaderClient<V3CheckResponse>()
-
-  return useQueries({
-    queries: params.map((param) => {
-      return {
-        queryKey: ['check', param],
-        queryFn: (): Promise<V3CheckResponse> => {
-          return directoryV3Check({
-            url: `/api/v3/directory/check`,
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            data: param,
-          })
-        },
-        options,
-      }
-    }),
-  }) as CheckResult[]
 }
 
 export const getNextPage = (lastPage: { page?: V3PaginationResponse  | undefined}) => {

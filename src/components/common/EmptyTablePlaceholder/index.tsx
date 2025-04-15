@@ -48,7 +48,7 @@ const BodyText = styled.span`
   white-space: pre-line;
 `
 
-export type EmptyTablePlaceholderProps = {
+type EmptyTablePlaceholderProps = {
   imgAlt: string
   imgSrc: string
   header: string

@@ -6,7 +6,7 @@ import { theme } from '../../../theme'
 import PageTitle from '../PageTitle'
 import RefreshButton from '../RefreshButton'
 
-export type PageHeaderProps = {
+type PageHeaderProps = {
   title?: string
   subtitle?: React.ReactNode | string
   load?: () => void
@@ -26,7 +26,8 @@ const PageHeaderContainer = styled.div<{
   position: fixed;
   width: 100%;
   top: 80px;
-  ${({ $hasBorderBottom }) => ($hasBorderBottom ? `border-bottom: 1px solid ${theme.grey20}` : '')};
+  ${({ $hasBorderBottom }) =>
+    $hasBorderBottom ? `border-bottom: 1px solid ${theme.grey20}` : ''};
   height: 60px;
   display: flex;
   align-items: center;
@@ -62,7 +63,10 @@ const PageHeader: React.FC<PageHeaderProps> = ({
       data-testid={testId}
       id={id}
     >
-      <RefreshButton load={load || refresh} loading={loading || queryClientFetching > 0} />
+      <RefreshButton
+        load={load || refresh}
+        loading={loading || queryClientFetching > 0}
+      />
       <div>
         {title && <PageTitle title={title} />}
         {subtitle && <div>{subtitle}</div>}

@@ -53,7 +53,7 @@ const CardHeader = styled.div<{ $variant?: Variant }>`
   ${({ $variant, theme }) => getStyleVariantForHeader($variant, theme)}
 `
 
-export const CardText = styled.div<{
+const CardText = styled.div<{
   $variant?: string
   bold?: boolean
   isInModal?: boolean
@@ -94,7 +94,7 @@ const HeaderButtons = styled.div`
   display: flex;
 `
 
-export type CardProps = {
+type CardProps = {
   title?: string
   text?: string | React.ReactElement
   body: React.ReactElement | string

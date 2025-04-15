@@ -232,11 +232,3 @@ export const useBaseClient = (
     [fetchFromApi]
   )
 }
-
-export function v1Api(serviceUrl: string) {
-  return `${serviceUrl}/api/v1`
-}
-
-export function v2Api(serviceUrl: string) {
-  return `${serviceUrl}/api/v2`
-}

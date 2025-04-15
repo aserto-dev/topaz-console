@@ -111,21 +111,6 @@ export const useParsedManifest = () => {
   }
 }
 
-export const useLegacyIdentities = (): boolean => {
-  const { relationTypes } = useParsedManifest()
-  return useMemo(() => {
-    if (relationTypes.length === 0) {
-      return false
-    }
-    return (
-      relationTypes.find(
-        (relation: RelationType) =>
-          relation.objectType === 'identity' && relation.name === 'identifier'
-      ) !== undefined
-    )
-  }, [relationTypes])
-}
-
 const parseDisplayNames = (
   doc:
     | Document.Parsed<Alias.Parsed, true>

@@ -8,7 +8,7 @@ import { NavBarBrand, NavBarContainer, Separator } from './styles'
 
 type expandSteps = 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
 
-export type BaseNavBarProps = {
+type BaseNavBarProps = {
   children?: React.ReactNode
   logo?: React.ReactNode
   uncollapsableContent?: React.ReactNode

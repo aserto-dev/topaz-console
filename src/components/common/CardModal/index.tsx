@@ -1,14 +1,14 @@
-import React from "react";
-import { Modal } from "react-bootstrap";
-import styled from "styled-components";
+import React from 'react'
+import { Modal } from 'react-bootstrap'
+import styled from 'styled-components'
 
-import { theme } from "../../../theme";
-import { Card, Variant } from "../Card";
+import { theme } from '../../../theme'
+import { Card, Variant } from '../Card'
 
 const CardModalContainer = styled(Modal)<{
-  backgroundcolor?: string;
-  fullscreen?: string | boolean;
-  $minWidth?: string;
+  backgroundcolor?: string
+  fullscreen?: string | boolean
+  $minWidth?: string
 }>`
   overflow-x: hidden;
   border-radius: 20px;
@@ -23,25 +23,25 @@ const CardModalContainer = styled(Modal)<{
     min-width: ${({ $minWidth }) => $minWidth};
   }
   background-color: ${({ backgroundcolor }) => backgroundcolor};
-`;
+`
 
-export type CardModalProps = {
-  backgroundColor?: string;
-  centered?: boolean;
-  title: string;
-  onHide?: () => void;
-  onSubmit?: () => void;
-  children: string | React.ReactElement;
-  show?: boolean;
-  size?: string;
-  cardHeight?: number | string;
-  text?: string | React.ReactElement;
-  variant?: Variant;
-  cardWidth?: number | string;
-  fullscreen?: string | boolean;
-  closeButton?: boolean;
-  minWidth?: string;
-};
+type CardModalProps = {
+  backgroundColor?: string
+  centered?: boolean
+  title: string
+  onHide?: () => void
+  onSubmit?: () => void
+  children: string | React.ReactElement
+  show?: boolean
+  size?: string
+  cardHeight?: number | string
+  text?: string | React.ReactElement
+  variant?: Variant
+  cardWidth?: number | string
+  fullscreen?: string | boolean
+  closeButton?: boolean
+  minWidth?: string
+}
 
 const CardModal: React.FC<CardModalProps> = ({
   children,
@@ -60,7 +60,7 @@ const CardModal: React.FC<CardModalProps> = ({
   closeButton,
   minWidth,
 }) => {
-  const minHeight = "215px";
+  const minHeight = '215px'
   return (
     <CardModalContainer
       $minWidth={minWidth}
@@ -69,7 +69,7 @@ const CardModal: React.FC<CardModalProps> = ({
       data-testid="modal"
       fullscreen={fullscreen}
       show={show}
-      size={size as "sm" | "lg" | "xl" | undefined}
+      size={size as 'sm' | 'lg' | 'xl' | undefined}
       onHide={onHide}
     >
       <Card
@@ -87,7 +87,7 @@ const CardModal: React.FC<CardModalProps> = ({
         onSubmit={onSubmit}
       />
     </CardModalContainer>
-  );
-};
+  )
+}
 
-export { CardModal };
+export { CardModal }

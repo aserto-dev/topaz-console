@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import { theme } from '../../../theme'
 
-export type PlayButtonProps = {
+type PlayButtonProps = {
   onSubmit: () => void
   disabled?: boolean
 }

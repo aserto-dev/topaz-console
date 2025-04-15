@@ -15,7 +15,7 @@ import show from './show.svg'
 import unavailable from './unavailable.svg'
 import valid from './valid.svg'
 
-export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
+type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   onChange?: FormControlProps['onChange']
   onKeyPress?: React.KeyboardEventHandler<HTMLInputElement>
   label?: string

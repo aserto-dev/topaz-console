@@ -42,7 +42,7 @@ export interface VerticalTabOptions {
   subOptions?: (NestedTabOptions | NestedTabButton)[]
 }
 
-export type VerticalTabsProps = {
+type VerticalTabsProps = {
   options: VerticalTabOptions[]
   selectedValue?: string
 }

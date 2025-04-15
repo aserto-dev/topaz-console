@@ -65,7 +65,7 @@ const HorizontalLabel = styled(Label)`
   align-items: center;
 `
 
-export interface CheckboxProps
+interface CheckboxProps
   extends Omit<React.ComponentPropsWithoutRef<'input'>, 'onChange' | 'type'> {
   onChange?: (checked: boolean) => void
   label?: string

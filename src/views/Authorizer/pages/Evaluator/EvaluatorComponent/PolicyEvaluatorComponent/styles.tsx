@@ -1,8 +1,6 @@
 import styled, { css } from 'styled-components'
 import Input from '../../../../../../components/common/Input'
 import { theme } from '../../../../../../theme'
-import { Row } from '../../../../../../components/common/Row'
-import { Col } from '../../../../../../components/common/Col'
 import Button from '../../../../../../components/common/Button'
 import Label from '../../../../../../components/common/Label'
 import { TextBox } from '../../../../../Directory/pages/Evaluator/styles'
@@ -126,113 +124,10 @@ export const SelectTraceContainer = styled.div`
   gap: 32px;
 `
 
-export const IsDecisionsWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-`
-
 export const ColumnWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-`
-
-export const IsDecisionWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 17px;
-  font-family:
-    SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
-    monospace;
-  font-weight: 600;
-`
-
-export const DecisionLabel = styled.div`
-  flex: 1;
-`
-
-export const DecisionValue = styled.div<{ $allowed?: boolean }>`
-  flex: 5;
-`
-
-export const Triangle = styled.div<{ $disabled?: boolean }>`
-  width: 0;
-  height: 0;
-  border-width: 0 7.5px 10px 7.5px;
-  border-style: solid;
-  transform: rotate(90deg);
-  ${({ $disabled }) => {
-    if ($disabled) {
-      return css`
-        border-color: transparent transparent #c3c3c3 transparent;
-      `
-    } else {
-      return css`
-        border-color: transparent transparent #ffffff transparent;
-      `
-    }
-  }}
-`
-
-export const Tick = styled.img`
-  height: 14px;
-  width: 18px;
-  padding: 0 5px 0 0;
-`
-
-export const CondensedEvaluatorHeader = styled(Row)`
-  border-bottom: 1px solid #000000;
-`
-
-export const InstructionText = styled.div`
-  font-size: 14px;
-  padding-top: 14px;
-`
-
-export const CondensedEvaluatorForm = styled.div`
-  font-size: 14px;
-  line-height: 1.5rem;
-  font-family:
-    SFMono-Regular,
-    Menlo,
-    Monaco,
-    Consolas,
-    Liberation Mono,
-    'Courier New',
-    'monospace';
-  > textarea {
-    font-weight: 400;
-    font-size: 14px;
-    font-family:
-      SFMono-Regular,
-      Menlo,
-      Monaco,
-      Consolas,
-      Liberation Mono,
-      'Courier New',
-      'monospace';
-  }
-`
-
-export const CondensedEvaluatorBody = styled(Row)`
-  padding: 10px 10px 5px 10px;
-  background-color: #2a2a2a;
-  width: 98%;
-  margin-top: 10px;
-  margin-bottom: 5px;
-`
-
-export const CondensedEvaluatorLeftColumn = styled(Col)`
-  flex: 2;
-  padding-left: 10px;
-  padding-right: 10px;
-`
-export const CondensedEvaluatorRightColumn = styled(Col)`
-  flex: 2;
-  margin-left: 15px;
 `
 
 export const CopyButton = styled(Button)`

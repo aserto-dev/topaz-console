@@ -41,7 +41,7 @@ export type SelectOption = {
 
 type ReactSelectElement = SelectInstance<SelectOption>
 
-export interface SelectProps
+interface SelectProps
   extends Omit<
     Props<SelectOption, false>,
     'isDisabled' | 'inputId' | 'styles' | 'formatGroupId' | 'components'

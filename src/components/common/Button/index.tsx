@@ -14,9 +14,14 @@ type DisplayState = {
   enabled?: boolean
 }
 
-type Variant = 'primary' | 'secondary' | 'danger' | 'secondary-borderless' | 'primary-outline'
+type Variant =
+  | 'primary'
+  | 'secondary'
+  | 'danger'
+  | 'secondary-borderless'
+  | 'primary-outline'
 
-export interface ButtonProps extends BootstrapButtonProps {
+interface ButtonProps extends BootstrapButtonProps {
   variant?: Variant
   displayState?: DisplayState
 }
@@ -46,6 +51,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     }
 
     return null
-  }
+  },
 )
 export default Button

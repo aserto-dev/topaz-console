@@ -56,14 +56,14 @@ const ComingSoonText = styled.span`
   font-size: 11px;
 `
 
-export type TabOption = {
+type TabOption = {
   label: string
   value: string
   isDisabled?: boolean
   hidden?: boolean
 }
 
-export type VerticalTabProps = {
+type VerticalTabProps = {
   options: Array<TabOption>
   selectedValue?: string
   onChange: (value: string) => void

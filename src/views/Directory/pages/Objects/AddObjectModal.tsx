@@ -45,7 +45,7 @@ const ButtonsContainer = styled.div`
   }
 `
 
-export type AddObjectModalProps = {
+type AddObjectModalProps = {
   objectTypeName: string | undefined
   onSuccess?: (object: V3Object) => void
   queryKey?: string

@@ -4,7 +4,7 @@ import { AlwaysValidValidator, Validator } from '../../../lib/validation'
 import Input from '../Input'
 import { UseIsNameAvailable } from '../../../lib/availability/useIsAvailable'
 
-export type ValidatedInputProps = Omit<
+type ValidatedInputProps = Omit<
   React.ComponentProps<typeof Input>,
   'onChange'
 > & {

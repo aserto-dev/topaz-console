@@ -22,8 +22,3 @@ export const useShowError = () => {
   const { showError } = useContext(ErrorContext)
   return showError
 }
-
-export const useIsErrorModalVisibile = () => {
-  const { isErrorVisible } = useContext(ErrorContext)
-  return isErrorVisible
-}

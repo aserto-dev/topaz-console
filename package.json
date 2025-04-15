@@ -4,11 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
     "build": "tsc -b && vite build",
+    "detect-unused-exports": "knip --include exports,types,nsExports,nsTypes,duplicates,unlisted,classMembers,enumMembers",
+    "dev": "vite",
+    "generate:rest": "./scripts/rest.sh",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "generate:rest": "./scripts/rest.sh"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",
@@ -52,6 +53,7 @@
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^15.15.0",
+    "knip": "^5.50.4",
     "openapi-types": "^12.1.3",
     "orval": "^7.8.0",
     "prettier": "^3.5.3",

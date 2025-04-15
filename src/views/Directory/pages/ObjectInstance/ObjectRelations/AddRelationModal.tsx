@@ -44,7 +44,7 @@ const ButtonsContainer = styled.div`
     margin-right: 10px;
   }
 `
-export type AddRelationModalProps = {
+type AddRelationModalProps = {
   show: boolean
   onHide: () => void
   relation: { type: string; objectType: string }

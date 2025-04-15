@@ -105,23 +105,3 @@ export const ContentHeader = styled.div<{
   align-items: center;
   ${({ height }) => (height ? `height: ${height}px` : '')};
 `
-
-export const PendingBundleContainer = styled.div`
-  margin-top: 5px;
-  font-size: 14px;
-  max-width: 651px;
-  line-height: 20px;
-  h4 {
-    font-size: 14px;
-    font-weight: bold;
-  }
-  li {
-    margin-bottom: 5px;
-  }
-`
-
-export const Diagram = styled.img`
-  width: 100%;
-  max-height: 321px;
-  margin: 30px 0px;
-`

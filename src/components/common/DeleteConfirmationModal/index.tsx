@@ -13,7 +13,7 @@ import {
 } from './styles'
 import { createExactMatchValidator } from '../../../lib/validation/validators/exactMatch'
 
-export type DeleteConfirmationModalProps = {
+type DeleteConfirmationModalProps = {
   show: boolean
   onHide: () => void
   subject: string

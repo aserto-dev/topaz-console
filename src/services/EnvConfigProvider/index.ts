@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 
 
-export type ClientConfig = {
+ type ClientConfig = {
   discoveryServiceUrl: string
   isDocker: boolean
 }
