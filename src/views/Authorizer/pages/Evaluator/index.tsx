@@ -2,11 +2,14 @@ import React from 'react'
 import { Evaluator as EvaluatorComponent } from '../Evaluator/EvaluatorComponent'
 
 import Frame from '../../Frame'
+import { PolicyEvaluatorContextProvider } from '../../../../services/PolicyEvaluatorContextProvider'
 
 const Evaluator: React.FC = () => {
   return (
     <Frame>
-      <EvaluatorComponent />
+      <PolicyEvaluatorContextProvider>
+        <EvaluatorComponent />
+      </PolicyEvaluatorContextProvider>
     </Frame>
   )
 }

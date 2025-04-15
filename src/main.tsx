@@ -10,12 +10,10 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { GlobalStyle } from './globalStyles'
 import { ThemeProvider } from 'styled-components'
 import { theme } from './theme'
-import DirectoryContextProvider from './services/DirectoryContextProvider/index'
 import ConfigProvider from './services/ConfigProvider/index'
 import SuccessBannerProvider from './services/SuccessBannerProvider/index'
 import ErrorModalProvider from './services/ErrorModalProvider/provider'
 import AuthProvider from './services/AuthProvider/index'
-import { PolicyEvaluatorContextProvider } from './services/PolicyEvaluatorContextProvider'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -27,23 +25,7 @@ createRoot(document.getElementById('root')!).render(
             <SuccessBannerProvider>
               <ConfigProvider>
                 <AuthProvider>
-                  <DirectoryContextProvider
-                    displayState={{
-                      canAddObject: { enabled: true, visible: true },
-                      canAddRelation: { enabled: true, visible: true },
-                      canDeleteDirectory: { enabled: true, visible: true },
-                      canEditManifest: { enabled: true, visible: true },
-                      canEditObject: { enabled: true, visible: true },
-                      canRemoveRelation: { enabled: true, visible: true },
-                      canRemoveAssertion: { enabled: true, visible: true },
-                      canAddAssertion: { enabled: true, visible: true },
-                      canEditAssertion: { enabled: true, visible: true },
-                    }}
-                  >
-                    <PolicyEvaluatorContextProvider>
-                      <App />
-                    </PolicyEvaluatorContextProvider>
-                  </DirectoryContextProvider>
+                  <App />
                 </AuthProvider>
               </ConfigProvider>
             </SuccessBannerProvider>
