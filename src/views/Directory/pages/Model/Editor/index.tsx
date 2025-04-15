@@ -7,7 +7,7 @@ import { Monaco } from '@monaco-editor/react'
 import { useQueryClient } from '@tanstack/react-query'
 
 import { useManifestData } from '../../../../../api/directory/parsers/manifest'
-import { useDirectoryV3ManifestSet } from '../../../../../api/v3/directory'
+import { useDirectoryModelV3ManifestSet } from '../../../../../api/v3/directory'
 import save from '../../../../../assets/save.svg'
 import { useDirectoryModelContext } from '../../../../../services/DirectoryContextProvider/hooks'
 import { useShowError } from '../../../../../services/ErrorModalProvider'
@@ -46,7 +46,7 @@ const ModelEditor: React.FC = () => {
     return manifestData?.toString() || ''
   }, [manifestData])
 
-  const setManifest = useDirectoryV3ManifestSet()
+  const setManifest = useDirectoryModelV3ManifestSet()
   const showError = useShowError()
   const resetCode = useCallback(() => {
     if (manifest) {

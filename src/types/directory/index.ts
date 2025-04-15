@@ -3,7 +3,7 @@
  * Do not edit manually.
  * Directory
  * Directory service
- * OpenAPI spec version: v0.33.2
+ * OpenAPI spec version: v0.33.5
  */
 
 export * from './directoryAssertionV3AssertionsListParams';
@@ -18,6 +18,30 @@ export * from './directoryWriterV3RelationDeleteParams';
 export * from './protobufAny';
 export * from './protobufNullValue';
 export * from './rpcStatus';
+export * from './v1Action';
+export * from './v1ActionProperties';
+export * from './v1ActionSearchRequest';
+export * from './v1ActionSearchRequestContext';
+export * from './v1ActionSearchResponse';
+export * from './v1EvaluationRequest';
+export * from './v1EvaluationRequestContext';
+export * from './v1EvaluationResponse';
+export * from './v1EvaluationResponseContext';
+export * from './v1EvaluationsRequest';
+export * from './v1EvaluationsRequestContext';
+export * from './v1EvaluationsRequestOptions';
+export * from './v1EvaluationsResponse';
+export * from './v1Page';
+export * from './v1Resource';
+export * from './v1ResourceProperties';
+export * from './v1ResourceSearchRequest';
+export * from './v1ResourceSearchRequestContext';
+export * from './v1ResourceSearchResponse';
+export * from './v1Subject';
+export * from './v1SubjectProperties';
+export * from './v1SubjectSearchRequest';
+export * from './v1SubjectSearchRequestContext';
+export * from './v1SubjectSearchResponse';
 export * from './v3Assert';
 export * from './v3Body';
 export * from './v3CheckPermissionRequest';

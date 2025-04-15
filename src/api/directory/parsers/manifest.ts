@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { Alias, Document, ParsedNode, parseDocument, Scalar, YAMLMap, YAMLSeq } from 'yaml'
 
-import { useDirectoryV3ManifestGet } from '../../v3/directory'
+import { useDirectoryModelV3ManifestGet } from '../../v3/directory'
 import { ObjectType, Permission, RelationType } from '../types'
 
 const DISPLAY_NAME_REGEX = /^(## )(display_name: )(.*)( ###)/
@@ -22,7 +22,7 @@ export type Manifest = {
 type ObjectDisplayName = { [key: string]: string }
 
 export const useManifestData = () => {
-  return useDirectoryV3ManifestGet<string>()
+  return useDirectoryModelV3ManifestGet<string>()
 }
 
 export const useManifest = () => {

@@ -3,7 +3,7 @@
  * Do not edit manually.
  * Directory
  * Directory service
- * OpenAPI spec version: v0.33.2
+ * OpenAPI spec version: v0.33.5
  */
 
 export type V3Opcode = typeof V3Opcode[keyof typeof V3Opcode];

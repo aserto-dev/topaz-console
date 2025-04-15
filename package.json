@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc -b && vite build",
+    "check": "tsc --noEmit",
     "detect-unused-exports": "knip --include exports,types,nsExports,nsTypes,duplicates,unlisted,classMembers,enumMembers",
     "dev": "vite",
     "generate:rest": "./scripts/rest.sh",
@@ -41,6 +42,7 @@
     "@eslint/js": "^9.21.0",
     "@tanstack/react-query-devtools": "^5.72.2",
     "@types/bootstrap": "^5",
+    "@types/node": "^22.14.1",
     "@types/prismjs": "^1",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
