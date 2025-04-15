@@ -1,9 +1,12 @@
 import { Nav } from 'react-bootstrap'
 
 import TopazLogo from '../../assets/topaz.svg'
+import { useConfig } from '../../services/ConfigProvider/hooks'
 import BaseNavBar, { BaseNavLink } from '../common/BaseNavBar'
 
 export const NavBar = () => {
+  const { authenticationType } = useConfig()
+
   return (
     <>
       <BaseNavBar
@@ -35,6 +38,20 @@ export const NavBar = () => {
             </>
           </>
         </Nav>
+        {authenticationType?.toLowerCase() === 'apikey' && (
+          <Nav className="ms-auto d-grid gap-2">
+            <Nav.Item as="li">
+              <Nav.Link
+                onClick={() => {
+                  localStorage.removeItem('apiKey')
+                  window.location.href = '/'
+                }}
+              >
+                Sign out
+              </Nav.Link>
+            </Nav.Item>
+          </Nav>
+        )}
       </BaseNavBar>
     </>
   )
