@@ -1,14 +1,14 @@
 import React, { useEffect, useMemo } from 'react'
 
+import Label from '../../../../../../../components/common/Label'
+import { Row } from '../../../../../../../components/common/Row'
+import Select from '../../../../../../../components/common/Select'
+import { useIsPolicyEvaluatorContext } from '../../../../../../../services/PolicyEvaluatorContextProvider/hooks'
+import { ApiModule } from '../../../../../../../types/authorizer'
 import { Decisions } from '../PolicyCommonFields/Decisions'
 import { ResourceContext } from '../PolicyCommonFields/ResourceContext'
 import { FieldContainer, SectionTitleContainer } from '../styles'
 import { SubField } from '../Subfield'
-import { ApiModule } from '../../../../../../../types/authorizer'
-import { useIsPolicyEvaluatorContext } from '../../../../../../../services/PolicyEvaluatorContextProvider/hooks'
-import Label from '../../../../../../../components/common/Label'
-import { Row } from '../../../../../../../components/common/Row'
-import Select from '../../../../../../../components/common/Select'
 
 type PolicyIsFieldsProps = {
   policyModules: Array<ApiModule>

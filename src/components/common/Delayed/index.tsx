@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 
 interface DelayedProps {
-  waitBeforeShow: number
   children: React.ReactNode
+  waitBeforeShow: number
 }
 
-const Delayed: React.FC<DelayedProps> = ({ waitBeforeShow, children }) => {
+const Delayed: React.FC<DelayedProps> = ({ children, waitBeforeShow }) => {
   const [hidden, setHidden] = useState(true)
 
   useEffect(() => {

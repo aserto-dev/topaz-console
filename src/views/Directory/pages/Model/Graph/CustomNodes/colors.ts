@@ -16,20 +16,20 @@ const colorListByType: ColorType = {
     backgroundColor: theme.cooperAccent1,
     borderColor: theme.cooperAccent3,
   },
-  subject: {
-    backgroundColor: theme.cooperAccent1,
-    borderColor: theme.cooperAccent3,
-  },
-  relation: {
-    backgroundColor: theme.indogoAccent1,
-    borderColor: theme.indogoAccent3,
+  operator: {
+    backgroundColor: theme.appleAccent1,
+    borderColor: theme.appleAccent3,
   },
   permission: {
     backgroundColor: theme.plumAccent1,
     borderColor: theme.plumAccent3,
   },
-  operator: {
-    backgroundColor: theme.appleAccent1,
-    borderColor: theme.appleAccent3,
+  relation: {
+    backgroundColor: theme.indogoAccent1,
+    borderColor: theme.indogoAccent3,
+  },
+  subject: {
+    backgroundColor: theme.cooperAccent1,
+    borderColor: theme.cooperAccent3,
   },
 }

@@ -1,12 +1,11 @@
 import 'allotment/dist/style.css'
-
 import { Allotment } from 'allotment'
 import React from 'react'
 import styled from 'styled-components'
 
 import { useManifestData } from '../../../../api/directory/parsers/manifest'
-import { useDirectoryModelContext } from '../../../../services/DirectoryContextProvider/hooks'
 import Delayed from '../../../../components/common/Delayed'
+import { useDirectoryModelContext } from '../../../../services/DirectoryContextProvider/hooks'
 import ModelEditor from './Editor'
 import ModelGraph from './Graph'
 

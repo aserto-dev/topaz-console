@@ -4,8 +4,8 @@ import styled from 'styled-components'
 import { theme } from '../../../theme'
 
 export const NavBarContainer = styled.div<{
-  $topPosition?: number
   $expand?: number
+  $topPosition?: number
 }>`
   position: fixed;
   width: 100%;

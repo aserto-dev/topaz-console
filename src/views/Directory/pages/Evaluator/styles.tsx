@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 
 import Button from '../../../../components/common/Button'
-import { theme } from '../../../../theme'
 import Label from '../../../../components/common/Label'
+import { theme } from '../../../../theme'
 
 export const Container = styled.div`
   width: 100%;
@@ -121,8 +121,8 @@ export const RightContainer = styled.div`
 `
 
 export const TextBox = styled.div<{
-  $margin?: number | string
   $height?: number
+  $margin?: number | string
 }>`
   background-color: ${theme.primaryBlack};
   border: 1px solid ${theme.grey40};

@@ -1,29 +1,29 @@
 import React, { PropsWithChildren, useMemo } from 'react'
 
 import { RpcStatus } from '../../../types/directory'
+import { useStorage } from '../../StorageProvider/hooks'
 import GenericIdentityProvider from '../GenericIdentityProvider'
 import ApiKeyLogin from './login'
-import { useStorage } from '../../StorageProvider/hooks'
 
 type ApiKeyContextProps = {
   apiKey: string | undefined
+  loginFunc: (key: string) => Promise<Error | RpcStatus | undefined>
   setApiKey: (apiKey: string) => void
-  loginFunc: (key: string) => Promise<RpcStatus | Error | undefined>
 }
 
 const ApiKeyContext = React.createContext<ApiKeyContextProps>({
   apiKey: undefined,
-  setApiKey: () => {},
   loginFunc: () => Promise.resolve(undefined),
+  setApiKey: () => {},
 })
 
 export type ApiKeyProviderProps = {
-  loginFunc: (key: string) => Promise<RpcStatus | Error | undefined>
+  loginFunc: (key: string) => Promise<Error | RpcStatus | undefined>
 }
 
 export const ApiKeyIdentityProvider: React.FC<
   PropsWithChildren<ApiKeyProviderProps>
-> = ({ loginFunc, children }) => {
+> = ({ children, loginFunc }) => {
   const [apiKey, setApiKey] = useStorage<string | undefined>(
     'apiKey',
     undefined,
@@ -32,8 +32,8 @@ export const ApiKeyIdentityProvider: React.FC<
   const value: ApiKeyContextProps = useMemo(
     () => ({
       apiKey: apiKey,
-      setApiKey: setApiKey,
       loginFunc: loginFunc,
+      setApiKey: setApiKey,
     }),
     [apiKey, setApiKey, loginFunc],
   )
@@ -42,13 +42,13 @@ export const ApiKeyIdentityProvider: React.FC<
     return (
       <GenericIdentityProvider
         identity={{
-          user: {
-            name: 'API Key',
-          },
           getAccessToken: () => Promise.resolve(`Basic ${apiKey}`),
           logout: () => {
             localStorage.removeItem('apiKey')
             window.location.href = '/'
+          },
+          user: {
+            name: 'API Key',
           },
         }}
       >

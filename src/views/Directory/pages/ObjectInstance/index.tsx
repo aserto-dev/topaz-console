@@ -1,16 +1,16 @@
 import React, { useMemo } from 'react'
 import { Navigate, Route, Routes, useParams } from 'react-router'
 
+import { useDirectoryReaderV3ObjectGet } from '../../../../api/v3/directory'
 import GenericObjectInstance from './GenericObjectInstance'
 import ObjectGraph from './ObjectGraph'
 import ObjectJson from './ObjectJson'
 import ObjectProperties from './ObjectProperties'
 import ObjectRelations from './ObjectRelations'
 import UserObjectInstance from './UserObjectInstance'
-import { useDirectoryReaderV3ObjectGet } from '../../../../api/v3/directory'
 
 const ObjectInstanceRouter: React.FC = () => {
-  const { objectType, objectId } = useParams()
+  const { objectId, objectType } = useParams()
   const safeObjectType = objectType || ''
   const safeObjectId = objectId || ''
   const { data: objectData, isLoading } = useDirectoryReaderV3ObjectGet(
@@ -19,10 +19,10 @@ const ObjectInstanceRouter: React.FC = () => {
     {},
     {
       query: {
-        retry: false,
         meta: {
           showError: false,
         },
+        retry: false,
       },
     },
   )

@@ -5,14 +5,14 @@ import { theme } from '../../../theme'
 
 export const customAtomDark: { [key: string]: React.CSSProperties } = {
   ...atomDark,
+  ':not(pre) > code[class*="language-"]': {
+    background: 'inherit',
+  },
   'pre[class*="language-"]': {
     background: 'inherit',
     fontFamily: '"Fira Code", monospace',
     fontSize: '14px',
     fontWeight: '500',
-  },
-  ':not(pre) > code[class*="language-"]': {
-    background: 'inherit',
   },
 }
 

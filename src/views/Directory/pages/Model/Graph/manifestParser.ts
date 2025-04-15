@@ -2,20 +2,20 @@ import { Manifest } from '../../../../../api/directory/parsers/manifest'
 
 export type ParsedManifestData = {
   object: string
-  relations: RelationData[]
   permissions?: PermissionData[]
-}
-
-type RelationData = {
-  key: string
-  subjects: string[]
-  permissions: { [key: string]: string[] }
+  relations: RelationData[]
 }
 
 type PermissionData = {
   key: string
   operator: string
   relations: Set<string>
+}
+
+type RelationData = {
+  key: string
+  permissions: { [key: string]: string[] }
+  subjects: string[]
 }
 
 const UNION_OPERATOR = '|'
@@ -56,7 +56,7 @@ const parseManifest = (manifest: Manifest | undefined): ParsedManifestData[] => 
   }
 
   return Object.entries(manifest.types).map(([typeName, type]) => {
-    const entry: ParsedManifestData = { object: typeName, relations: [], permissions: [] }
+    const entry: ParsedManifestData = { object: typeName, permissions: [], relations: [] }
 
     // Parse relations
     const relations = type?.relations && typeof type.relations === 'object' ? type.relations : {}
@@ -69,8 +69,8 @@ const parseManifest = (manifest: Manifest | undefined): ParsedManifestData[] => 
 
       entry.relations.push({
         key: relationKey,
-        subjects,
         permissions: {},
+        subjects,
       })
     }
 

@@ -4,13 +4,13 @@ import { BaseClient, useBaseClient } from './base'
 import { QueryParams } from './queryParams'
 
 type RestClient<T> = (data: {
-  url: string
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'HEAD'
-  params?: QueryParams
-  headers?: Record<string, string>
   data?: unknown
+  headers?: Record<string, string>
+  method: 'DELETE' | 'GET' | 'HEAD' | 'PATCH' | 'POST' | 'PUT'
+  params?: QueryParams
   responseType?: string
   signal?: AbortSignal
+  url: string
 }) => Promise<T>
 
 export const useAuthorizerClient = <T>(): RestClient<T> => {
@@ -44,7 +44,7 @@ export const useDirectoryReaderClient = <T>(): RestClient<T> => {
 }
 
 export const useDirectoryWriterClient = <T>(): RestClient<T> => {
-  const { directoryWriterServiceUrl, directoryServiceUrl } = useConfig()
+  const { directoryServiceUrl, directoryWriterServiceUrl } = useConfig()
   return useRestDirectoryClient(directoryWriterServiceUrl || directoryServiceUrl || '')
 }
 
@@ -53,7 +53,7 @@ export const useDirectoryModelClient = <T>(): RestClient<T> => {
   return useRestDirectoryClient(directoryModelServiceUrl || directoryServiceUrl || '')
 }
 function restClient<T>(client: BaseClient): RestClient<T> {
-  return async ({ url, method, params, data, signal, responseType }) => {
+  return async ({ data, method, params, responseType, signal, url }) => {
     const path = url.replace('/', '')
     const queryParams = params
     if (queryParams && queryParams['page.token'] === undefined) {
@@ -63,6 +63,13 @@ function restClient<T>(client: BaseClient): RestClient<T> {
     const abortSignal = signal
 
     switch (method.toUpperCase()) {
+      case 'DELETE':
+        return await client.del<T>({
+          abortSignal,
+          path,
+          queryParams,
+        })
+
       case 'GET':
         if (responseType === 'blob') {
           return (await client.getBlob<T>({
@@ -98,13 +105,6 @@ function restClient<T>(client: BaseClient): RestClient<T> {
         return await client.put<T, T>({
           abortSignal,
           body,
-          path,
-          queryParams,
-        })
-
-      case 'DELETE':
-        return await client.del<T>({
-          abortSignal,
           path,
           queryParams,
         })

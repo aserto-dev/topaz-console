@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+
 import { useQueryClient } from '@tanstack/react-query'
 
 import Button from '../../../../components/common/Button'
@@ -24,16 +25,16 @@ const ButtonsContainer = styled.div`
 
 type DataChangedModalProps = {
   changedDataType: string
-  show: boolean
   onHide: () => void
   onReload?: () => void
+  show: boolean
 }
 
 const DataChangedModal: React.FC<DataChangedModalProps> = ({
   changedDataType,
-  show,
   onHide,
   onReload,
+  show,
 }) => {
   const queryClient = useQueryClient()
   return (

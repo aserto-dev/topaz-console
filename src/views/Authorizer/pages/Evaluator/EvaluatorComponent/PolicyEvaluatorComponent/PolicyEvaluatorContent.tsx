@@ -1,9 +1,31 @@
 import { editor } from 'monaco-editor'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
+
 import { Monaco } from '@monaco-editor/react'
-import Highlight from '../../../../../../components/common/Highlight'
 
 import { PolicyEvaluatorProps } from '.'
+import Highlight from '../../../../../../components/common/Highlight'
+import Label from '../../../../../../components/common/Label'
+import MonacoEditor from '../../../../../../components/common/MonacoEditor'
+import { PlayButton } from '../../../../../../components/common/PlayButton'
+import { Row } from '../../../../../../components/common/Row'
+import Select, {
+  SelectOption,
+} from '../../../../../../components/common/Select'
+import {
+  AuthorizerOperation,
+  useContentPolicyEvaluatorContext,
+  usePolicyEvaluatorErrorContext,
+  useRebacPolicyEvaluatorContext,
+} from '../../../../../../services/PolicyEvaluatorContextProvider/hooks'
+import { theme } from '../../../../../../theme'
+import {
+  ApiIdentityType,
+  V2DecisionTreeResponse,
+  V2IsResponse,
+  V2QueryResponse,
+} from '../../../../../../types/authorizer'
+import { TextBox } from '../../../../../Directory/pages/Evaluator/styles'
 import { useCopyCurl } from './copyCurl'
 import { DecisionTreeTable } from './DecisionTreeTable'
 import { PolicyDecisiontreeFields } from './PolicyDecisiontreeFields'
@@ -29,28 +51,6 @@ import {
   Tab,
   TabGroup,
 } from './styles'
-import Select, {
-  SelectOption,
-} from '../../../../../../components/common/Select'
-import {
-  ApiIdentityType,
-  V2DecisionTreeResponse,
-  V2IsResponse,
-  V2QueryResponse,
-} from '../../../../../../types/authorizer'
-
-import { Row } from '../../../../../../components/common/Row'
-import { theme } from '../../../../../../theme'
-import { PlayButton } from '../../../../../../components/common/PlayButton'
-import Label from '../../../../../../components/common/Label'
-import { TextBox } from '../../../../../Directory/pages/Evaluator/styles'
-import MonacoEditor from '../../../../../../components/common/MonacoEditor'
-import {
-  useContentPolicyEvaluatorContext,
-  usePolicyEvaluatorErrorContext,
-  useRebacPolicyEvaluatorContext,
-  AuthorizerOperation,
-} from '../../../../../../services/PolicyEvaluatorContextProvider/hooks'
 
 const identityOptions: Array<SelectOption> = [
   {
@@ -73,55 +73,55 @@ const identityOptions: Array<SelectOption> = [
 
 const REQUEST_PATHS = {
   CHECK: 'api/V2/authz/is',
-  IS: 'api/V2/authz/is',
   DECISIONTREE: 'api/V2/authz/decisiontree',
+  IS: 'api/V2/authz/is',
   QUERY: 'api/V2/authz/query',
 }
 
 const MonacoTheme = [
-  { token: 'constant', foreground: '#A8FF60' },
-  { token: 'number', foreground: '#FF66FF' },
-  { token: 'number.hex', foreground: '#FF66FF' },
-  { token: 'annotation', foreground: '#96CBFE' },
-  { token: 'type', foreground: '#96CBFE' },
-  { token: 'delimiter', foreground: '#CCCCCC' },
-  { token: 'delimiter.html', foreground: '#CCCCCC' },
-  { token: 'delimiter.xml', foreground: '#CCCCCC' },
-  { token: 'editorBracketHighlight', foreground: '#CCCCCC' },
-  { token: 'metatag.content.html', foreground: '#A8FF60' },
-  { token: 'key', foreground: '#96CBFE' },
-  { token: 'string.key.json', foreground: '#96CBFE' },
-  { token: 'string.value.json', foreground: '#A8FF60' },
-  { token: 'attribute.value.unit', foreground: '#A8FF60' },
-  { token: 'attribute.value.html', foreground: '#A8FF60' },
-  { token: 'attribute.value.xml', foreground: '#A8FF60' },
-  { token: 'string', foreground: '#A8FF60' },
-  { token: 'string.html', foreground: '#A8FF60' },
-  { token: 'string.sql', foreground: '#A8FF60' },
-  { token: 'string.yaml', foreground: '#A8FF60' },
-  { token: 'keyword', foreground: '#99CC99' },
-  { token: 'keyword.json', foreground: '#99CC99' },
-  { token: 'keyword.flow', foreground: '#99CC99' },
-  { token: 'keyword.flow.scss', foreground: '#99CC99' },
+  { foreground: '#A8FF60', token: 'constant' },
+  { foreground: '#FF66FF', token: 'number' },
+  { foreground: '#FF66FF', token: 'number.hex' },
+  { foreground: '#96CBFE', token: 'annotation' },
+  { foreground: '#96CBFE', token: 'type' },
+  { foreground: '#CCCCCC', token: 'delimiter' },
+  { foreground: '#CCCCCC', token: 'delimiter.html' },
+  { foreground: '#CCCCCC', token: 'delimiter.xml' },
+  { foreground: '#CCCCCC', token: 'editorBracketHighlight' },
+  { foreground: '#A8FF60', token: 'metatag.content.html' },
+  { foreground: '#96CBFE', token: 'key' },
+  { foreground: '#96CBFE', token: 'string.key.json' },
+  { foreground: '#A8FF60', token: 'string.value.json' },
+  { foreground: '#A8FF60', token: 'attribute.value.unit' },
+  { foreground: '#A8FF60', token: 'attribute.value.html' },
+  { foreground: '#A8FF60', token: 'attribute.value.xml' },
+  { foreground: '#A8FF60', token: 'string' },
+  { foreground: '#A8FF60', token: 'string.html' },
+  { foreground: '#A8FF60', token: 'string.sql' },
+  { foreground: '#A8FF60', token: 'string.yaml' },
+  { foreground: '#99CC99', token: 'keyword' },
+  { foreground: '#99CC99', token: 'keyword.json' },
+  { foreground: '#99CC99', token: 'keyword.flow' },
+  { foreground: '#99CC99', token: 'keyword.flow.scss' },
 ]
 
 function isDecisionTreeResponse(
   output:
-    | V2QueryResponse
-    | V2IsResponse
-    | V2DecisionTreeResponse
     | string
-    | undefined,
+    | undefined
+    | V2DecisionTreeResponse
+    | V2IsResponse
+    | V2QueryResponse,
 ): output is V2DecisionTreeResponse {
   return (output as V2DecisionTreeResponse)?.path !== undefined
 }
 
 export const PolicyEvaluatorContent: React.FC<PolicyEvaluatorProps> = ({
-  output,
-  onSubmit,
-  onRequestChange,
-  policyModules,
   isRebac,
+  onRequestChange,
+  onSubmit,
+  output,
+  policyModules,
   requestBody,
 }) => {
   const [requestPath, setRequestPath] = useState<string>('')
@@ -133,15 +133,15 @@ export const PolicyEvaluatorContent: React.FC<PolicyEvaluatorProps> = ({
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null)
 
   const {
-    request,
-    setRequest,
     identity,
-    setIdentity,
-    type,
-    setType,
     queryMetrics,
     queryTrace,
     queryTraceSummary,
+    request,
+    setIdentity,
+    setRequest,
+    setType,
+    type,
   } = useContentPolicyEvaluatorContext()
   const { policyContextError, resourceContextError } =
     usePolicyEvaluatorErrorContext()
@@ -202,7 +202,7 @@ export const PolicyEvaluatorContent: React.FC<PolicyEvaluatorProps> = ({
   }, [isRebac, request, requestOptions, setRequest, setRequestPath])
 
   const [activeQueryTab, setActiveQueryTab] = useState<
-    'Results' | 'Trace' | 'Metrics' | 'Trace Summary'
+    'Metrics' | 'Results' | 'Trace' | 'Trace Summary'
   >('Results')
 
   const queryResult = (output as V2QueryResponse)?.response
@@ -213,12 +213,12 @@ export const PolicyEvaluatorContent: React.FC<PolicyEvaluatorProps> = ({
   const queryOutput = useMemo(() => {
     if (request === 'QUERY') {
       switch (activeQueryTab) {
+        case 'Metrics':
+          return queryMetricsOutput
         case 'Results':
           return queryResult
         case 'Trace':
           return queryTraceOutput
-        case 'Metrics':
-          return queryMetricsOutput
         case 'Trace Summary':
           return queryTraceSummaryOutput
         default:
@@ -271,14 +271,14 @@ export const PolicyEvaluatorContent: React.FC<PolicyEvaluatorProps> = ({
                       ...style,
                       option: (
                         styles,
-                        { isDisabled, isFocused, isSelected, data },
+                        { data, isDisabled, isFocused, isSelected },
                       ) => {
                         return {
                           ...styles,
-                          borderBottom:
-                            data.value === 'CHECK'
-                              ? `2px ${theme.grey30} solid`
-                              : '',
+                          ':active': {
+                            ...styles[':active'],
+                            backgroundColor: theme.grey40,
+                          },
                           backgroundColor: isDisabled
                             ? theme.grey20
                             : isFocused
@@ -286,22 +286,22 @@ export const PolicyEvaluatorContent: React.FC<PolicyEvaluatorProps> = ({
                               : isSelected
                                 ? theme.grey20
                                 : theme.grey20,
+                          borderBottom:
+                            data.value === 'CHECK'
+                              ? `2px ${theme.grey30} solid`
+                              : '',
                           borderLeft: isSelected
                             ? `5px solid ${theme.indogoAccent3}`
                             : `5px solid transparent`,
                           color: isFocused ? theme.grey100 : theme.grey70,
-                          height: '100%',
-                          minHeight: 36,
-                          fontSize: 14,
-                          lineHeight: '20px',
                           cursor: isDisabled ? 'not-allowed' : 'default',
-                          ':active': {
-                            ...styles[':active'],
-                            backgroundColor: theme.grey40,
-                          },
+                          fontSize: 14,
+                          height: '100%',
+                          lineHeight: '20px',
+                          minHeight: 36,
                           overflow: 'hidden',
-                          whiteSpace: 'nowrap',
                           textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap',
                         }
                       },
                     }

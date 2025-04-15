@@ -31,7 +31,7 @@ export const useStorage = <T,>(
     }
   })
 
-  const setValue = (value: T | ((val: T) => T)) => {
+  const setValue = (value: ((val: T) => T) | T) => {
     try {
       const valueToStore =
         value instanceof Function ? value(storedValue) : value

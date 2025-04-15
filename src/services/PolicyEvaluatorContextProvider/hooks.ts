@@ -1,6 +1,7 @@
 import React, { useContext } from "react"
-import { V2PathSeparator, V2TraceLevel, ApiIdentityType } from "../../types/authorizer"
+
 import { SelectOption } from "../../components/common/Select"
+import { ApiIdentityType, V2PathSeparator, V2TraceLevel } from "../../types/authorizer"
 
 export type AuthorizerOperation = typeof AuthorizerOperation[keyof typeof AuthorizerOperation];
 export const AuthorizerOperation = {
@@ -10,19 +11,20 @@ export const AuthorizerOperation = {
   QUERY: 'QUERY',
 } as const;
 
-type PolicyEvaluatorContextProps =
-  | PolicyEvaluatorContextForIsProps
-  | PolicyEvaluatorContextForCommonProps
-  | PolicyEvaluatorContextForDecisionTreeProps
-  | PolicyEvaluatorContextForQueryProps
-  | PolicyEvaluatorContextForContentProps
-  | PolicyEvaluatorContextForRebacProps
-  | PolicyEvaluatorErrorContextProps
-  | PolicyEvaluatorActiveInstanceProps
+type PolicyEvaluatorActiveInstanceProps = {
+  policyInstance: string
+  setPolicyInstance: React.Dispatch<React.SetStateAction<string>>
+}
 
-type PolicyEvaluatorContextForContentProps = {
+type PolicyEvaluatorContextForCommonProps = {
   decisions: string
-  identity: string | null
+  resourceContext: string
+  setDecisions: React.Dispatch<React.SetStateAction<string>>
+  setResourceContext: React.Dispatch<React.SetStateAction<string>>
+}
+ type PolicyEvaluatorContextForContentProps = {
+  decisions: string
+  identity: null | string
   input: string
   options: V2PathSeparator
   pathFreeText: string
@@ -34,51 +36,23 @@ type PolicyEvaluatorContextForContentProps = {
   queryTraceSummary: boolean
   request: AuthorizerOperation
   resourceContext: string
-  setIdentity: React.Dispatch<React.SetStateAction<string | null>>
+  setIdentity: React.Dispatch<React.SetStateAction<null | string>>
   setRequest: React.Dispatch<React.SetStateAction<AuthorizerOperation>>
   setType: React.Dispatch<React.SetStateAction<ApiIdentityType>>
   type: ApiIdentityType
 }
- type PolicyEvaluatorActiveInstanceProps = {
-  policyInstance: string
-  setPolicyInstance: React.Dispatch<React.SetStateAction<string>>
-}
- type PolicyEvaluatorErrorContextProps = {
-  resourceContextError: string | undefined
-  setResourceContextError: React.Dispatch<
-    React.SetStateAction<string | undefined>
-  >
-  policyContextError: string | undefined
-  setPolicyContextError: React.Dispatch<
-    React.SetStateAction<string | undefined>
-  >
-}
-
- type PolicyEvaluatorContextForRebacProps = {
-  subjectType: string
-  subjectInstance: SelectOption | null
-  permission: SelectOption | null
-  relationType: SelectOption | null
-  objectType: string
-  objectInstance: SelectOption | null
-  setSubjectType: React.Dispatch<React.SetStateAction<string>>
-  setSubjectInstance: React.Dispatch<React.SetStateAction<SelectOption | null>>
-  setPermission: React.Dispatch<React.SetStateAction<SelectOption | null>>
-  setRelationType: React.Dispatch<React.SetStateAction<SelectOption | null>>
-  setObjectType: React.Dispatch<React.SetStateAction<string>>
-  setObjectInstance: React.Dispatch<React.SetStateAction<SelectOption | null>>
-}
-
-type PolicyEvaluatorContextForIsProps = {
-  pathSelect: string
-  setPathSelect: (path: string) => void
-}
-type PolicyEvaluatorContextForDecisionTreeProps = {
+ type PolicyEvaluatorContextForDecisionTreeProps = {
   options: V2PathSeparator
   pathFreeText: string
   setOptions: React.Dispatch<React.SetStateAction<V2PathSeparator>>
   setPathFreeText: React.Dispatch<React.SetStateAction<string>>
 }
+
+ type PolicyEvaluatorContextForIsProps = {
+  pathSelect: string
+  setPathSelect: (path: string) => void
+}
+
 type PolicyEvaluatorContextForQueryProps = {
   input: string
   pathFreeText: string
@@ -95,11 +69,38 @@ type PolicyEvaluatorContextForQueryProps = {
   setQueryTraceLevel: React.Dispatch<React.SetStateAction<V2TraceLevel>>
   setQueryTraceSummary: React.Dispatch<React.SetStateAction<boolean>>
 }
-type PolicyEvaluatorContextForCommonProps = {
-  decisions: string
-  resourceContext: string
-  setDecisions: React.Dispatch<React.SetStateAction<string>>
-  setResourceContext: React.Dispatch<React.SetStateAction<string>>
+type PolicyEvaluatorContextForRebacProps = {
+  objectInstance: null | SelectOption
+  objectType: string
+  permission: null | SelectOption
+  relationType: null | SelectOption
+  setObjectInstance: React.Dispatch<React.SetStateAction<null | SelectOption>>
+  setObjectType: React.Dispatch<React.SetStateAction<string>>
+  setPermission: React.Dispatch<React.SetStateAction<null | SelectOption>>
+  setRelationType: React.Dispatch<React.SetStateAction<null | SelectOption>>
+  setSubjectInstance: React.Dispatch<React.SetStateAction<null | SelectOption>>
+  setSubjectType: React.Dispatch<React.SetStateAction<string>>
+  subjectInstance: null | SelectOption
+  subjectType: string
+}
+type PolicyEvaluatorContextProps =
+  | PolicyEvaluatorActiveInstanceProps
+  | PolicyEvaluatorContextForCommonProps
+  | PolicyEvaluatorContextForContentProps
+  | PolicyEvaluatorContextForDecisionTreeProps
+  | PolicyEvaluatorContextForIsProps
+  | PolicyEvaluatorContextForQueryProps
+  | PolicyEvaluatorContextForRebacProps
+  | PolicyEvaluatorErrorContextProps
+type PolicyEvaluatorErrorContextProps = {
+  policyContextError: string | undefined
+  resourceContextError: string | undefined
+  setPolicyContextError: React.Dispatch<
+    React.SetStateAction<string | undefined>
+  >
+  setResourceContextError: React.Dispatch<
+    React.SetStateAction<string | undefined>
+  >
 }
 
 export const PolicyEvaluatorContext = React.createContext<PolicyEvaluatorContextProps>(
@@ -107,43 +108,43 @@ export const PolicyEvaluatorContext = React.createContext<PolicyEvaluatorContext
     decisions: '["allowed", "visible", "enabled"]',
     identity: null,
     input: '',
+    objectInstance: { label: '', value: '' },
+    objectType: '',
     options: 'PATH_SEPARATOR_DOT',
     pathFreeText: '',
     pathSelect: '',
+    permission: { label: '', value: '' },
+    policyContextError: undefined,
     policyInstance: '',
     query: '',
     queryMetrics: false,
     queryTrace: false,
     queryTraceLevel: 'TRACE_LEVEL_NOTES',
     queryTraceSummary: false,
+    relationType: { label: '', value: '' },
     request: 'IS',
     resourceContext: '',
-    type: 'IDENTITY_TYPE_NONE',
     setDecisions: () => {},
     setIdentity: () => {},
     setInput: () => {},
+    setObjectInstance: () => {},
+    setObjectType: () => {},
     setOptions: () => {},
     setPathFreeText: () => {},
     setPathSelect: () => {},
+    setPermission: () => {},
+    setPolicyContextError: () => {},
     setPolicyInstance: () => {},
     setQuery: () => {},
+    setRelationType: () => {},
     setRequest: () => {},
     setResourceContext: () => {},
-    setType: () => {},
-    subjectType: '',
-    subjectInstance: { label: '', value: '' },
-    permission: { label: '', value: '' },
-    relationType: { label: '', value: '' },
-    objectType: '',
-    objectInstance: { label: '', value: '' },
-    setSubjectType: () => {},
     setSubjectInstance: () => {},
-    setPermission: () => {},
-    setRelationType: () => {},
-    setObjectType: () => {},
-    setObjectInstance: () => {},
-    setPolicyContextError: () => {},
-    policyContextError: undefined,
+    setSubjectType: () => {},
+    setType: () => {},
+    subjectInstance: { label: '', value: '' },
+    subjectType: '',
+    type: 'IDENTITY_TYPE_NONE',
   },
 )
 

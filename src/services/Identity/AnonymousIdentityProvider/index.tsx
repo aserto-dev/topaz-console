@@ -6,9 +6,9 @@ export const AnonymousIdentityProvider: React.FC<PropsWithChildren> = ({ childre
   return (
     <GenericIdentityProvider
       identity={{
-        user: undefined,
         getAccessToken: () => Promise.resolve(''),
         logout: () => {},
+        user: undefined,
       }}
     >
       {children!}

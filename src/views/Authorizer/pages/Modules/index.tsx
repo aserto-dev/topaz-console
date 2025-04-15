@@ -1,10 +1,10 @@
 import React, { useMemo, useState } from 'react'
-import { usePoliciesList } from '../../../../api/v3/authorizer'
-
 import { Nav } from 'react-bootstrap'
-import Frame from '../../Frame'
+
+import { usePoliciesList } from '../../../../api/v3/authorizer'
 import Highlight from '../../../../components/common/Highlight'
-import { PillLineItem, Column, ContentHeader, Content } from './styles'
+import Frame from '../../Frame'
+import { Column, Content, ContentHeader, PillLineItem } from './styles'
 
 const Modules: React.FC = () => {
   const [moduleId, setModuleId] = useState<string>('')

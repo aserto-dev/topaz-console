@@ -16,19 +16,19 @@ import {
 } from '../SelectWithoutControl'
 
 const groupLabelStyle = {
-  position: 'relative' as const,
-  marginTop: -8,
+  backgroundColor: theme.grey,
   marginBottom: -3,
   marginLeft: -11,
   marginRight: -11,
-  backgroundColor: theme.grey,
+  marginTop: -8,
+  position: 'relative' as const,
 }
 
 const formatGroupLabel = () => <div style={groupLabelStyle} />
 
 const OptionsSelect: React.ForwardRefExoticComponent<
-  SelectWithoutControlProps &
-    React.RefAttributes<ReactSelectElement> & {
+  React.RefAttributes<ReactSelectElement> &
+    SelectWithoutControlProps & {
       modifyCustomStyle?: (
         styles: StylesConfig<SelectOption, false>,
       ) => StylesConfig<SelectOption, false>
@@ -36,27 +36,27 @@ const OptionsSelect: React.ForwardRefExoticComponent<
 > = React.forwardRef(
   (
     {
-      options,
       defaultValue,
-      onChange,
-      label,
       disabled,
-      style,
       disableLabel,
+      label,
       modifyCustomStyle,
       name,
-      shouldDisableOptions,
       onBlur,
+      onChange,
+      options,
+      shouldDisableOptions,
+      style,
       ...props
     },
     ref,
   ) => {
     const [firstSelectedOption, setFirstSelectedOption] =
-      useState<SelectOption | null>(null)
+      useState<null | SelectOption>(null)
     const removeFocusBox = {
+      boxShadow: 'none',
       outline: 'none',
       webkitBoxShadow: 'none',
-      boxShadow: 'none',
     }
 
     useEffect(() => {
@@ -103,35 +103,32 @@ const OptionsSelect: React.ForwardRefExoticComponent<
       control: (styles, { isDisabled, isFocused }) => {
         return {
           ...styles,
-          width: 93,
-          height: 36,
-          backgroundColor: isFocused ? theme.grey40 : theme.grey20,
-          border: `1px solid ${theme.grey30}`,
-          color: theme.grey70,
-          opacity: isDisabled ? 0.6 : 1,
-          outline: isFocused ? 'none' : '',
-          boxShadow: 'none',
-          borderWidth: 1,
           ':hover': {
             ...styles[':hover'],
             backgroundColor: theme.grey40,
             borderColor: theme.grey40,
           },
-        }
-      },
-      option: (styles, { isDisabled, isFocused }) => {
-        return {
-          ...styles,
           backgroundColor: isFocused ? theme.grey40 : theme.grey20,
-          color: isFocused ? theme.grey100 : theme.grey70,
+          border: `1px solid ${theme.grey30}`,
+          borderWidth: 1,
+          boxShadow: 'none',
+          color: theme.grey70,
           height: 36,
-          cursor: isDisabled ? 'not-allowed' : 'default',
-          ':active': {
-            ...styles[':active'],
-            backgroundColor: theme.grey30,
-          },
+          opacity: isDisabled ? 0.6 : 1,
+          outline: isFocused ? 'none' : '',
+          width: 93,
         }
       },
+      dropdownIndicator: (styles) => ({
+        ...styles,
+        ':hover': {
+          ...styles[':hover'],
+          color: theme.grey100,
+        },
+        color: theme.grey100,
+        padding: 0,
+        width: 25,
+      }),
       group: (styles) => {
         return {
           ...styles,
@@ -140,10 +137,41 @@ const OptionsSelect: React.ForwardRefExoticComponent<
           paddingTop: 6,
         }
       },
+      indicatorSeparator: (styles) => ({
+        ...styles,
+        display: 'none',
+      }),
       input: (styles) => {
         return {
           ...styles,
           color: theme.grey100,
+        }
+      },
+      menu: (styles) => ({
+        ...styles,
+        backgroundColor: 'none',
+        marginLeft: -155,
+        marginTop: 3,
+        width: 250,
+        zIndex: 0,
+      }),
+      menuList: (style) => ({
+        ...style,
+        border: `1px solid ${theme.grey60}`,
+        padding: 0,
+        zIndex: -10,
+      }),
+      option: (styles, { isDisabled, isFocused }) => {
+        return {
+          ...styles,
+          ':active': {
+            ...styles[':active'],
+            backgroundColor: theme.grey30,
+          },
+          backgroundColor: isFocused ? theme.grey40 : theme.grey20,
+          color: isFocused ? theme.grey100 : theme.grey70,
+          cursor: isDisabled ? 'not-allowed' : 'default',
+          height: 36,
         }
       },
       placeholder: (styles) => ({
@@ -155,38 +183,10 @@ const OptionsSelect: React.ForwardRefExoticComponent<
       singleValue: (styles, { isDisabled }) => ({
         ...styles,
         color: isDisabled ? theme.grey40 : theme.grey100,
-        width: '100%',
-        textAlign: 'left',
         overflow: 'auto',
+        textAlign: 'left',
+        width: '100%',
         ...removeFocusBox,
-      }),
-      menu: (styles) => ({
-        ...styles,
-        width: 250,
-        zIndex: 0,
-        marginTop: 3,
-        backgroundColor: 'none',
-        marginLeft: -155,
-      }),
-      dropdownIndicator: (styles) => ({
-        ...styles,
-        padding: 0,
-        width: 25,
-        color: theme.grey100,
-        ':hover': {
-          ...styles[':hover'],
-          color: theme.grey100,
-        },
-      }),
-      menuList: (style) => ({
-        ...style,
-        zIndex: -10,
-        padding: 0,
-        border: `1px solid ${theme.grey60}`,
-      }),
-      indicatorSeparator: (styles) => ({
-        ...styles,
-        display: 'none',
       }),
       valueContainer: (styles) => ({
         ...styles,
@@ -205,7 +205,7 @@ const OptionsSelect: React.ForwardRefExoticComponent<
           {...props}
           ref={ref}
           closeMenuOnSelect={false}
-          components={{ Option, DropdownIndicator }}
+          components={{ DropdownIndicator, Option }}
           defaultValue={defaultValue}
           formatGroupLabel={formatGroupLabel}
           inputId={name}

@@ -6,8 +6,8 @@
  * OpenAPI spec version: v0.33.5
  */
 import type { V3Body } from './v3Body';
-import type { V3Metadata } from './v3Metadata';
 import type { V3GetManifestResponseModel } from './v3GetManifestResponseModel';
+import type { V3Metadata } from './v3Metadata';
 
 export interface V3GetManifestResponse {
   body?: V3Body;

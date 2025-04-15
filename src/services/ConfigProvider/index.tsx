@@ -1,7 +1,8 @@
 import React, { PropsWithChildren, useEffect } from 'react'
+
+import { useInternalConfig } from '../../api/internal/config'
 import { InformationalError } from '../../lib/error/InformationalError'
 import { useShowError } from '../ErrorModalProvider'
-import { useInternalConfig } from '../../api/internal/config'
 import { ConfigContext } from './hooks'
 
 const ConfigProvider: React.FC<PropsWithChildren> = ({ children }) => {

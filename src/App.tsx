@@ -1,8 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.css'
-
 import React, { Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router'
+
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+
 import { NavBar } from './components/NavBar'
 
 const Directory = React.lazy(() => import('./views/Directory'))

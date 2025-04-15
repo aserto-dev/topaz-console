@@ -1,11 +1,11 @@
-import { FieldContainer } from '../styles'
-import { SubField } from '../Subfield'
-import { Row } from '../../../../../../../components/common/Row'
 import Input from '../../../../../../../components/common/Input'
+import { Row } from '../../../../../../../components/common/Row'
 import {
   useCommonPolicyEvaluatorContext,
   usePolicyEvaluatorErrorContext,
 } from '../../../../../../../services/PolicyEvaluatorContextProvider/hooks'
+import { FieldContainer } from '../styles'
+import { SubField } from '../Subfield'
 
 export const Decisions = () => {
   const { decisions, setDecisions } = useCommonPolicyEvaluatorContext()

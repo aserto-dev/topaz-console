@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 
 import { theme } from '../../../theme'
 
-const Label = styled.label<{ disabled?: boolean; $small?: boolean }>`
+const Label = styled.label<{ $small?: boolean; disabled?: boolean; }>`
   ${({ $small }) => {
     return $small
       ? css`

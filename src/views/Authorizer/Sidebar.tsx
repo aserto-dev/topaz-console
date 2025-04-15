@@ -1,10 +1,10 @@
+import React from 'react'
 import { useLocation, useNavigate } from 'react-router'
 
-import React from 'react'
-import { LeftContainer } from '../Directory/pages/Directory/styles'
-import { Row, SelectContainer } from './styles'
 import Select, { SelectOption } from '../../components/common/Select'
 import { VerticalTab } from '../../components/common/VerticalTab'
+import { LeftContainer } from '../Directory/pages/Directory/styles'
+import { Row, SelectContainer } from './styles'
 
 enum OptionValues {
   docs = 'API Browser',
@@ -16,9 +16,9 @@ const AuthorizerSidebar: React.FC = () => {
   const navigate = useNavigate()
 
   interface VerticalTabOptionsProps {
+    isDisabled?: boolean
     label: string
     value: keyof typeof OptionValues
-    isDisabled?: boolean
   }
 
   const verticalTabOptions: VerticalTabOptionsProps[] = [

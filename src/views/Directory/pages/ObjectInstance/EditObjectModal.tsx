@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+
 import { Query, useQueryClient } from '@tanstack/react-query'
 
-import Button from '../../../../components/common/Button'
-import { CardModal } from '../../../../components/common/CardModal'
-import ValidatedInput from '../../../../components/common/ValidatedInput'
-import { DisplayNameValidator } from '../../../../lib/validation'
-import { useShowError } from '../../../../services/ErrorModalProvider'
-import { V3Object } from '../../../../types/directory'
-import Input from '../../../../components/common/Input'
 import { useDirectoryV3ObjectTypesList } from '../../../../api/directory/customQuery'
 import {
   getDirectoryReaderV3ObjectGetQueryKey,
@@ -16,6 +10,13 @@ import {
   getDirectoryReaderV3RelationsListQueryKey,
   useDirectoryWriterV3ObjectSet,
 } from '../../../../api/v3/directory'
+import Button from '../../../../components/common/Button'
+import { CardModal } from '../../../../components/common/CardModal'
+import Input from '../../../../components/common/Input'
+import ValidatedInput from '../../../../components/common/ValidatedInput'
+import { DisplayNameValidator } from '../../../../lib/validation'
+import { useShowError } from '../../../../services/ErrorModalProvider'
+import { V3Object } from '../../../../types/directory'
 
 const ContentContainer = styled.div`
   padding: 20px;
@@ -47,19 +48,19 @@ const ButtonsContainer = styled.div`
 `
 
 type EditObjectModalProps = {
-  onSuccess?: (object: V3Object) => void
-  showDataChangedModal: () => void
   objectInstance: V3Object
-  show: boolean
   onHide: () => void
+  onSuccess?: (object: V3Object) => void
+  show: boolean
+  showDataChangedModal: () => void
 }
 
 const EditObjectModal: React.FC<EditObjectModalProps> = ({
   objectInstance,
-  showDataChangedModal,
-  show,
   onHide,
   onSuccess,
+  show,
+  showDataChangedModal,
 }) => {
   const [displayName, setDisplayName] = useState('')
   const showError = useShowError()

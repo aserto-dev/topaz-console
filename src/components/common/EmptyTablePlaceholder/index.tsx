@@ -49,19 +49,19 @@ const BodyText = styled.span`
 `
 
 type EmptyTablePlaceholderProps = {
+  body: React.ReactNode | string
+  header: string
   imgAlt: string
   imgSrc: string
-  header: string
-  body: string | React.ReactNode
   node?: React.ReactNode
 }
 
 const EmptyTablePlaceholder: React.FC<EmptyTablePlaceholderProps> = ({
+  body,
+  header,
   imgAlt,
   imgSrc,
-  header,
   node,
-  body,
 }) => {
   return (
     <Container>

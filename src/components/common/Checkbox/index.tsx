@@ -31,9 +31,9 @@ const Icon = styled.svg`
 `
 
 const StyledCheckbox = styled.div<{
-  checked: boolean
   $disabled?: boolean
   $hasLabel: boolean
+  checked: boolean
 }>`
   display: inline-block;
   border: 1px solid ${(props) => (props.checked ? theme.primary : theme.grey50)};
@@ -67,17 +67,17 @@ const HorizontalLabel = styled(Label)`
 
 interface CheckboxProps
   extends Omit<React.ComponentPropsWithoutRef<'input'>, 'onChange' | 'type'> {
-  onChange?: (checked: boolean) => void
-  label?: string
   disabled?: boolean
+  label?: string
+  onChange?: (checked: boolean) => void
 }
 
 const Checkbox: React.FC<CheckboxProps> = ({
-  onChange,
-  label,
-  disabled,
   checked,
   className,
+  disabled,
+  label,
+  onChange,
   ...checkboxProps
 }) => {
   const onCheckboxChange: React.ChangeEventHandler<HTMLInputElement> =

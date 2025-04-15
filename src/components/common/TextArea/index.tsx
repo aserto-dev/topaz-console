@@ -4,15 +4,15 @@ import React from 'react'
 import { FormControl, FormControlProps } from 'react-bootstrap'
 
 type TextAreaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
-  value: string | number
   onChange?: FormControlProps['onChange']
   style?: unknown
+  value: number | string
 }
 
 const TextArea: React.FC<TextAreaProps> = ({
-  value,
   onChange,
   style,
+  value,
   ...props
 }) => (
   <FormControl

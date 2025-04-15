@@ -8,21 +8,17 @@
 
 export type DirectoryReaderV3RelationGetParams = {
 /**
- * object type
- */
-object_type: string;
-/**
  * object identifier
  */
 object_id: string;
 /**
+ * object type
+ */
+object_type: string;
+/**
  * relation name
  */
 relation: string;
-/**
- * subject type
- */
-subject_type: string;
 /**
  * subject identifier
  */
@@ -31,6 +27,10 @@ subject_id: string;
  * optional subject relation name
  */
 subject_relation?: string;
+/**
+ * subject type
+ */
+subject_type: string;
 /**
  * materialize relation objects
  */

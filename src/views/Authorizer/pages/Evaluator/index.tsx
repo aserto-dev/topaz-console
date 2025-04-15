@@ -1,8 +1,8 @@
 import React from 'react'
-import { Evaluator as EvaluatorComponent } from '../Evaluator/EvaluatorComponent'
 
-import Frame from '../../Frame'
 import { PolicyEvaluatorContextProvider } from '../../../../services/PolicyEvaluatorContextProvider'
+import Frame from '../../Frame'
+import { Evaluator as EvaluatorComponent } from '../Evaluator/EvaluatorComponent'
 
 const Evaluator: React.FC = () => {
   return (

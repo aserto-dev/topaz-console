@@ -1,32 +1,32 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import Button from '../Button'
 import { theme, Theme } from '../../../theme'
-export type Variant = 'primary' | 'danger' | 'delete_danger'
+import Button from '../Button'
+export type Variant = 'danger' | 'delete_danger' | 'primary'
 const getStyleVariantForHeader = (
   variant: Variant = 'primary',
   theme: Theme,
 ) => {
   const sharedStyle = `background-color: ${theme.mojo50}; color: ${theme.fullWhite}`
   const styleObj = {
-    primary: `color: ${theme.grey100}; background-color: ${theme.grey20};`,
     danger: `${sharedStyle}; border-bottom: 1px solid ${theme.grey50}`,
     delete_danger: `${sharedStyle}; border-bottom: 0px solid ${theme.grey50}`,
+    primary: `color: ${theme.grey100}; background-color: ${theme.grey20};`,
   }
 
   return styleObj[variant]
 }
 
 const CardContainer = styled.div<{
+  $fullHeight?: boolean
   height?: number | string
   width?: number | string
-  $fullHeight?: boolean
 }>`
   border-radius: 6px;
   display: flex;
   flex-direction: column;
-  height: ${({ height, $fullHeight }) => {
+  height: ${({ $fullHeight, height }) => {
     if ($fullHeight) {
       return '100%'
     }
@@ -95,37 +95,37 @@ const HeaderButtons = styled.div`
 `
 
 type CardProps = {
-  title?: string
-  text?: string | React.ReactElement
   body: React.ReactElement | string
+  fullHeight?: boolean
+  fullscreen?: boolean | string
   height?: number | string
-  width?: number | string
   inactive?: boolean
-  style?: Theme
-  variant?: Variant
   onClose?: () => void
   onRefresh?: () => void
   onSubmit?: () => void
-  fullHeight?: boolean
-  fullscreen?: boolean | string
+  style?: Theme
   testId?: string
+  text?: React.ReactElement | string
+  title?: string
+  variant?: Variant
+  width?: number | string
 }
 
 export const Card: React.FC<CardProps> = ({
-  title,
-  text,
   body,
+  fullHeight,
+  fullscreen,
   height,
   inactive,
-  width,
-  style,
-  variant,
   onClose,
   onRefresh,
   onSubmit,
-  fullHeight,
-  fullscreen,
+  style,
   testId,
+  text,
+  title,
+  variant,
+  width,
 }) => {
   return (
     <CardContainer

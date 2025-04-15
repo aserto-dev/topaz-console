@@ -10,80 +10,80 @@ import ReactSelect, {
 import { theme } from '../../../theme'
 import Label from '../Label'
 
+export type ReactSelectElement = SelectInstance<SelectOption>
+
 export type SelectOption = {
-  value: string | number
   label: string
-  shouldStopPropagation?: boolean
   onClick?: () => void
   onMouseOut?: () => void
+  shouldStopPropagation?: boolean
+  value: number | string
 }
-
-export type ReactSelectElement = SelectInstance<SelectOption>
 
 export interface SelectWithoutControlProps
   extends Omit<
     Props<SelectOption, false>,
-    | 'onFocus'
-    | 'onBlur'
-    | 'isDisabled'
-    | 'isClearable'
-    | 'isSearchable'
     | 'closeMenuOnSelect'
-    | 'menuIsOpen'
-    | 'inputId'
-    | 'styles'
-    | 'formatGroupId'
     | 'components'
+    | 'formatGroupId'
+    | 'inputId'
+    | 'isClearable'
+    | 'isDisabled'
+    | 'isSearchable'
+    | 'menuIsOpen'
+    | 'onBlur'
+    | 'onFocus'
+    | 'styles'
   > {
   defaultValue?: SelectOption
-  onChange?: (value: SelectOption | null) => void
   disabled?: boolean
-  label?: string
-  value?: SelectOption | null
-  style?: React.CSSProperties
   disableLabel?: boolean
-  shouldDisableOptions?: boolean
-  removeTenantText?: string
+  label?: string
   onBlur?: (firstSelectedOption?: SelectOption) => void
+  onChange?: (value: null | SelectOption) => void
+  removeTenantText?: string
+  shouldDisableOptions?: boolean
+  style?: React.CSSProperties
+  value?: null | SelectOption
 }
 
 const groupLabelStyle = {
-  position: 'relative' as const,
-  marginTop: -8,
+  backgroundColor: theme.grey,
+  height: 1,
   marginBottom: -3,
   marginLeft: -11,
   marginRight: -11,
-  height: 1,
-  backgroundColor: theme.grey,
+  marginTop: -8,
+  position: 'relative' as const,
 }
 
 const formatGroupLabel = () => <div style={groupLabelStyle} />
 
 const SelectWithoutControl: React.ForwardRefExoticComponent<
-  SelectWithoutControlProps & React.RefAttributes<ReactSelectElement>
+  React.RefAttributes<ReactSelectElement> & SelectWithoutControlProps
 > = React.forwardRef(
   (
     {
-      options,
       defaultValue,
-      onChange,
-      label,
       disabled,
-      style,
       disableLabel,
+      label,
       name,
-      shouldDisableOptions,
       onBlur,
+      onChange,
+      options,
+      shouldDisableOptions,
+      style,
       ...props
     },
     ref,
   ) => {
     const [firstSelectedOption, setFirstSelectedOption] =
-      useState<SelectOption | null>(null)
+      useState<null | SelectOption>(null)
     const removeFocusBox = {
+      boxShadow: 'none',
       outline: 'none',
       webkitBoxShadow: 'none',
-      boxShadow: 'none',
     }
 
     useEffect(() => {
@@ -122,27 +122,65 @@ const SelectWithoutControl: React.ForwardRefExoticComponent<
       control: (styles, { isDisabled, isFocused }) => {
         return {
           ...styles,
-          width: 120,
-          marginTop: -4,
-          marginLeft: -20,
-          backgroundColor: 'transparent',
-          color: theme.grey70,
-          border: 'none',
-          opacity: isDisabled ? 0.6 : 1,
-          outline: isFocused ? 'none' : '',
-          boxShadow: 'none',
-          borderWidth: 1,
           ':hover': {
             ...styles[':hover'],
             backgroundColor: theme.grey10,
             borderColor: theme.indogoAccent1,
             color: theme.grey100,
           },
+          backgroundColor: 'transparent',
+          border: 'none',
+          borderWidth: 1,
+          boxShadow: 'none',
+          color: theme.grey70,
+          marginLeft: -20,
+          marginTop: -4,
+          opacity: isDisabled ? 0.6 : 1,
+          outline: isFocused ? 'none' : '',
+          width: 120,
         }
       },
+      dropdownIndicator: (styles, { isDisabled }) => ({
+        ...styles,
+        color: isDisabled ? theme.grey40 : theme.grey70,
+        paddingRight: 22,
+      }),
+      group: (styles) => {
+        return {
+          ...styles,
+          paddingBottom: 0,
+        }
+      },
+      indicatorSeparator: (styles) => ({
+        ...styles,
+        display: 'none',
+      }),
+      input: (styles) => {
+        return {
+          ...styles,
+          borderColor: theme.grey60,
+          color: theme.grey100,
+        }
+      },
+      menu: (styles) => ({
+        ...styles,
+        backgroundColor: theme.primaryBlack,
+        marginTop: -5,
+        width: 250,
+        zIndex: 6,
+      }),
+      menuList: (style) => ({
+        ...style,
+        borderRadius: 6,
+        zIndex: 5,
+      }),
       option: (styles, { isDisabled, isFocused, isSelected }) => {
         return {
           ...styles,
+          ':active': {
+            ...styles[':active'],
+            backgroundColor: theme.grey30,
+          },
           backgroundColor: isDisabled
             ? theme.grey20
             : isFocused
@@ -152,26 +190,9 @@ const SelectWithoutControl: React.ForwardRefExoticComponent<
                 : theme.grey20,
           borderLeft: isSelected ? `5px solid ${theme.indogoAccent3}` : '',
           color: isFocused ? theme.grey100 : theme.grey70,
-          height: 36,
-          fontSize: 14,
           cursor: isDisabled ? 'not-allowed' : 'default',
-          ':active': {
-            ...styles[':active'],
-            backgroundColor: theme.grey30,
-          },
-        }
-      },
-      group: (styles) => {
-        return {
-          ...styles,
-          paddingBottom: 0,
-        }
-      },
-      input: (styles) => {
-        return {
-          ...styles,
-          color: theme.grey100,
-          borderColor: theme.grey60,
+          fontSize: 14,
+          height: 36,
         }
       },
       placeholder: (styles, { isDisabled }) => ({
@@ -181,31 +202,10 @@ const SelectWithoutControl: React.ForwardRefExoticComponent<
       singleValue: (styles, { isDisabled }) => ({
         ...styles,
         color: isDisabled ? theme.grey40 : theme.grey100,
-        width: '100%',
-        textAlign: 'left',
         overflow: 'auto',
+        textAlign: 'left',
+        width: '100%',
         ...removeFocusBox,
-      }),
-      menu: (styles) => ({
-        ...styles,
-        width: 250,
-        backgroundColor: theme.primaryBlack,
-        zIndex: 6,
-        marginTop: -5,
-      }),
-      dropdownIndicator: (styles, { isDisabled }) => ({
-        ...styles,
-        paddingRight: 22,
-        color: isDisabled ? theme.grey40 : theme.grey70,
-      }),
-      menuList: (style) => ({
-        ...style,
-        zIndex: 5,
-        borderRadius: 6,
-      }),
-      indicatorSeparator: (styles) => ({
-        ...styles,
-        display: 'none',
       }),
       valueContainer: (styles) => ({
         ...styles,

@@ -3,8 +3,10 @@ import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
-import eslintConfigPrettier from "eslint-config-prettier/flat";
-import react from 'eslint-plugin-react';
+import eslintConfigPrettier from "eslint-config-prettier/flat"
+import react from 'eslint-plugin-react'
+import perfectionist from "eslint-plugin-perfectionist"
+
 
 export default tseslint.config(
   { ignores: ['dist'] },
@@ -17,8 +19,9 @@ export default tseslint.config(
     extends: [
       js.configs.recommended,
       ...tseslint.configs.recommended,
+      perfectionist.configs["recommended-natural"],
       react.configs.flat.recommended,
-      react.configs.flat['jsx-runtime']
+      react.configs.flat['jsx-runtime'],
     ],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
@@ -63,7 +66,44 @@ export default tseslint.config(
 
       'react/no-unescaped-entities': 'off',
       'react/prop-types': 'off',
+      "@typescript-eslint/no-unused-expressions": [
+        "error",
+        {
+          allowShortCircuit: true,
+          allowTernary: true,
+        },
+      ],
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+        },
+      ],
+      "perfectionist/sort-enums": [
+        "warn",
+        {
+          partitionByComment: true,
+          partitionByNewLine: true,
+        },
+      ],
+      "perfectionist/sort-imports": [
+        "warn",
+        {
+          internalPattern: ["^@"],
+          specialCharacters: "keep",
+        },
+      ],
+      "perfectionist/sort-maps": [
+        "warn",
+        {
+          partitionByComment: true,
+          partitionByNewLine: true,
+        },
+      ],
+      "perfectionist/sort-jsx-props": "off",
     },
+
   },
   eslintConfigPrettier
 )

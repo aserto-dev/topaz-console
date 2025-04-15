@@ -1,8 +1,6 @@
 import React, { useEffect, useMemo } from 'react'
 
-import { EvaluatorStyledInput, FieldContainer, InputTopMargin } from '../styles'
 import { useDirectoryV3PermissionsList } from '../../../../../../../api/directory/customQuery'
-
 import {
   useDirectoryV3ObjectTypesList,
   useDirectoryV3RelationTypesList,
@@ -11,23 +9,24 @@ import { Row } from '../../../../../../../components/common/Row'
 import Select from '../../../../../../../components/common/Select'
 import { colourStyles } from '../../../../../../../components/common/Select/colourStyles'
 import {
-  useRebacPolicyEvaluatorContext,
-  useContentPolicyEvaluatorContext,
   useCommonPolicyEvaluatorContext,
+  useContentPolicyEvaluatorContext,
   useIsPolicyEvaluatorContext,
+  useRebacPolicyEvaluatorContext,
 } from '../../../../../../../services/PolicyEvaluatorContextProvider/hooks'
+import { EvaluatorStyledInput, FieldContainer, InputTopMargin } from '../styles'
 
 export const RebacEvaluator: React.FC = () => {
   const {
-    relationType,
-    objectType,
     objectInstance,
-    setSubjectType,
-    setRelationType,
-    setObjectType,
+    objectType,
+    relationType,
     setObjectInstance,
+    setObjectType,
+    setRelationType,
+    setSubjectType,
   } = useRebacPolicyEvaluatorContext()
-  const { request, identity, setType, setIdentity } =
+  const { identity, request, setIdentity, setType } =
     useContentPolicyEvaluatorContext()
   const { resourceContext, setResourceContext } =
     useCommonPolicyEvaluatorContext()
@@ -113,8 +112,8 @@ export const RebacEvaluator: React.FC = () => {
                       ...JSON.parse(
                         resourceContext !== '' ? resourceContext : '{}',
                       ),
-                      object_type: String(option.value),
                       object_id: '',
+                      object_type: String(option.value),
                     },
                     null,
                     2,

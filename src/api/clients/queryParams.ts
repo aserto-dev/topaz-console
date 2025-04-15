@@ -1,8 +1,8 @@
-type Nested<T> = {
-  [P in keyof T]: Record<string, string> | string | boolean | number | unknown
-}
-
 export type QueryParams = Nested<Record<string, string>> | Record<string, string>
+
+type Nested<T> = {
+  [P in keyof T]: boolean | number | Record<string, string> | string | unknown
+}
 
 export const flatten = (
   input: Nested<Record<string, string>> | Record<string, string>

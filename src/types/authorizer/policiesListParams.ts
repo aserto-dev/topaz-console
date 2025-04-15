@@ -9,11 +9,11 @@
 export type PoliciesListParams = {
 field_mask?: string;
 /**
- * policy name
- */
-'policy_instance.name'?: string;
-/**
  * label identifying the instance of the policy
  */
 'policy_instance.instance_label'?: string;
+/**
+ * policy name
+ */
+'policy_instance.name'?: string;
 };

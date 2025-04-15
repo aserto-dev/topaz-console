@@ -1,9 +1,9 @@
+import { useId } from 'react'
 import { HeaderGroup } from 'react-table'
 import styled from 'styled-components'
 
 import asc from '../../../assets/asc.svg'
 import desc from '../../../assets/desc.svg'
-import { useId } from 'react'
 
 const Icon = styled.img`
   margin-left: 8px;

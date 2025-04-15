@@ -16,24 +16,24 @@ import unavailable from './unavailable.svg'
 import valid from './valid.svg'
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
-  onChange?: FormControlProps['onChange']
-  onKeyPress?: React.KeyboardEventHandler<HTMLInputElement>
-  label?: string
-  info?: string
-  hideError?: boolean
-  error?: string | boolean
-  isValid?: boolean
-  isUnavailable?: boolean
-  style?: React.CSSProperties
-  hasSmallLabel?: boolean
   autoComplete?: string
   block?: boolean
-  defaultValue?: string | number
+  defaultValue?: number | string
+  error?: boolean | string
+  hasSmallLabel?: boolean
+  hideError?: boolean
   id?: string
+  info?: string
+  isUnavailable?: boolean
+  isValid?: boolean
+  label?: string
+  onChange?: FormControlProps['onChange']
   onClickCopy?: (value: string) => void
   onClickSearch?: () => void
-
+  onKeyPress?: React.KeyboardEventHandler<HTMLInputElement>
   shouldShowHideShowButton?: boolean
+
+  style?: React.CSSProperties
 }
 
 const getInputValueForState = (
@@ -52,11 +52,11 @@ const getInputValueForState = (
 }
 
 const CustomInput = styled(FormControl)<{
-  isValid?: boolean
-  isInvalid?: boolean
-  $isUnavailable?: boolean
   $block?: boolean
+  $isUnavailable?: boolean
   $paddingRight?: number
+  isInvalid?: boolean
+  isValid?: boolean
 }>`
   background-color: ${theme.primaryBlack};
   color: ${theme.grey100};
@@ -84,7 +84,7 @@ const CustomInput = styled(FormControl)<{
   &[type='number'] {
     -moz-appearance: textfield;
   }
-  ${({ isValid, isInvalid, $isUnavailable }) =>
+  ${({ $isUnavailable, isInvalid, isValid }) =>
     getInputValueForState(
       isValid ?? false,
       isInvalid ?? false,
@@ -182,21 +182,21 @@ export const Info = styled.div`
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
     {
-      onChange,
-      label,
-      info,
-      error,
-      hideError,
-      isValid,
-      isUnavailable,
-      style,
-      hasSmallLabel,
       block,
       defaultValue,
+      error,
+      hasSmallLabel,
+      hideError,
       id,
+      info,
+      isUnavailable,
+      isValid,
+      label,
+      onChange,
       onClickCopy,
       onClickSearch,
       shouldShowHideShowButton,
+      style,
       type,
       value,
       ...props

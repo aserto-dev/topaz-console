@@ -1,13 +1,22 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { CellProps, Column, TableInstance } from 'react-table'
 
+import { keepPreviousData } from '@tanstack/react-query'
+
+import {
+  getNextPage,
+  useDirectoryV3ObjectTypesList,
+  useDirectoryV3RelationTypesList,
+} from '../../../../../api/directory/customQuery'
+import { useDirectoryReaderV3RelationsListInfinite } from '../../../../../api/v3/directory'
 import NoObjectsImage from '../../../../../assets/shapes.svg'
-import { useDirectoryDataContext } from '../../../../../services/DirectoryContextProvider/hooks'
-import { V3Relation } from '../../../../../types/directory'
 import DataTable from '../../../../../components/common/DataTable'
 import EmptyTablePlaceholder from '../../../../../components/common/EmptyTablePlaceholder'
 import Select from '../../../../../components/common/Select'
 import { Link } from '../../../../../components/common/UndecoratedLink'
+import { useDirectoryDataContext } from '../../../../../services/DirectoryContextProvider/hooks'
+import { V3Relation } from '../../../../../types/directory'
+import { useIsScrollable } from '../../Directory/useIsScrollable'
 import {
   BreakDiv,
   EmptyTableContainer,
@@ -26,29 +35,21 @@ import {
   SubjectTypeContainer,
   TableWrapper,
 } from '../styles'
-import { useIsScrollable } from '../../Directory/useIsScrollable'
-import {
-  getNextPage,
-  useDirectoryV3ObjectTypesList,
-  useDirectoryV3RelationTypesList,
-} from '../../../../../api/directory/customQuery'
-import { useDirectoryReaderV3RelationsListInfinite } from '../../../../../api/v3/directory'
-import { keepPreviousData } from '@tanstack/react-query'
 
 const RelationsTable: React.FC = () => {
   const {
-    objectType,
-    setObjectType,
-    subjectType,
-    setSubjectType,
-    relation,
-    setRelation,
-    subjectRelation,
-    setSubjectRelation,
     objectId,
+    objectType,
+    relation,
     setObjectId,
-    subjectId,
+    setObjectType,
+    setRelation,
     setSubjectId,
+    setSubjectRelation,
+    setSubjectType,
+    subjectId,
+    subjectRelation,
+    subjectType,
   } = useDirectoryDataContext()
 
   const [relationsList, setRelationsList] = useState<V3Relation[]>([])
@@ -99,29 +100,29 @@ const RelationsTable: React.FC = () => {
 
   const {
     data: relationsData,
-    isFetching: isFetchingRelations,
-    hasNextPage: hasMoreRelations,
     fetchNextPage: fetchMoreRelations,
+    hasNextPage: hasMoreRelations,
+    isFetching: isFetchingRelations,
   } = useDirectoryReaderV3RelationsListInfinite(
     {
-      object_type: objectType || '',
       object_id: objectId || '',
-      subject_type: subjectType || '',
-      subject_id: subjectId || '',
-      relation: relation || '',
-      subject_relation: subjectRelation || '',
+      object_type: objectType || '',
       'page.size': 100,
+      relation: relation || '',
+      subject_id: subjectId || '',
+      subject_relation: subjectRelation || '',
+      subject_type: subjectType || '',
     },
     {
       query: {
-        getNextPageParam: getNextPage,
         enabled: isFilter,
+        getNextPageParam: getNextPage,
         placeholderData: keepPreviousData,
       },
     },
   )
 
-  const tableRef = useRef<TableInstance<V3Relation> | null>(null)
+  const tableRef = useRef<null | TableInstance<V3Relation>>(null)
 
   const relations: V3Relation[] = useMemo(() => {
     return (
@@ -139,9 +140,9 @@ const RelationsTable: React.FC = () => {
   }, [setIsFilter])
 
   const fetchData = useIsScrollable({
-    isFetching: isFetchingRelations,
-    hasMoreData: hasMoreRelations || false,
     fetchNextData: fetchMoreRelations,
+    hasMoreData: hasMoreRelations || false,
+    isFetching: isFetchingRelations,
   })
 
   useCallback(() => {
@@ -150,19 +151,15 @@ const RelationsTable: React.FC = () => {
 
   const columns: Column<V3Relation>[] = [
     {
+      Cell: ({ row }: CellProps<V3Relation>) => {
+        return <div>{row.original.object_type}</div>
+      },
       id: 'Object Type',
       style: {
         cellWidth: '16.66%',
       },
-      Cell: ({ row }: CellProps<V3Relation>) => {
-        return <div>{row.original.object_type}</div>
-      },
     },
     {
-      id: 'Object Id',
-      style: {
-        cellWidth: '16.66%',
-      },
       Cell: ({ row }: CellProps<V3Relation>) => {
         return (
           <Link
@@ -174,48 +171,48 @@ const RelationsTable: React.FC = () => {
           </Link>
         )
       },
+      id: 'Object Id',
+      style: {
+        cellWidth: '16.66%',
+      },
     },
     {
+      Cell: ({ row }: CellProps<V3Relation>) => {
+        return <div>{row.original.relation}</div>
+      },
       id: 'Relation',
       style: {
         cellWidth: '16.66%',
       },
-      Cell: ({ row }: CellProps<V3Relation>) => {
-        return <div>{row.original.relation}</div>
-      },
     },
     {
+      Cell: () => {
+        return <div></div>
+      },
       id: 'delimiter',
       style: {
         cellWidth: '2px',
       },
+    },
+    {
       Cell: () => {
         return <div></div>
       },
-    },
-    {
       id: 'blank',
       style: {
         cellWidth: '8px',
       },
-      Cell: () => {
-        return <div></div>
-      },
     },
     {
+      Cell: ({ row }: CellProps<V3Relation>) => {
+        return <div>{row.original.subject_type}</div>
+      },
       id: 'Subject Type',
       style: {
         cellWidth: '16.66%',
       },
-      Cell: ({ row }: CellProps<V3Relation>) => {
-        return <div>{row.original.subject_type}</div>
-      },
     },
     {
-      id: 'Subject Id',
-      style: {
-        cellWidth: '16.66%',
-      },
       Cell: ({ row }: CellProps<V3Relation>) => {
         return (
           <Link
@@ -227,14 +224,18 @@ const RelationsTable: React.FC = () => {
           </Link>
         )
       },
-    },
-    {
-      id: 'Subject Relation',
+      id: 'Subject Id',
       style: {
         cellWidth: '16.66%',
       },
+    },
+    {
       Cell: ({ row }: CellProps<V3Relation>) => {
         return <div>{row.original.subject_relation}</div>
+      },
+      id: 'Subject Relation',
+      style: {
+        cellWidth: '16.66%',
       },
     },
   ]
@@ -369,18 +370,18 @@ const RelationsTable: React.FC = () => {
             mRef={tableRef}
             paging={{
               dataLength: relationsList.length,
+              getNext: () => fetchMoreRelations(),
+              hasMore: () => !!hasMoreRelations,
               loadingContent: [
                 {
-                  object_type: 'loading...',
                   object_id: 'loading...',
+                  object_type: 'loading...',
                   relation: 'loading...',
-                  subject_type: 'loading...',
                   subject_id: 'loading...',
                   subject_relation: 'loading...',
+                  subject_type: 'loading...',
                 },
               ],
-              hasMore: () => !!hasMoreRelations,
-              getNext: () => fetchMoreRelations(),
             }}
             sticky={true}
           />

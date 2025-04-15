@@ -6,9 +6,9 @@
  * OpenAPI spec version: v0.20.10
  */
 import type { ApiIdentityContext } from './apiIdentityContext';
-import type { V2DecisionTreeOptions } from './v2DecisionTreeOptions';
 import type { ApiPolicyContext } from './apiPolicyContext';
 import type { ApiPolicyInstance } from './apiPolicyInstance';
+import type { V2DecisionTreeOptions } from './v2DecisionTreeOptions';
 import type { V2DecisionTreeRequestResourceContext } from './v2DecisionTreeRequestResourceContext';
 
 export interface V2DecisionTreeRequest {

@@ -8,6 +8,10 @@
 
 export type DirectoryReaderV3GraphParams = {
 /**
+ * return graph paths for each result
+ */
+explain?: boolean;
+/**
  * object identifier
  */
 object_id?: string;
@@ -19,10 +23,6 @@ subject_id?: string;
  * subject relation
  */
 subject_relation?: string;
-/**
- * return graph paths for each result
- */
-explain?: boolean;
 /**
  * collect trace information
  */

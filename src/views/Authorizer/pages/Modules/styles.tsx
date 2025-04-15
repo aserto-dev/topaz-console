@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+
 import { theme } from '../../../../theme'
 
 export const Column = styled.div<{ $flex?: boolean }>`
@@ -16,11 +17,11 @@ export const Column = styled.div<{ $flex?: boolean }>`
 `
 
 export const Content = styled.div<{
-  $flex?: boolean
   $fixed?: boolean
+  $flex?: boolean
+  $hasBorderLeft?: boolean
   $paddingTop?: number
   $shouldPad?: boolean
-  $hasBorderLeft?: boolean
 }>`
   color: ${theme.grey100};
   ${({ $flex }) => ($flex ? 'flex: 1' : '')};

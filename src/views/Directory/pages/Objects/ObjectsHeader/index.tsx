@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 
+import { useQueryClient } from '@tanstack/react-query'
+
 import plus from '../../../../../assets/plus.svg'
-import { useDirectoryDisplayState } from '../../../../../services/DirectoryContextProvider/hooks'
 import EvaluateDisplayState from '../../../../../components/common/EvaluateDisplayState'
+import { useDirectoryDisplayState } from '../../../../../services/DirectoryContextProvider/hooks'
 import { AddButton } from '../../../styles'
 import AddObjectModal from '../AddObjectModal'
 import { Header, SubHeader, TitleContainer } from './styles'
-import { useQueryClient } from '@tanstack/react-query'
 
 const ObjectsHeader: React.FC<React.ComponentProps<'div'>> = ({
   children,

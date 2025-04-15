@@ -8,10 +8,6 @@
 
 export type DirectoryReaderV3ObjectGetParams = {
 /**
- * materialize the object relations objects
- */
-with_relations?: boolean;
-/**
  * requested page size, valid value between 1-100 rows (default 100)
  */
 'page.size'?: number;
@@ -19,4 +15,8 @@ with_relations?: boolean;
  * pagination start token, default ""
  */
 'page.token'?: string;
+/**
+ * materialize the object relations objects
+ */
+with_relations?: boolean;
 };

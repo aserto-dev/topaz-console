@@ -8,21 +8,17 @@
 
 export type DirectoryWriterV3RelationDeleteParams = {
 /**
- * object type
- */
-object_type: string;
-/**
  * object identifier
  */
 object_id: string;
 /**
+ * object type
+ */
+object_type: string;
+/**
  * object relation name
  */
 relation: string;
-/**
- * subject type
- */
-subject_type: string;
 /**
  * subject identifier
  */
@@ -31,4 +27,8 @@ subject_id: string;
  * optional subject relation name
  */
 subject_relation?: string;
+/**
+ * subject type
+ */
+subject_type: string;
 };

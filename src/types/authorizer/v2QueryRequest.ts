@@ -6,9 +6,9 @@
  * OpenAPI spec version: v0.20.10
  */
 import type { ApiIdentityContext } from './apiIdentityContext';
-import type { V2QueryOptions } from './v2QueryOptions';
 import type { ApiPolicyContext } from './apiPolicyContext';
 import type { ApiPolicyInstance } from './apiPolicyInstance';
+import type { V2QueryOptions } from './v2QueryOptions';
 import type { V2QueryRequestResourceContext } from './v2QueryRequestResourceContext';
 
 export interface V2QueryRequest {

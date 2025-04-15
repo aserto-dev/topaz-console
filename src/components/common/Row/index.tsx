@@ -2,9 +2,9 @@ import styled from 'styled-components'
 
 export const Row = styled.div<{
   $centered?: boolean
-  $marginTop?: number
   $flex?: boolean
   $marginLeft?: number
+  $marginTop?: number
 }>`
   display: flex;
   flex-direction: row;

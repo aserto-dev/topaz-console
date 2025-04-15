@@ -10,7 +10,7 @@ export const PolicyEvaluatorContextProvider = ({
   children: React.ReactNode
 }) => {
   const [subjectType, setSubjectType] = useState('')
-  const [permission, setPermission] = useState<SelectOption | null>(null)
+  const [permission, setPermission] = useState<null | SelectOption>(null)
   const [policyContextError, setPolicyContextError] = useState<
     string | undefined
   >()
@@ -49,7 +49,7 @@ export const PolicyEvaluatorContextProvider = ({
   )
 
   const setFieldContextState = useCallback(
-    (field: string, value: string | boolean) => {
+    (field: string, value: boolean | string) => {
       setPolicyContextState((prevState) => {
         try {
           const json = JSON.parse(prevState || '{}')
@@ -150,7 +150,7 @@ export const PolicyEvaluatorContextProvider = ({
   }, [getFieldContextState])
 
   const setSubjectInstance = useCallback(
-    (instance: SelectOption | null) => {
+    (instance: null | SelectOption) => {
       if (instance) {
         setFieldContextState('subject', JSON.stringify(instance))
       } else {
@@ -166,7 +166,7 @@ export const PolicyEvaluatorContextProvider = ({
   }, [getFieldContextState])
 
   const setObjectInstance = useCallback(
-    (object: SelectOption | null) => {
+    (object: null | SelectOption) => {
       if (object) {
         setFieldContextState('object', JSON.stringify(object))
       } else {
@@ -181,7 +181,7 @@ export const PolicyEvaluatorContextProvider = ({
   }, [getFieldContextState])
 
   const setRelationType = useCallback(
-    (relation: SelectOption | null) => {
+    (relation: null | SelectOption) => {
       if (relation) {
         setFieldContextState('relation_type', JSON.stringify(relation))
       } else {
@@ -195,7 +195,7 @@ export const PolicyEvaluatorContextProvider = ({
   }, [getFieldContextState])
 
   const setIdentity = useCallback(
-    (value: string | null) => {
+    (value: null | string) => {
       if (value) {
         setFieldContextState('identity', value)
       } else {
@@ -304,48 +304,48 @@ export const PolicyEvaluatorContextProvider = ({
       decisions,
       identity,
       input,
+      objectInstance,
+      objectType,
       options,
       pathFreeText,
       pathSelect,
+      permission,
+      policyContextError,
       query,
       queryMetrics,
       queryTrace,
       queryTraceLevel,
       queryTraceSummary,
-      resourceContext,
+      relationType,
       request,
+      resourceContext,
+      resourceContextError,
       setDecisions,
       setIdentity,
       setInput,
+      setObjectInstance,
+      setObjectType,
       setOptions,
       setPathFreeText,
       setPathSelect,
+      setPermission,
+      setPolicyContextError,
+      setPolicyInstance,
       setQuery,
       setQueryMetrics,
       setQueryTrace,
       setQueryTraceLevel,
       setQueryTraceSummary,
+      setRelationType,
       setRequest,
       setResourceContext,
-      setType,
-      type,
-      subjectType,
-      subjectInstance,
-      permission,
-      relationType,
-      objectType,
-      objectInstance,
-      setSubjectType,
-      setSubjectInstance,
-      setPermission,
-      setRelationType,
-      setObjectType,
-      setObjectInstance,
-      setPolicyInstance,
-      policyContextError,
-      setPolicyContextError,
-      resourceContextError,
       setResourceContextError,
+      setSubjectInstance,
+      setSubjectType,
+      setType,
+      subjectInstance,
+      subjectType,
+      type,
     }),
     [
       decisions,

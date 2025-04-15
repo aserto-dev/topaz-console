@@ -1,5 +1,5 @@
-import { useConfig } from '../../../../services/ConfigProvider/hooks'
 import ApiBrowser from '../../../../components/ApiBrowser'
+import { useConfig } from '../../../../services/ConfigProvider/hooks'
 
 const DirectoryApiDocs = () => {
   const { directoryApiKey, directoryServiceUrl } = useConfig()

@@ -22,18 +22,18 @@ const ButtonsContainer = styled.div`
 `
 
 type DirectoryDeleteModalProps = {
-  specificText?: string
-  deleteData: { type: string; name: string }
-  show: boolean
-  onHide: () => void
+  deleteData: { name: string; type: string; }
   onClickRemove: () => void
+  onHide: () => void
+  show: boolean
+  specificText?: string
 }
 
 const DirectoryDeleteModal: React.FC<DirectoryDeleteModalProps> = ({
   deleteData,
-  show,
-  onHide,
   onClickRemove,
+  onHide,
+  show,
   specificText,
 }) => {
   return (

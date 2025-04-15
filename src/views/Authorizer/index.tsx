@@ -1,9 +1,9 @@
 import './index.css'
 
 import { Suspense } from 'react'
+import { Navigate, Route, Routes } from 'react-router'
 
 import Frame from './Frame'
-import { Navigate, Route, Routes } from 'react-router'
 import AuthorizerApiDocs from './pages/ApiDocs'
 import Evaluator from './pages/Evaluator'
 import Modules from './pages/Modules'

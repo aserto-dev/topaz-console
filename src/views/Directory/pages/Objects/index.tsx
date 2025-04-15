@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo } from 'react'
 import { useParams } from 'react-router'
 
+import { useDirectoryV3ObjectTypesList } from '../../../../api/directory/customQuery'
 import GenericObjects from './GenericObjects'
 import UserObjects from './UserObjects'
-import { useDirectoryV3ObjectTypesList } from '../../../../api/directory/customQuery'
 
 const ObjectsSelector: React.FC = () => {
   const { objectType } = useParams()

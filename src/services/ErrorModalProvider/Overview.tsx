@@ -1,7 +1,7 @@
 import React from "react";
 
-import { MessageText } from "./Styles";
 import { ApiError } from "../../lib/error/ApiError";
+import { MessageText } from "./Styles";
 
 interface OverviewProps {
   error: Error;
@@ -9,7 +9,7 @@ interface OverviewProps {
 
 const Overview: React.FC<OverviewProps> = ({ error }) => {
   if (error instanceof ApiError) {
-    const { code, message, type, reason } = error;
+    const { code, message, reason, type } = error;
     return (
       <>
         <strong>Code</strong>

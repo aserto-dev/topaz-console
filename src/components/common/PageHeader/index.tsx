@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react'
 import styled from 'styled-components'
+
 import { useIsFetching, useQueryClient } from '@tanstack/react-query'
 
 import { theme } from '../../../theme'
@@ -7,15 +8,15 @@ import PageTitle from '../PageTitle'
 import RefreshButton from '../RefreshButton'
 
 type PageHeaderProps = {
-  title?: string
-  subtitle?: React.ReactNode | string
+  children?: React.ReactNode
+  hasBorderBottom?: boolean
+  id?: string
   load?: () => void
   loading?: boolean
-  hasBorderBottom?: boolean
-  children?: React.ReactNode
-  id?: string
   mobileBreakpoint?: number
+  subtitle?: React.ReactNode | string
   testId?: string
+  title?: string
 }
 
 const PageHeaderContainer = styled.div<{
@@ -40,15 +41,15 @@ const PageHeaderContainer = styled.div<{
 `
 
 const PageHeader: React.FC<PageHeaderProps> = ({
-  title,
-  subtitle,
-  load,
-  loading,
+  children,
   hasBorderBottom,
   id,
+  load,
+  loading,
   mobileBreakpoint,
+  subtitle,
   testId,
-  children,
+  title,
 }) => {
   const queryClient = useQueryClient()
   const queryClientFetching = useIsFetching()

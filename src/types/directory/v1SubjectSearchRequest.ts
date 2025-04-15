@@ -6,10 +6,10 @@
  * OpenAPI spec version: v0.33.5
  */
 import type { V1Action } from './v1Action';
-import type { V1SubjectSearchRequestContext } from './v1SubjectSearchRequestContext';
 import type { V1Page } from './v1Page';
 import type { V1Resource } from './v1Resource';
 import type { V1Subject } from './v1Subject';
+import type { V1SubjectSearchRequestContext } from './v1SubjectSearchRequestContext';
 
 export interface V1SubjectSearchRequest {
   action?: V1Action;

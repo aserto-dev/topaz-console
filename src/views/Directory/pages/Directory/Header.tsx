@@ -1,18 +1,19 @@
 import React, { useCallback } from 'react'
+
 import { useQueryClient } from '@tanstack/react-query'
 
 import pen from '../../../../assets/edit_pen.svg'
+import EvaluateDisplayState from '../../../../components/common/EvaluateDisplayState'
 import PageHeader from '../../../../components/common/PageHeader'
 import PageHeaderContent from '../../../../components/common/PageHeaderContent'
 import {
   useDirectoryDisplayState,
   useDirectoryModelContext,
 } from '../../../../services/DirectoryContextProvider/hooks'
-import EvaluateDisplayState from '../../../../components/common/EvaluateDisplayState'
 import { EditButton, EditImage, Header } from './styles'
 
 const HeaderComponent: React.FC = () => {
-  const { visible, setVisible } = useDirectoryModelContext()
+  const { setVisible, visible } = useDirectoryModelContext()
   const queryClient = useQueryClient()
   const pathname = window.location.pathname
   const displayState = useDirectoryDisplayState()

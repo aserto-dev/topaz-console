@@ -3,16 +3,17 @@ import { editor } from 'monaco-editor'
 import { configureMonacoYaml, SchemasSettings } from 'monaco-yaml'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import YAML from 'yaml'
+
 import { Monaco } from '@monaco-editor/react'
 import { useQueryClient } from '@tanstack/react-query'
 
 import { useManifestData } from '../../../../../api/directory/parsers/manifest'
 import { useDirectoryModelV3ManifestSet } from '../../../../../api/v3/directory'
 import save from '../../../../../assets/save.svg'
-import { useDirectoryModelContext } from '../../../../../services/DirectoryContextProvider/hooks'
-import { useShowError } from '../../../../../services/ErrorModalProvider'
 import Button from '../../../../../components/common/Button'
 import MonacoEditor from '../../../../../components/common/MonacoEditor'
+import { useDirectoryModelContext } from '../../../../../services/DirectoryContextProvider/hooks'
+import { useShowError } from '../../../../../services/ErrorModalProvider'
 import {
   ButtonsContainer,
   ControlsContainer,
@@ -25,8 +26,8 @@ import {
 const ModelEditor: React.FC = () => {
   const defaultSchema: SchemasSettings = useMemo(() => {
     return {
-      uri: 'https://www.topaz.sh/schema/manifest.json',
       fileMatch: ['file://**/manifest.yaml'],
+      uri: 'https://www.topaz.sh/schema/manifest.json',
     }
   }, [])
 
@@ -39,8 +40,8 @@ const ModelEditor: React.FC = () => {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null)
   const {
     data: manifestData,
-    queryKey: manifestQueryKey,
     isRefetching,
+    queryKey: manifestQueryKey,
   } = useManifestData()
   const manifest = useMemo(() => {
     return manifestData?.toString() || ''
@@ -71,13 +72,13 @@ const ModelEditor: React.FC = () => {
             data: new Blob([parsed.toString()], { type: 'application/yaml' }),
           },
           {
-            onSuccess: () => {
-              queryClient.invalidateQueries({ queryKey: manifestQueryKey })
-              setModified(false)
-            },
             onError: (error) => {
               showError(error)
               setHasError(true)
+            },
+            onSuccess: () => {
+              queryClient.invalidateQueries({ queryKey: manifestQueryKey })
+              setModified(false)
             },
           },
         )
@@ -134,22 +135,22 @@ const ModelEditor: React.FC = () => {
       })
 
       editorRef.current?.updateOptions({
-        tabSize: 2,
-        fontSize: 14,
+        fontFamily:
+          "'Fira Code', -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell','Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
         fontLigatures: true,
-        scrollbar: {
-          verticalScrollbarSize: 4,
-          horizontalScrollbarSize: 4,
-        },
+        fontSize: 14,
         inlineSuggest: {
           enabled: true,
         },
-
-        fontFamily:
-          "'Fira Code', -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell','Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
         minimap: {
           enabled: false,
         },
+
+        scrollbar: {
+          horizontalScrollbarSize: 4,
+          verticalScrollbarSize: 4,
+        },
+        tabSize: 2,
       })
 
       setCode(manifest)

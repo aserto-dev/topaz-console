@@ -4,8 +4,8 @@ import styled from 'styled-components'
 import { theme } from '../../../theme'
 
 type PlayButtonProps = {
-  onSubmit: () => void
   disabled?: boolean
+  onSubmit: () => void
 }
 
 const Icon = styled.div<{ $disabled?: boolean }>`
@@ -27,8 +27,8 @@ const ButtonPath = styled.path<{ $disabled?: boolean }>`
 `
 
 export const PlayButton: React.FC<PlayButtonProps> = ({
-  onSubmit,
   disabled,
+  onSubmit,
 }) => {
   return (
     <Icon $disabled={disabled} aria-label="Run operation" onClick={onSubmit}>

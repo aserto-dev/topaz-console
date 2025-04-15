@@ -1,23 +1,8 @@
 import React, { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router'
+
 import { Query, useQueryClient } from '@tanstack/react-query'
 
-import BinImg from '../../../../../assets/bin.svg'
-import EditImg from '../../../../../assets/edit_pen.svg'
-import line from '../../../../../assets/line.svg'
-import Breadcrumb from '../../../../../components/common/Breadcrumb'
-import { useDirectoryDisplayState } from '../../../../../services/DirectoryContextProvider/hooks'
-import { useShowError } from '../../../../../services/ErrorModalProvider'
-import { V3Object } from '../../../../../types/directory'
-import EvaluateDisplayState from '../../../../../components/common/EvaluateDisplayState'
-import {
-  HeaderButtonContainer,
-  ImageButton,
-  ObjectHeaderContainer,
-} from '../../../styles'
-import DataChangedModal from '../../Directory/DataChangedModal'
-import DirectoryDeleteModal from '../../Directory/DirectoryDeleteModal'
-import EditObjectModal from '../EditObjectModal'
 import { useDirectoryV3ObjectTypesList } from '../../../../../api/directory/customQuery'
 import {
   getDirectoryReaderV3ObjectGetQueryKey,
@@ -27,6 +12,22 @@ import {
   getDirectoryReaderV3ObjectsListQueryKey,
   getDirectoryReaderV3RelationsListQueryKey,
 } from '../../../../../api/v3/directory'
+import BinImg from '../../../../../assets/bin.svg'
+import EditImg from '../../../../../assets/edit_pen.svg'
+import line from '../../../../../assets/line.svg'
+import Breadcrumb from '../../../../../components/common/Breadcrumb'
+import EvaluateDisplayState from '../../../../../components/common/EvaluateDisplayState'
+import { useDirectoryDisplayState } from '../../../../../services/DirectoryContextProvider/hooks'
+import { useShowError } from '../../../../../services/ErrorModalProvider'
+import { V3Object } from '../../../../../types/directory'
+import {
+  HeaderButtonContainer,
+  ImageButton,
+  ObjectHeaderContainer,
+} from '../../../styles'
+import DataChangedModal from '../../Directory/DataChangedModal'
+import DirectoryDeleteModal from '../../Directory/DirectoryDeleteModal'
+import EditObjectModal from '../EditObjectModal'
 
 const ObjectInstanceHeader: React.FC<{ object?: V3Object }> = ({ object }) => {
   const showError = useShowError()
@@ -62,6 +63,7 @@ const ObjectInstanceHeader: React.FC<{ object?: V3Object }> = ({ object }) => {
   const { mutateAsync: deleteObjectMutation } =
     useDirectoryWriterV3ObjectDelete({
       mutation: {
+        onError: (error) => showError(error),
         onSuccess: () => {
           navigate(`/ui/directory/objects/${safeObjectType}`, {
             replace: true,
@@ -81,7 +83,6 @@ const ObjectInstanceHeader: React.FC<{ object?: V3Object }> = ({ object }) => {
             },
           })
         },
-        onError: (error) => showError(error),
       },
     })
 
@@ -103,13 +104,13 @@ const ObjectInstanceHeader: React.FC<{ object?: V3Object }> = ({ object }) => {
         }}
       />
       <DirectoryDeleteModal
-        deleteData={{ type: 'Object Instance', name: safeObjectType }}
+        deleteData={{ name: safeObjectType, type: 'Object Instance' }}
         show={showDeleteModal}
         specificText={`Delete the object instance "${objectId}" from the directory. `}
         onClickRemove={() => {
           deleteObjectMutation({
-            objectType: safeObjectType,
             objectId: safeObjectId,
+            objectType: safeObjectType,
             params: { with_relations: true },
           })
         }}

@@ -1,29 +1,30 @@
 import React, { useCallback, useEffect, useState } from 'react'
+
 import { useQueryClient } from '@tanstack/react-query'
 
-import Button from '../../../../../components/common/Button'
-import CodeEditor from '../../../../../components/common/CodeEditor'
-import { useDirectoryDisplayState } from '../../../../../services/DirectoryContextProvider/hooks'
-import { useShowError } from '../../../../../services/ErrorModalProvider'
-import { V3Object } from '../../../../../types/directory'
-import EvaluateDisplayState from '../../../../../components/common/EvaluateDisplayState'
-import DataChangedModal from '../../Directory/DataChangedModal'
 import {
   getDirectoryReaderV3ObjectsListQueryKey,
   useDirectoryReaderV3ObjectGetQueryOptions,
   useDirectoryWriterV3ObjectSet,
 } from '../../../../../api/v3/directory'
+import Button from '../../../../../components/common/Button'
+import CodeEditor from '../../../../../components/common/CodeEditor'
+import EvaluateDisplayState from '../../../../../components/common/EvaluateDisplayState'
+import { useDirectoryDisplayState } from '../../../../../services/DirectoryContextProvider/hooks'
+import { useShowError } from '../../../../../services/ErrorModalProvider'
+import { useShowSuccessMessage } from '../../../../../services/SuccessBannerProvider/hooks'
+import { V3Object } from '../../../../../types/directory'
+import DataChangedModal from '../../Directory/DataChangedModal'
 import {
   ButtonsContainer,
   ControlsContainer,
   ErrorMessage,
   PropertiesContainer,
 } from './styles'
-import { useShowSuccessMessage } from '../../../../../services/SuccessBannerProvider/hooks'
 
 const ObjectProperties: React.FC<{ object?: V3Object }> = ({ object }) => {
   const queryClient = useQueryClient()
-  const { id: objectId, type: objectType, properties } = object || {}
+  const { id: objectId, properties, type: objectType } = object || {}
 
   const objectsListInfiniteQueryKey = getDirectoryReaderV3ObjectsListQueryKey({
     object_type: objectType,
@@ -33,7 +34,7 @@ const ObjectProperties: React.FC<{ object?: V3Object }> = ({ object }) => {
     objectType || '',
     objectId || '',
   )
-  const { mutate: updateObject, isPending: updatingObject } =
+  const { isPending: updatingObject, mutate: updateObject } =
     useDirectoryWriterV3ObjectSet({
       mutation: {
         onSuccess: () => {

@@ -11,10 +11,10 @@ import Label from '../Label'
 import { colourStyles, formatGroupLabel } from './colourStyles'
 
 export type SelectOption = {
-  value: string | number
   label: string
-  shouldStopPropagation?: boolean
   onClick?: () => void
+  shouldStopPropagation?: boolean
+  value: number | string
 }
 
 type ReactSelectElement = SelectInstance<SelectOption>
@@ -22,32 +22,32 @@ type ReactSelectElement = SelectInstance<SelectOption>
 interface SelectProps
   extends Omit<
     Props<SelectOption, false>,
-    'isDisabled' | 'inputId' | 'styles' | 'formatGroupId' | 'components'
+    'components' | 'formatGroupId' | 'inputId' | 'isDisabled' | 'styles'
   > {
   defaultValue?: SelectOption
   disabled?: boolean
+  disableLabel?: boolean
   label?: string
-  value?: SelectOption | null
-  style?: React.CSSProperties
   modifyCustomStyle?: (
     styles: StylesConfig<SelectOption, false>,
   ) => StylesConfig<SelectOption, false>
-  disableLabel?: boolean
+  style?: React.CSSProperties
+  value?: null | SelectOption
 }
 
 const Select: React.ForwardRefExoticComponent<
-  SelectProps & React.RefAttributes<ReactSelectElement>
+  React.RefAttributes<ReactSelectElement> & SelectProps
 > = React.forwardRef(
   (
     {
-      onChange,
-      label,
       disabled,
+      disableLabel,
+      label,
+      modifyCustomStyle,
+      name,
+      onChange,
       style,
       value,
-      disableLabel,
-      name,
-      modifyCustomStyle,
       ...props
     },
     ref,

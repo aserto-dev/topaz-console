@@ -1,7 +1,9 @@
 import { useMemo } from 'react'
+
 import { QueryKey, useQuery, UseQueryOptions } from '@tanstack/react-query'
 
 import { RpcStatus, V3CheckRequest, V3CheckResponse, V3PaginationResponse } from '../../types/directory'
+import { useDirectoryReaderClient } from '../clients/rest'
 import { useParsedManifest } from './parsers/manifest'
 import {
   Permission,
@@ -13,27 +15,26 @@ import {
   V3PermissionsListRequest,
   V3RelationTypesListRequest,
 } from './types'
-import { useDirectoryReaderClient } from '../clients/rest'
 
 export const useDirectoryV3CheckQuery = (
   params: V3CheckRequest,
   options?: Omit<
     UseQueryOptions<V3CheckResponse, RpcStatus, V3CheckResponse, QueryKey>,
-    'queryKey' | 'queryFn' | 'retry' | 'staleTime'
+    'queryFn' | 'queryKey' | 'retry' | 'staleTime'
   >
 ) => {
   const directoryV3Check = useDirectoryReaderClient<V3CheckResponse>()
 
   return useQuery({
-    queryKey: ['check', params],
     queryFn: (): Promise<V3CheckResponse> => {
       return directoryV3Check({
-        url: `/api/v3/directory/check`,
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         data: params,
+        headers: { 'Content-Type': 'application/json' },
+        method: 'POST',
+        url: `/api/v3/directory/check`,
       })
     },
+    queryKey: ['check', params],
     ...options,
   })
 }
@@ -58,8 +59,8 @@ export const useDirectoryV3ObjectTypesList = (params?: V3ObjectTypesListRequest)
 }
 
 export const useDirectoryV3RelationTypesList = (params?: V3RelationTypesListRequest) => {
-  const { relationTypes, promise, ...all } = useParsedManifest()
-  const { objectType, name } = params ?? {}
+  const { promise, relationTypes, ...all } = useParsedManifest()
+  const { name, objectType } = params ?? {}
 
   const filteredRelationTypes = useMemo(() => {
     let filteredRelationTypes: RelationType[] = relationTypes
@@ -90,7 +91,7 @@ export const useDirectoryV3RelationTypesList = (params?: V3RelationTypesListRequ
 
 export const useDirectoryV3PermissionsList = (params?: V3PermissionsListRequest) => {
   const { permissions, promise, ...all } = useParsedManifest()
-  const { objectType, name } = params ?? {}
+  const { name, objectType } = params ?? {}
 
   const filteredPermissions = useMemo(() => {
     let filteredPermissions: Permission[] = permissions
@@ -116,6 +117,6 @@ export const useDirectoryV3PermissionsList = (params?: V3PermissionsListRequest)
   }
 }
 
-export const getNextPage = (lastPage: { page?: V3PaginationResponse  | undefined}) => {
+export const getNextPage = (lastPage: { page?: undefined  | V3PaginationResponse}) => {
   return lastPage?.page?.next_token || undefined
 }

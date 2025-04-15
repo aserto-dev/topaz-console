@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react'
 import copy from 'copy-to-clipboard'
+import React, { useMemo } from 'react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 
 import copyIcon from '../../../../src/assets/copy.svg'
@@ -7,16 +7,16 @@ import { CodeContainer, CodeDiv, CopyButton, customAtomDark } from './styles'
 
 type HighlightProps = {
   children: string
-  language: string
   copyToClipboard?: boolean
   height?: number
+  language: string
 }
 
 const Highlight: React.FC<HighlightProps> = ({
   children,
-  language,
   copyToClipboard,
   height,
+  language,
 }) => {
   const memoizedHighlighter = useMemo(
     () => (

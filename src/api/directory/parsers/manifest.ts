@@ -6,17 +6,17 @@ import { ObjectType, Permission, RelationType } from '../types'
 
 const DISPLAY_NAME_REGEX = /^(## )(display_name: )(.*)( ###)/
 
-type ManifestObjectType = {
-  displayName: string
-  relations: Record<string, string>
-  permissions: Record<string, string>
-}
-
 export type Manifest = {
   model: {
     version: number
   }
   types: Record<string, ManifestObjectType>
+}
+
+type ManifestObjectType = {
+  displayName: string
+  permissions: Record<string, string>
+  relations: Record<string, string>
 }
 
 type ObjectDisplayName = { [key: string]: string }
@@ -42,8 +42,8 @@ export const useManifest = () => {
         } else {
           manifestData.types[type] = {
             displayName: displayNames[type] || type,
-            relations: {},
             permissions: {},
+            relations: {},
           }
         }
       })
@@ -73,8 +73,8 @@ export const useParsedManifest = () => {
     const types = manifest?.types || {}
     return Object.keys(types).map((objectType) => {
       return {
-        name: objectType,
         displayName: types[objectType]?.displayName || objectType,
+        name: objectType,
       }
     })
   }, [manifest?.types])
@@ -84,9 +84,9 @@ export const useParsedManifest = () => {
       const objectTypeName = objectType.name
       const relationNames = Object.keys(manifest?.types?.[objectTypeName]?.relations || [])
       return relationNames.map((relationName) => ({
+        displayName: relationName,
         name: relationName,
         objectType: objectTypeName,
-        displayName: relationName,
       }))
     })
   }, [parsedObjectTypes, manifest?.types])
@@ -96,17 +96,17 @@ export const useParsedManifest = () => {
       const objectTypeName = objectType.name
       const permissionNames = Object.keys(manifest?.types?.[objectTypeName]?.permissions || [])
       return permissionNames.map((permissionName) => ({
+        displayName: permissionName,
         name: permissionName,
         objectType: objectTypeName,
-        displayName: permissionName,
       }))
     })
   }, [parsedObjectTypes, manifest?.types])
 
   return {
     objectTypes: parsedObjectTypes,
-    relationTypes: parsedRelationTypes,
     permissions: parsedPermissions,
+    relationTypes: parsedRelationTypes,
     ...all,
   }
 }
@@ -115,7 +115,7 @@ const parseDisplayNames = (
   doc:
     | Document.Parsed<Alias.Parsed, true>
     | Document.Parsed<Scalar.Parsed, true>
-    | Document.Parsed<YAMLMap.Parsed<ParsedNode, ParsedNode | null>, true>
+    | Document.Parsed<YAMLMap.Parsed<ParsedNode, null | ParsedNode>, true>
     | Document.Parsed<YAMLSeq.Parsed<ParsedNode>, true>
 ): ObjectDisplayName => {
   const displayNames: ObjectDisplayName = {}

@@ -17,7 +17,7 @@ import {
 const UserObjectInstance: React.FC<{ object?: V3Object }> = ({ object }) => {
   const { id: objectId, type: objectType } = object || {}
 
-  const userProps: { picture?: string; email?: string } =
+  const userProps: { email?: string; picture?: string; } =
     object?.properties || {}
 
   useEffect(() => {

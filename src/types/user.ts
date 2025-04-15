@@ -12,8 +12,6 @@ const UserPropertiesSchema = z.object({
     .transform((v) => (v === '' ? userAvatar : v)),
 })
 
-type UserProperties = z.infer<typeof UserPropertiesSchema>
-
 export type Ds0UserObject = {
   display_name?: string;
   email?: string;
@@ -21,6 +19,8 @@ export type Ds0UserObject = {
 } & {
   properties: UserProperties
 }
+
+type UserProperties = z.infer<typeof UserPropertiesSchema>
 
 export const parseAsUserProperties = (target: V3ObjectProperties = {}): UserProperties =>
   UserPropertiesSchema.parse(target || {})

@@ -1,10 +1,9 @@
 import { useMemo } from 'react'
 
-
-import useIsAvailableDebounced from './useIsAvailableDebounced'
-import { UseIsNameAvailable } from './useIsAvailable'
-import { useDirectoryReaderV3ObjectsListInfinite } from '../../api/v3/directory'
 import { getNextPage } from '../../api/directory/customQuery'
+import { useDirectoryReaderV3ObjectsListInfinite } from '../../api/v3/directory'
+import { UseIsNameAvailable } from './useIsAvailable'
+import useIsAvailableDebounced from './useIsAvailableDebounced'
 
 const useIsIdAvailable = (objectType: string | undefined, currentId?: string): UseIsNameAvailable =>
   useMemo(() => {
@@ -12,7 +11,7 @@ const useIsIdAvailable = (objectType: string | undefined, currentId?: string): U
       const queryResult = useDirectoryReaderV3ObjectsListInfinite(
         { object_type: objectType!},
         {
-          query: { getNextPageParam: getNextPage, enabled: !!objectType && id !== currentId },
+          query: { enabled: !!objectType && id !== currentId, getNextPageParam: getNextPage },
         }
       )
 

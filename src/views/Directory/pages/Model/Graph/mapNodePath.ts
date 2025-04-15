@@ -19,7 +19,7 @@ const mapNodePath = (parsedManifest: ParsedManifestData[]) => {
       relations = relations.filter((relation) => relation.subjects.includes(target))
     }
 
-    if (['object', 'subject', 'permission'].includes(nodeType)) {
+    if (['object', 'permission', 'subject'].includes(nodeType)) {
       if (['object', 'subject'].includes(nodeType)) {
         nodes.push(`${object}-object`)
         relations.forEach((relation) => {

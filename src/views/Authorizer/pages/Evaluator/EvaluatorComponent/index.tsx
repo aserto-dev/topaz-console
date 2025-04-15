@@ -1,12 +1,17 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
-import { PolicyEvaluatorComponent } from './PolicyEvaluatorComponent'
 import {
-  useAuthorizerQuery,
-  useAuthorizerIs,
   useAuthorizerDecisionTree,
+  useAuthorizerIs,
+  useAuthorizerQuery,
   usePoliciesList,
 } from '../../../../../api/v3/authorizer'
+import ensureError from '../../../../../lib/error/ensureError'
+import {
+  AuthorizerOperation,
+  useContentPolicyEvaluatorContext,
+  usePolicyEvaluatorErrorContext,
+} from '../../../../../services/PolicyEvaluatorContextProvider/hooks'
 import {
   V2DecisionTreeRequest,
   V2DecisionTreeResponse,
@@ -15,15 +20,10 @@ import {
   V2QueryRequest,
   V2QueryResponse,
 } from '../../../../../types/authorizer'
-import {
-  AuthorizerOperation,
-  useContentPolicyEvaluatorContext,
-  usePolicyEvaluatorErrorContext,
-} from '../../../../../services/PolicyEvaluatorContextProvider/hooks'
-import ensureError from '../../../../../lib/error/ensureError'
+import { PolicyEvaluatorComponent } from './PolicyEvaluatorComponent'
 type EvaluatorProps = {
   isRebac?: boolean
-  selectedModuleId?: string | null
+  selectedModuleId?: null | string
 }
 
 export const Evaluator: React.FC<EvaluatorProps> = ({
@@ -34,10 +34,10 @@ export const Evaluator: React.FC<EvaluatorProps> = ({
   const { mutateAsync: getAuthzIs } = useAuthorizerIs()
   const { mutateAsync: getAuthzDecisiontree } = useAuthorizerDecisionTree()
   const [output, setOutput] = useState<
-    V2QueryResponse | V2IsResponse | V2DecisionTreeResponse | string
+    string | V2DecisionTreeResponse | V2IsResponse | V2QueryResponse
   >()
   const [requestBody, setRequestBody] = useState<
-    V2QueryRequest | V2IsRequest | V2DecisionTreeRequest
+    V2DecisionTreeRequest | V2IsRequest | V2QueryRequest
   >()
   const { data: listPolicyModules } = usePoliciesList({
     field_mask: 'id,package_path,raw',
@@ -61,10 +61,10 @@ export const Evaluator: React.FC<EvaluatorProps> = ({
 
   const getOperationBasedOnType = (type: AuthorizerOperation) => {
     const operationsObj = {
-      QUERY: getAuthzQuery,
-      IS: getAuthzIs,
-      DECISIONTREE: getAuthzDecisiontree,
       CHECK: getAuthzIs,
+      DECISIONTREE: getAuthzDecisiontree,
+      IS: getAuthzIs,
+      QUERY: getAuthzQuery,
     }
 
     return operationsObj[type]
@@ -72,7 +72,7 @@ export const Evaluator: React.FC<EvaluatorProps> = ({
 
   const onExecute = async (
     type: AuthorizerOperation,
-    body: V2QueryRequest | V2IsRequest | V2DecisionTreeRequest,
+    body: V2DecisionTreeRequest | V2IsRequest | V2QueryRequest,
   ) => {
     const operation = getOperationBasedOnType(type)
     try {
@@ -148,8 +148,8 @@ export const Evaluator: React.FC<EvaluatorProps> = ({
   const generateIdentityContext = useCallback(() => {
     return {
       identity_context: {
-        type,
         identity: identity!,
+        type,
       },
     }
   }, [identity, type])

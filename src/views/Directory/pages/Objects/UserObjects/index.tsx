@@ -2,11 +2,19 @@ import React, { useCallback, useMemo, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { useParams } from 'react-router'
 
+import {
+  getNextPage,
+  useDirectoryV3ObjectTypesList,
+} from '../../../../../api/directory/customQuery'
+import {
+  useDirectoryReaderV3ObjectGet,
+  useDirectoryReaderV3ObjectsListInfinite,
+} from '../../../../../api/v3/directory'
 import userAvatar from '../../../../../assets/generic-user-avatar.svg'
 import NoUsersImage from '../../../../../assets/users.svg'
 import EmptyTablePlaceholder from '../../../../../components/common/EmptyTablePlaceholder'
-import { V3Object, V3ObjectProperties } from '../../../../../types/directory'
 import { UndecoratedLink } from '../../../../../components/common/UndecoratedLink'
+import { V3Object, V3ObjectProperties } from '../../../../../types/directory'
 import ObjectsHeader from '../ObjectsHeader'
 import { useIsScrollable } from '../useIsScrollable'
 import {
@@ -18,14 +26,6 @@ import {
   SubjectCard,
   UsersContainer,
 } from './styles'
-import {
-  getNextPage,
-  useDirectoryV3ObjectTypesList,
-} from '../../../../../api/directory/customQuery'
-import {
-  useDirectoryReaderV3ObjectGet,
-  useDirectoryReaderV3ObjectsListInfinite,
-} from '../../../../../api/v3/directory'
 
 const UserObjects: React.FC = () => {
   const { objectType } = useParams()
@@ -40,9 +40,9 @@ const UserObjects: React.FC = () => {
 
   const {
     data: usersData,
-    isFetching: isFetchingUsers,
-    hasNextPage: hasMoreUsers,
     fetchNextPage: fetchNextUsersData,
+    hasNextPage: hasMoreUsers,
+    isFetching: isFetchingUsers,
   } = useDirectoryReaderV3ObjectsListInfinite(
     {
       object_type: safeObjectType,
@@ -50,8 +50,8 @@ const UserObjects: React.FC = () => {
     },
     {
       query: {
-        getNextPageParam: getNextPage,
         enabled: objectTypes.includes(safeObjectType),
+        getNextPageParam: getNextPage,
       },
     },
   )
@@ -70,17 +70,17 @@ const UserObjects: React.FC = () => {
     {
       query: {
         enabled: false,
-        retry: false,
         meta: {
           showError: false,
         },
+        retry: false,
       },
     },
   )
   const fetchData = useIsScrollable({
-    isFetching: isFetchingUsers,
-    hasMoreData: hasMoreUsers || false,
     fetchNextData: fetchNextUsersData,
+    hasMoreData: hasMoreUsers || false,
+    isFetching: isFetchingUsers,
   })
   useCallback(() => {
     fetchData()
@@ -122,8 +122,8 @@ const UserObjects: React.FC = () => {
           >
             {users.map((u) => {
               const userProps = u.properties as V3ObjectProperties & {
-                picture: string
                 email: string
+                picture: string
               }
 
               return (

@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
+import { useDirectoryModelV3ManifestDelete } from '../../../../api/v3/directory'
+import Button from '../../../../components/common/Button'
+import DeleteConfirmationModal from '../../../../components/common/DeleteConfirmationModal'
 import { useDirectoryModelContext } from '../../../../services/DirectoryContextProvider/hooks'
 import { useShowError } from '../../../../services/ErrorModalProvider'
 import { useShowSuccessMessage } from '../../../../services/SuccessBannerProvider/hooks'
 import { theme } from '../../../../theme'
-import Button from '../../../../components/common/Button'
-import DeleteConfirmationModal from '../../../../components/common/DeleteConfirmationModal'
-import { useDirectoryModelV3ManifestDelete } from '../../../../api/v3/directory'
 
 const DeleteContainer = styled.div`
   font-family: Roboto;

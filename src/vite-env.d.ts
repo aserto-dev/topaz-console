@@ -7,8 +7,8 @@ declare namespace JSX {
   interface IntrinsicElements {
     'rapi-doc': {
       id?: string
-      theme?: string
       ref?: React.Ref<RapiDocElement>
+      theme?: string
     }
   }
 }

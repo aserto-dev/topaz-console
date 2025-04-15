@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 
-import { useBaseClient } from '../clients/base'
 import { useClientConfig } from '../../services/EnvConfigProvider'
+import { useBaseClient } from '../clients/base'
 
 export const useTopazLogin = () => {
   const { discoveryServiceUrl } = useClientConfig()
@@ -9,8 +9,8 @@ export const useTopazLogin = () => {
 
 
   return useMutation({
-    mutationFn: (body: {apiKey: string}) => {
-      return get({ path: `api/v2/config`, headerOverrides: { authorization: `Basic ${body.apiKey}` } })
+    mutationFn: (body: { apiKey: string }) => {
+      return get({ headerOverrides: { authorization: `Basic ${body.apiKey}` }, path: `api/v2/config` })
     },
     onSuccess: () => {
       window.location.reload();

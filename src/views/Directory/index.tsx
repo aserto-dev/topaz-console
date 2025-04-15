@@ -1,14 +1,15 @@
 import { Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router'
-import Frame from './pages/Directory'
-import Directory from './pages/Directory'
-import Model from './pages/Model'
-import Relations from './pages/Relations'
-import Objects from './pages/Objects'
-import ObjectInstance from './pages/ObjectInstance'
-import DirectoryEvaluator from './pages/Evaluator'
+
 import DirectoryApiDocs from './pages/ApiDocs'
 import DangerZone from './pages/DangerZone'
+import Frame from './pages/Directory'
+import Directory from './pages/Directory'
+import DirectoryEvaluator from './pages/Evaluator'
+import Model from './pages/Model'
+import ObjectInstance from './pages/ObjectInstance'
+import Objects from './pages/Objects'
+import Relations from './pages/Relations'
 
 const DirectoryBrowser = () => {
   return (

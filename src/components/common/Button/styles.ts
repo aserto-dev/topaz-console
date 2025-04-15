@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 
 import { theme } from '../../../theme'
 
-const BaseButton = styled(BootstrapButton)<{ size?: 'sm' | 'md' | 'lg' }>`
+const BaseButton = styled(BootstrapButton)<{ size?: 'lg' | 'md' | 'sm' }>`
   border: none;
   border-radius: 4px;
   font-size: 14px;

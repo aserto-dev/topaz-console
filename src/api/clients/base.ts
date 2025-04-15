@@ -1,8 +1,17 @@
 import { useCallback, useMemo } from 'react'
 
-
-import { flatten, QueryParams } from './queryParams'
 import ensureError from '../../lib/error/ensureError'
+import { flatten, QueryParams } from './queryParams'
+
+export type BaseClient = {
+  del: <T>(params: FetchParams) => Promise<T>;
+  get: <T>(params: FetchParams) => Promise<T>;
+  getBlob: <T>(params: FetchParams) => Promise<T>;
+  patch: <Tout, Tin>(params: FetchParamsWithBody<Tin>) => Promise<Tout>;
+  post: <Tout, Tin>(params: FetchParamsWithBody<Tin>) => Promise<Tout>;
+  postBlob: <Tout, Tin>(params: FetchParamsWithBody<Tin>) => Promise<Tout>;
+  put: <Tout, Tin>(params: FetchParamsWithBody<Tin>) => Promise<Tout>;
+};
 
 type FetchParams = {
   abortSignal?: AbortSignal | null
@@ -14,16 +23,6 @@ type FetchParams = {
 type FetchParamsWithBody<T> = FetchParams & {
   body: T
 }
-
-export type BaseClient = {
-  del: <T>(params: FetchParams) => Promise<T>;
-  get: <T>(params: FetchParams) => Promise<T>;
-  getBlob: <T>(params: FetchParams) => Promise<T>;
-  patch: <Tout, Tin>(params: FetchParamsWithBody<Tin>) => Promise<Tout>;
-  post: <Tout, Tin>(params: FetchParamsWithBody<Tin>) => Promise<Tout>;
-  postBlob: <Tout, Tin>(params: FetchParamsWithBody<Tin>) => Promise<Tout>;
-  put: <Tout, Tin>(params: FetchParamsWithBody<Tin>) => Promise<Tout>;
-};
 export const useBaseClient = (
   baseUrl: string,
   apiHeaderOverrides: Record<string, string> = {},
@@ -80,9 +79,9 @@ export const useBaseClient = (
       }
 
       const response = await fetch(url, {
-        method: method || 'GET',
-        headers,
         body,
+        headers,
+        method: method || 'GET',
         signal: abortSignal,
       })
 

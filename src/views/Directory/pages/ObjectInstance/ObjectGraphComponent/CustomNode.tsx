@@ -2,8 +2,8 @@ import { FC, memo } from 'react'
 import { Handle, NodeProps, Position } from 'reactflow'
 import styled from 'styled-components'
 
-import { theme } from '../../../../../theme'
 import Button from '../../../../../components/common/Button'
+import { theme } from '../../../../../theme'
 
 const NodeDiv = styled.div`
   width: 200px;

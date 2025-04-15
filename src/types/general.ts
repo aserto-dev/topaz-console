@@ -1,37 +1,37 @@
-export type Configurations = { readOnly: boolean; configs: Configuration[] } & EnvConfig
-
- type EnvConfig = {
-  authenticationType: string
-}
- type BaseConfiguration = {
-  authorizerServiceUrl?: string
-  authorizerApiKey?: string
-  directoryServiceUrl?: string
-  directoryApiKey?: string
-  directoryTenantId?: string
-  directoryReaderServiceUrl?: string
-  directoryWriterServiceUrl?: string
-  directoryModelServiceUrl?: string
-}
-
- type Configuration = {
-  name: string
-  configurationType: string
-  address?: string
-} & BaseConfiguration
-
-
 export enum QueryKeys {
   Config = 'Config',
 }
 
-export type Config = {
-  authorizerServiceUrl?: string
+ export type Config = {
+  authenticationType: string
   authorizerApiKey?: string
-  directoryServiceUrl?: string
-  directoryReaderServiceUrl?: string
-  directoryWriterServiceUrl?: string
-  directoryModelServiceUrl?: string
+  authorizerServiceUrl?: string
   directoryApiKey?: string
+  directoryModelServiceUrl?: string
+  directoryReaderServiceUrl?: string
+  directoryServiceUrl?: string
+  directoryWriterServiceUrl?: string
+}
+ export type Configurations = EnvConfig & { configs: Configuration[]; readOnly: boolean; }
+
+ type BaseConfiguration = {
+  authorizerApiKey?: string
+  authorizerServiceUrl?: string
+  directoryApiKey?: string
+  directoryModelServiceUrl?: string
+  directoryReaderServiceUrl?: string
+  directoryServiceUrl?: string
+  directoryTenantId?: string
+  directoryWriterServiceUrl?: string
+}
+
+
+type Configuration = BaseConfiguration & {
+  address?: string
+  configurationType: string
+  name: string
+}
+
+type EnvConfig = {
   authenticationType: string
 }

@@ -11,10 +11,10 @@ import { GraphData, markerEnd } from './graphData'
 const GetGraphData = (
   parsedManifest: ParsedManifestData[],
   nodeStyle: (nodeType: string) => {
-    borderRadius: string
     borderColor: string
-    borderWidth: string
+    borderRadius: string
     borderStyle: string
+    borderWidth: string
   },
 ): GraphData => {
   return useMemo(() => {
@@ -63,10 +63,6 @@ const GetGraphData = (
         }
 
         relationNodes.push({
-          id: `${data.object}-${relation.key}`,
-          type: 'relation',
-          sourcePosition: Position.Right,
-          targetPosition: Position.Left,
           data: {
             context: data.object,
             label: relation.key,
@@ -74,6 +70,7 @@ const GetGraphData = (
             targetHandle: true,
             toolbarValue: relation.key,
           },
+          id: `${data.object}-${relation.key}`,
           position: {
             x: relationsX,
             y:
@@ -82,11 +79,13 @@ const GetGraphData = (
                 : baseY +
                   (Math.round(uniqueSubjects / 2) - 2 + relationIndex) * step,
           },
+          sourcePosition: Position.Right,
           style: nodeStyle('relation'),
+          targetPosition: Position.Left,
+          type: 'relation',
         })
 
         // Arrow operator edges
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         Object.entries(relation.permissions || {}).forEach(([_key, values]) => {
           values.forEach((value) => {
             relation.subjects.forEach((subject) => {
@@ -99,13 +98,13 @@ const GetGraphData = (
               if (edgeExists === -1) {
                 relationEdges.push({
                   id: `${id}`,
-                  source: `${data.object}-${relation.key}`,
-                  target: `${subject}-${value}`,
-                  sourceHandle: 'permission',
-                  targetHandle: target,
                   markerEnd: markerEnd,
-                  type: 'smoothstep',
+                  source: `${data.object}-${relation.key}`,
+                  sourceHandle: 'permission',
                   style: { strokeDasharray: '5' },
+                  target: `${subject}-${value}`,
+                  targetHandle: target,
+                  type: 'smoothstep',
                 })
               }
             })
@@ -121,10 +120,6 @@ const GetGraphData = (
 
           if (!existingSubject) {
             subjectNodes.push({
-              id: `${data.object}-${subject}-subject`,
-              type: 'subject',
-              sourcePosition: Position.Right,
-              targetPosition: Position.Left,
               data: {
                 context: data.object,
                 label: subject,
@@ -132,11 +127,15 @@ const GetGraphData = (
                 targetHandle: true,
                 toolbarValue: subject,
               },
+              id: `${data.object}-${subject}-subject`,
               position: {
                 x: subjectsX,
                 y: baseY + (subjectsCount - existingCount) * step,
               },
+              sourcePosition: Position.Right,
               style: nodeStyle('object'),
+              targetPosition: Position.Left,
+              type: 'subject',
             })
             subjectsCount = subjectsCount + 1
           } else {
@@ -149,9 +148,9 @@ const GetGraphData = (
 
           relationEdges.push({
             id: `${data.object}-${relation.key}:${data.object}-${subject}-subject`,
+            markerEnd: markerEnd,
             source: `${data.object}-${relation.key}`,
             target: `${data.object}-${subject}-subject`,
-            markerEnd: markerEnd,
           })
         })
 
@@ -163,9 +162,9 @@ const GetGraphData = (
         ) {
           objectEdges.push({
             id: `${data.object}-object:${data.object}-${relation.key}`,
+            markerEnd: markerEnd,
             source: `${data.object}-object`,
             target: `${data.object}-${relation.key}`,
-            markerEnd: markerEnd,
           })
         }
       })
@@ -177,10 +176,6 @@ const GetGraphData = (
       }
       permissions.forEach((permission, permissionIndex) => {
         permissionNodes.push({
-          id: `${data.object}-${permission.key}`,
-          type: 'permission',
-          sourcePosition: Position.Right,
-          targetPosition: Position.Left,
           data: {
             context: data.object,
             label: permission.key,
@@ -188,40 +183,44 @@ const GetGraphData = (
             targetHandle: true,
             toolbarValue: permission.key,
           },
+          id: `${data.object}-${permission.key}`,
           position: {
             x: permissionsX,
             y: baseY + permissionIndex * step,
           },
+          sourcePosition: Position.Right,
           style: nodeStyle('permission'),
+          targetPosition: Position.Left,
+          type: 'permission',
         })
         operatorNodes.push({
-          id: `${data.object}-${permission.key}-${permission.operator}`,
-          type: 'operator',
-          sourcePosition: Position.Right,
-          targetPosition: Position.Left,
           data: {
             context: data.object,
-            permission: permission.key,
             label: permission.operator,
+            permission: permission.key,
             sourceHandle: true,
             targetHandle: true,
           },
+          id: `${data.object}-${permission.key}-${permission.operator}`,
           position: { x: operatorsX, y: baseY + permissionIndex * step },
+          sourcePosition: Position.Right,
           style: nodeStyle('operator'),
+          targetPosition: Position.Left,
+          type: 'operator',
         })
 
         objectEdges.push({
           id: `${data.object}-object:${data.object}-${permission.key}`,
+          markerEnd: markerEnd,
           source: `${data.object}-object`,
           target: `${data.object}-${permission.key}`,
-          markerEnd: markerEnd,
         })
 
         permissionEdges.push({
           id: `${data.object}-${permission.key}:${data.object}-${permission.key}-${permission.operator}`,
+          markerEnd: markerEnd,
           source: `${data.object}-${permission.key}`,
           target: `${data.object}-${permission.key}-${permission.operator}`,
-          markerEnd: markerEnd,
         })
 
         const permissionsKeys = permissions.map((permission) => permission.key)
@@ -229,31 +228,31 @@ const GetGraphData = (
           const isPermission = permissionsKeys.includes(relation)
           operatorEdges.push({
             id: `${data.object}-${permission.key}-${permission.operator}:${data.object}-${relation}`,
-            source: `${data.object}-${permission.key}-${permission.operator}`,
-            target: `${data.object}-${relation}`,
-            sourceHandle: isPermission ? 'permission' : undefined,
-            targetHandle: isPermission ? 'permission' : undefined,
             markerEnd: markerEnd,
+            source: `${data.object}-${permission.key}-${permission.operator}`,
+            sourceHandle: isPermission ? 'permission' : undefined,
+            target: `${data.object}-${relation}`,
+            targetHandle: isPermission ? 'permission' : undefined,
             type: isPermission ? 'smoothstep' : 'default',
           })
         })
       })
 
       objectNodes.push({
-        id: `${data.object}-object`,
-        type: 'object',
-        sourcePosition: Position.Right,
         data: {
           context: data.object,
           label: data.object,
           sourceHandle: true,
           toolbarValue: data.object,
         },
+        id: `${data.object}-object`,
         position: {
           x: objectsX,
           y: baseY + (Math.round(currentDepth / 2) - 1) * step,
         },
+        sourcePosition: Position.Right,
         style: nodeStyle('object'),
+        type: 'object',
       })
 
       // set the new base
@@ -261,16 +260,16 @@ const GetGraphData = (
     })
 
     return {
+      edges: objectEdges
+        .concat(permissionEdges)
+        .concat(operatorEdges)
+        .concat(relationEdges),
+
       nodes: objectNodes
         .concat(operatorNodes)
         .concat(permissionNodes)
         .concat(relationNodes)
         .concat(subjectNodes),
-
-      edges: objectEdges
-        .concat(permissionEdges)
-        .concat(operatorEdges)
-        .concat(relationEdges),
     }
   }, [parsedManifest, nodeStyle])
 }

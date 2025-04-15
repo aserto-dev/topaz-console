@@ -2,6 +2,7 @@ import React, { useMemo } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 import { FormatOptionLabelMeta } from 'react-select'
 
+import { useDirectoryV3ObjectTypesList } from '../../../../api/directory/customQuery'
 import {
   VerticalTabOptions,
   VerticalTabs,
@@ -12,7 +13,6 @@ import SelectDirectory, {
 } from '../../../../components/common/SelectDirectory'
 import { useDirectoryDisplayState } from '../../../../services/DirectoryContextProvider/hooks'
 import { LeftContainer, SelectContainerDirectory } from './styles'
-import { useDirectoryV3ObjectTypesList } from '../../../../api/directory/customQuery'
 
 export const DirectorySidebar: React.FC = () => {
   const navigate = useNavigate()
@@ -25,15 +25,15 @@ export const DirectorySidebar: React.FC = () => {
     {
       section: {
         label: 'Model',
-        value: '/ui/directory/model',
         redirects: true,
+        value: '/ui/directory/model',
       },
     },
     {
       section: {
         label: 'Relations',
-        value: '/ui/directory/relations',
         redirects: true,
+        value: '/ui/directory/relations',
       },
     },
   ]
@@ -42,15 +42,15 @@ export const DirectorySidebar: React.FC = () => {
     verticalTabOptions.push({
       section: {
         label: 'Objects',
-        value: '/ui/directory/objects',
         redirects: true,
+        value: '/ui/directory/objects',
       },
       subOptions: [
         ...objectTypes.map((o) => {
           return {
             label: o.displayName || o.name,
-            value: `/ui/directory/objects/${encodeURIComponent(o.name)}`,
             redirects: true as const,
+            value: `/ui/directory/objects/${encodeURIComponent(o.name)}`,
           }
         }),
       ],
@@ -60,16 +60,16 @@ export const DirectorySidebar: React.FC = () => {
   verticalTabOptions.push({
     section: {
       label: 'Evaluator',
-      value: '/ui/directory/evaluator',
       redirects: true,
+      value: '/ui/directory/evaluator',
     },
   })
 
   verticalTabOptions.push({
     section: {
       label: 'API Browser',
-      value: '/ui/directory/docs',
       redirects: true,
+      value: '/ui/directory/docs',
     },
   })
 
@@ -77,8 +77,8 @@ export const DirectorySidebar: React.FC = () => {
     verticalTabOptions.push({
       section: {
         label: 'Danger Zone',
-        value: '/ui/directory/danger',
         redirects: true,
+        value: '/ui/directory/danger',
       },
     })
   }
@@ -91,16 +91,16 @@ export const DirectorySidebar: React.FC = () => {
             .filter((so: { redirects: unknown }) => so.redirects)
             .map((so: { label: string; value: string }) => {
               return {
+                group: o.section.label,
                 label: so.label,
                 value: so.value,
-                group: o.section.label,
               }
             })
         : [
             {
+              group: o.section.label,
               label: '',
               value: o.section.value,
-              group: o.section.label,
             },
           ],
     }

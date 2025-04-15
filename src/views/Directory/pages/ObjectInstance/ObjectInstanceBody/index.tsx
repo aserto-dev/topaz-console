@@ -8,7 +8,7 @@ import PropertiesImg from '../../../../../assets/properties.svg'
 import { NavTab, TabGroup } from './styles'
 
 const ObjectInstanceBody = () => {
-  const { objectType, objectId } = useParams()
+  const { objectId, objectType } = useParams()
 
   return (
     <>

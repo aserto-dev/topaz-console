@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
 
-import { RowComponent } from '../../../../components/common/DataTable/TableBody'
 import Button from '../../../../components/common/Button'
+import { RowComponent } from '../../../../components/common/DataTable/TableBody'
 import { theme } from '../../../../theme'
 
 export const AddButton = styled(Button)`

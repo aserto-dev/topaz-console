@@ -2,19 +2,19 @@ import React, { useEffect, useMemo, useState } from 'react'
 import CreatableSelect from 'react-select/creatable'
 import styled from 'styled-components'
 
-import Button from '../../../../../components/common/Button'
-import { CardModal } from '../../../../../components/common/CardModal'
-import Select from '../../../../../components/common/Select'
-import { V3Object } from '../../../../../types/directory'
-import Label from '../../../../../components/common/Label'
-import { colourStyles } from '../../../../../components/common/Select/colourStyles'
-import { useSubjectRelationTypes } from '../../../hooks/useSubjectRelationTypes'
 import {
   getNextPage,
   useDirectoryV3ObjectTypesList,
   useDirectoryV3RelationTypesList,
 } from '../../../../../api/directory/customQuery'
 import { useDirectoryReaderV3ObjectsListInfinite } from '../../../../../api/v3/directory'
+import Button from '../../../../../components/common/Button'
+import { CardModal } from '../../../../../components/common/CardModal'
+import Label from '../../../../../components/common/Label'
+import Select from '../../../../../components/common/Select'
+import { colourStyles } from '../../../../../components/common/Select/colourStyles'
+import { V3Object } from '../../../../../types/directory'
+import { useSubjectRelationTypes } from '../../../hooks/useSubjectRelationTypes'
 
 const ContentContainer = styled.div`
   padding: 20px;
@@ -45,30 +45,30 @@ const ButtonsContainer = styled.div`
   }
 `
 type AddRelationModalProps = {
-  show: boolean
+  object: undefined | V3Object
   onHide: () => void
-  relation: { type: string; objectType: string }
-  relationSideProperty: 'subject' | 'object'
-  object: V3Object | undefined
   onSave?: (
     objectType: string,
     objectKey: string,
     subjectRelation?: string,
   ) => void
+  relation: { objectType: string; type: string; }
+  relationSideProperty: 'object' | 'subject'
+  show: boolean
 }
 
 const AddRelationModal: React.FC<AddRelationModalProps> = ({
-  relationSideProperty,
-  relation,
-  onSave,
-  onHide,
-  show,
   object,
+  onHide,
+  onSave,
+  relation,
+  relationSideProperty,
+  show,
 }) => {
-  const [selectedObjectType, setSelectedObjectType] = useState<string | null>()
-  const [selectedObjectKey, setSelectedObjectKey] = useState<string | null>()
+  const [selectedObjectType, setSelectedObjectType] = useState<null | string>()
+  const [selectedObjectKey, setSelectedObjectKey] = useState<null | string>()
   const [selectedSubjectRelation, setSelectedSubjectRelation] = useState<
-    string | null
+    null | string
   >()
   const [filter, setFilter] = useState<string>('')
   const safeObjectType = object?.type || ''
@@ -91,9 +91,9 @@ const AddRelationModal: React.FC<AddRelationModalProps> = ({
 
   const {
     data: objectsData,
-    isLoading: isLoadingObjectRelations,
-    hasNextPage: hasMoreObjectRelations,
     fetchNextPage: fetchNextObjectRelations,
+    hasNextPage: hasMoreObjectRelations,
+    isLoading: isLoadingObjectRelations,
   } = useDirectoryReaderV3ObjectsListInfinite(
     {
       object_type: selectedObjectType ?? '',

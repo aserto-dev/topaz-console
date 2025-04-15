@@ -1,23 +1,28 @@
 import React, { useMemo, useState } from 'react'
 
-import Highlight from '../../../../components/common/Highlight'
-import Label from '../../../../components/common/Label'
-import { PlayButton } from '../../../../components/common/PlayButton'
-import { Row } from '../../../../components/common/Row'
-import Select from '../../../../components/common/Select'
-import { useDirectoryEvaluatorContext } from '../../../../services/DirectoryContextProvider/hooks'
-import { colourStyles } from '../../../../components/common/Select/colourStyles'
-import { useCopyCurlRest } from './copyCurlRest'
 import {
   getNextPage,
   useDirectoryV3CheckQuery,
   useDirectoryV3ObjectTypesList,
 } from '../../../../api/directory/customQuery'
-import { useDirectoryReaderV3Graph } from '../../../../api/v3/directory'
 import {
   useDirectoryV3PermissionsList,
   useDirectoryV3RelationTypesList,
 } from '../../../../api/directory/customQuery'
+import { useDirectoryReaderV3Graph } from '../../../../api/v3/directory'
+import {
+  useDirectoryReaderV3ObjectGet,
+  useDirectoryReaderV3ObjectsListInfinite,
+  useDirectoryReaderV3RelationsListInfinite,
+} from '../../../../api/v3/directory'
+import Highlight from '../../../../components/common/Highlight'
+import Label from '../../../../components/common/Label'
+import { PlayButton } from '../../../../components/common/PlayButton'
+import { Row } from '../../../../components/common/Row'
+import Select from '../../../../components/common/Select'
+import { colourStyles } from '../../../../components/common/Select/colourStyles'
+import { useDirectoryEvaluatorContext } from '../../../../services/DirectoryContextProvider/hooks'
+import { useCopyCurlRest } from './copyCurlRest'
 import {
   ButtonsContainer,
   Container,
@@ -36,82 +41,77 @@ import {
   SubContainer,
   TextBox,
 } from './styles'
-import {
-  useDirectoryReaderV3ObjectGet,
-  useDirectoryReaderV3ObjectsListInfinite,
-  useDirectoryReaderV3RelationsListInfinite,
-} from '../../../../api/v3/directory'
 
-type PermissionPayload = {
+export type RequestPayload = FindObjectsPayload &
+  FindUsersPayload &
+  ObjectPayload &
+  ObjectRelationsPayload &
+  ObjectsPayload &
+  PermissionPayload &
+  RelationsPayload
+type FindObjectsPayload = {
   object_type: string
-  object_id: string
-  subject_type: string
-  subject_id: string
-  permission: string
-}
-type RelationsPayload = {
-  object_type: string
-  object_id: string
-  subject_type: string
-  subject_id: string
   relation: string
+  subject_id: string
+  subject_type: string
+}
+type FindUsersPayload = {
+  object_id: string
+  object_type: string
+  relation: string
+  subject_type: string
 }
 type ObjectPayload = {
-  object_type: string
   object_id: string
-}
-type ObjectsPayload = {
   object_type: string
 }
 type ObjectRelationsPayload = {
-  object_type: string
   object_id: string
+  object_type: string
 }
 
-type FindUsersPayload = {
+type ObjectsPayload = {
   object_type: string
-  object_id: string
-  subject_type: string
-  relation: string
 }
 
-type FindObjectsPayload = {
-  subject_type: string
+type PermissionPayload = {
+  object_id: string
+  object_type: string
+  permission: string
   subject_id: string
-  object_type: string
-  relation: string
+  subject_type: string
 }
 
-export type RequestPayload = RelationsPayload &
-  PermissionPayload &
-  ObjectPayload &
-  ObjectsPayload &
-  ObjectRelationsPayload &
-  FindUsersPayload &
-  FindObjectsPayload
+type RelationsPayload = {
+  object_id: string
+  object_type: string
+  relation: string
+  subject_id: string
+  subject_type: string
+}
 
 const DirectoryEvaluator: React.FC = () => {
   const {
-    request,
-    subjectType,
-    subjectInstance,
-    relationType,
-    objectType,
     objectInstance,
-    setRequest,
-    setSubjectType,
-    setSubjectInstance,
-    setRelationType,
-    setObjectType,
+    objectType,
+    relationType,
+    request,
     setObjectInstance,
+    setObjectType,
+    setRelationType,
+    setRequest,
+    setSubjectInstance,
+    setSubjectType,
+    subjectInstance,
+    subjectType,
   } = useDirectoryEvaluatorContext()
 
   const REQUEST_PATHS = {
     CHECK: 'api/v3/directory/check',
+    GRAPH: 'api/v3/directory/graph',
     OBJECT: 'api/v3/directory/object',
     OBJECTS: 'api/v3/directory/objects',
     RELATIONS: 'api/v3/directory/relations',
-    GRAPH: 'api/v3/directory/graph',
   } as const
 
   const [query, setQuery] = useState<string>()
@@ -121,16 +121,16 @@ const DirectoryEvaluator: React.FC = () => {
     switch (request) {
       case 'check':
         return REQUEST_PATHS.CHECK
+      case 'find_objects':
+        return REQUEST_PATHS.GRAPH
+      case 'find_users':
+        return REQUEST_PATHS.GRAPH
       case 'object':
         return REQUEST_PATHS.OBJECT
       case 'objects':
         return REQUEST_PATHS.OBJECTS
       case 'relations':
         return REQUEST_PATHS.RELATIONS
-      case 'find_users':
-        return REQUEST_PATHS.GRAPH
-      case 'find_objects':
-        return REQUEST_PATHS.GRAPH
     }
     return ''
   }
@@ -138,38 +138,38 @@ const DirectoryEvaluator: React.FC = () => {
     switch (request) {
       case 'check':
         return {
-          subject_type: subjectType,
-          subject_id: String(subjectInstance?.value || ''),
-          object_type: objectType,
           object_id: String(objectInstance?.value || ''),
+          object_type: objectType,
           relation: String(relationType?.value || ''),
+          subject_id: String(subjectInstance?.value || ''),
+          subject_type: subjectType,
         }
-      case 'object':
+      case 'find_objects':
         return {
           object_type: objectType,
-          object_id: String(objectInstance?.value || ''),
-        }
-      case 'objects':
-        return { object_type: objectType }
-      case 'relations':
-        return {
-          object_type: objectType,
-          object_id: String(objectInstance?.value || ''),
+          relation: String(relationType?.value || ''),
+          subject_id: String(subjectInstance?.value || ''),
+          subject_type: 'user',
         }
       case 'find_users':
         return {
-          object_type: objectType,
           object_id: String(objectInstance?.value || ''),
-          subject_type: 'user',
-          relation: String(relationType?.value || ''),
-        }
-
-      case 'find_objects':
-        return {
-          subject_type: 'user',
-          subject_id: String(subjectInstance?.value || ''),
           object_type: objectType,
           relation: String(relationType?.value || ''),
+          subject_type: 'user',
+        }
+      case 'object':
+        return {
+          object_id: String(objectInstance?.value || ''),
+          object_type: objectType,
+        }
+      case 'objects':
+        return { object_type: objectType }
+
+      case 'relations':
+        return {
+          object_id: String(objectInstance?.value || ''),
+          object_type: objectType,
         }
     }
   }
@@ -192,9 +192,9 @@ const DirectoryEvaluator: React.FC = () => {
     {
       object_id: String(objectInstance?.value || ''),
       object_type: objectType,
+      relation: String(relationType?.value || ''),
       subject_id: String(subjectInstance?.value || ''),
       subject_type: subjectType,
-      relation: String(relationType?.value || ''),
     },
     {
       enabled: false,
@@ -228,9 +228,9 @@ const DirectoryEvaluator: React.FC = () => {
   const { refetch: refetchIncomingRelationsData } =
     useDirectoryReaderV3RelationsListInfinite(
       {
+        'page.size': 100,
         subject_id: String(objectInstance?.value || ''),
         subject_type: objectType || '',
-        'page.size': 100,
       },
       {
         query: {
@@ -272,8 +272,8 @@ const DirectoryEvaluator: React.FC = () => {
 
   const {
     data: subjectsData,
-    hasNextPage: hasMoreSubjects,
     fetchNextPage: fetchNextSubjectsData,
+    hasNextPage: hasMoreSubjects,
   } = useDirectoryReaderV3ObjectsListInfinite(
     {
       object_type: subjectType,
@@ -347,8 +347,8 @@ const DirectoryEvaluator: React.FC = () => {
 
   const {
     data: objectsData,
-    hasNextPage: hasMoreObjects,
     fetchNextPage: fetchMoreObjects,
+    hasNextPage: hasMoreObjects,
   } = useDirectoryReaderV3ObjectsListInfinite(
     {
       object_type: objectType,
@@ -377,16 +377,16 @@ const DirectoryEvaluator: React.FC = () => {
     switch (request) {
       case 'check':
         return !relationType || !subjectInstance || !objectInstance
+      case 'find_objects':
+        return !subjectInstance || !objectType || !relationType
+      case 'find_users':
+        return !objectInstance || !objectType || !relationType
       case 'object':
         return !objectInstance || !objectType
       case 'objects':
         return !objectType
       case 'relations':
         return !objectInstance || !objectType
-      case 'find_users':
-        return !objectInstance || !objectType || !relationType
-      case 'find_objects':
-        return !subjectInstance || !objectType || !relationType
       default:
         return !request
     }
@@ -403,14 +403,23 @@ const DirectoryEvaluator: React.FC = () => {
   }
 
   const evaluate = async () => {
-    let data, currentQuery
+    let currentQuery, data
     switch (request) {
       case 'check':
         data = (await refetchCheck()).data
         break
+      case 'find_objects':
+        data = (await refetchGetGraph()).data?.results
+        currentQuery = 'find_objects' // placeholder for copyAsCurl state
+        break
+      case 'find_users':
+        data = (await refetchGetGraph()).data?.results
+        currentQuery = 'find_users' // placeholder for copyAsCurl state
+        break
       case 'object':
         data = (await refetchObjectData()).data?.result
         break
+
       case 'objects':
         data = (await refetchObjectsByTypeData()).data?.pages.flatMap(
           (page) => page.results || [],
@@ -420,13 +429,13 @@ const DirectoryEvaluator: React.FC = () => {
         const incomingData = await refetchIncomingRelationsData()
         const outgoingData = await refetchOutgoingRelationsData()
         data = {
-          outgoingRelations: (
-            outgoingData.data?.pages.map((page) => {
+          incomingRelations: (
+            incomingData.data?.pages.map((page) => {
               return page.results || []
             }) || []
           ).flat(),
-          incomingRelations: (
-            incomingData.data?.pages.map((page) => {
+          outgoingRelations: (
+            outgoingData.data?.pages.map((page) => {
               return page.results || []
             }) || []
           ).flat(),
@@ -434,15 +443,6 @@ const DirectoryEvaluator: React.FC = () => {
 
         break
       }
-
-      case 'find_users':
-        data = (await refetchGetGraph()).data?.results
-        currentQuery = 'find_users' // placeholder for copyAsCurl state
-        break
-      case 'find_objects':
-        data = (await refetchGetGraph()).data?.results
-        currentQuery = 'find_objects' // placeholder for copyAsCurl state
-        break
       default:
         break
     }
@@ -514,11 +514,11 @@ const DirectoryEvaluator: React.FC = () => {
           )}
           {[
             'check',
+            'find_objects',
+            'find_users',
             'object',
             'objects',
             'relations',
-            'find_users',
-            'find_objects',
           ].includes(request) && (
             <ObjectDiv>
               <Select
@@ -533,7 +533,7 @@ const DirectoryEvaluator: React.FC = () => {
                   }
                 }}
               />
-              {!['objects', 'find_objects'].includes(request) && (
+              {!['find_objects', 'objects'].includes(request) && (
                 <Select
                   label="Instance"
                   options={objectInstances}
@@ -548,7 +548,7 @@ const DirectoryEvaluator: React.FC = () => {
               )}
             </ObjectDiv>
           )}
-          {['check', 'find_users', 'find_objects'].includes(request) && (
+          {['check', 'find_objects', 'find_users'].includes(request) && (
             <Select
               label="Relation"
               modifyCustomStyle={() => colourStyles}

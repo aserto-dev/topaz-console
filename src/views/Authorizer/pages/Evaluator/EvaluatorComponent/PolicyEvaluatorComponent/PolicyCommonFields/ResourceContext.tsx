@@ -1,27 +1,27 @@
 import React, { useMemo } from 'react'
 
-import { FieldContainer, ResourceTextArea } from '../styles'
-import {
-  useCommonPolicyEvaluatorContext,
-  usePolicyEvaluatorErrorContext,
-  useRebacPolicyEvaluatorContext,
-} from '../../../../../../../services/PolicyEvaluatorContextProvider/hooks'
 import {
   useDirectoryV3PermissionsList,
   useDirectoryV3RelationTypesList,
 } from '../../../../../../../api/directory/customQuery'
 import Label from '../../../../../../../components/common/Label'
 import { SelectOption } from '../../../../../../../components/common/Select'
+import {
+  useCommonPolicyEvaluatorContext,
+  usePolicyEvaluatorErrorContext,
+  useRebacPolicyEvaluatorContext,
+} from '../../../../../../../services/PolicyEvaluatorContextProvider/hooks'
+import { FieldContainer, ResourceTextArea } from '../styles'
 
 export const ResourceContext = () => {
   const {
     objectType,
-    setObjectType,
     setObjectInstance,
-    setRelationType,
+    setObjectType,
     setPermission,
+    setRelationType,
   } = useRebacPolicyEvaluatorContext()
-  const { setResourceContext, resourceContext } =
+  const { resourceContext, setResourceContext } =
     useCommonPolicyEvaluatorContext()
   const { resourceContextError } = usePolicyEvaluatorErrorContext()
   const { data: permissionsData } = useDirectoryV3PermissionsList({
@@ -93,13 +93,13 @@ export const ResourceContext = () => {
 const handleChange = (
   value: string,
   setObjectType: React.Dispatch<React.SetStateAction<string>>,
-  setObjectInstance: React.Dispatch<React.SetStateAction<SelectOption | null>>,
-  setRelationType: React.Dispatch<React.SetStateAction<SelectOption | null>>,
+  setObjectInstance: React.Dispatch<React.SetStateAction<null | SelectOption>>,
+  setRelationType: React.Dispatch<React.SetStateAction<null | SelectOption>>,
   relations: { label: string; value: string }[],
-  setPermission: React.Dispatch<React.SetStateAction<SelectOption | null>>,
+  setPermission: React.Dispatch<React.SetStateAction<null | SelectOption>>,
   permissions: { label: string; value: string }[],
 ) => {
-  let ctx = { object_type: '', object_key: '', relation: '', permission: '' }
+  let ctx = { object_key: '', object_type: '', permission: '', relation: '' }
   try {
     ctx = JSON.parse(value !== '' ? value : '{}')
   } catch {

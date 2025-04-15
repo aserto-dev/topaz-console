@@ -32,9 +32,9 @@ const ObjectGraph: React.FC<{ object?: V3Object }> = ({ object }) => {
   const { id: objectId, type: objectType } = object || {}
 
   const obj: V3Object = {
+    display_name: object?.display_name || objectId,
     id: objectId || '',
     type: objectType || '',
-    display_name: object?.display_name || objectId,
   }
   const setObject = useCallback(
     (o: V3Object) => {

@@ -10,47 +10,47 @@ import {
   VerticalTab,
 } from './styles'
 
+export interface VerticalTabOptions {
+  section: NestedTabOptions
+  subOptions?: (NestedTabButton | NestedTabOptions)[]
+}
+
+interface NestedTabButton {
+  label: string
+  onClick: () => void
+  redirects: false
+  value: string
+}
+
+interface NestedTabOptions {
+  isDisabled?: boolean
+  label: string
+  redirects: true
+  value: string
+}
+
 type TabOption =
-  | {
-      label: string
-      value: string
-      redirects: true
-      onClick?: () => void
-    }
   | {
       label: string
       onClick: () => void
       redirects: false
     }
+  | {
+      label: string
+      onClick?: () => void
+      redirects: true
+      value: string
+    }
 
-interface NestedTabOptions {
-  label: string
-  value: string
-  isDisabled?: boolean
-  redirects: true
-}
-
-interface NestedTabButton {
-  value: string
-  label: string
-  onClick: () => void
-  redirects: false
-}
-
-export interface VerticalTabOptions {
-  section: NestedTabOptions
-  subOptions?: (NestedTabOptions | NestedTabButton)[]
+type VerticalTabParams = {
+  depth: number
+  subLinks?: TabOption[]
+  to: To
 }
 
 type VerticalTabsProps = {
   options: VerticalTabOptions[]
   selectedValue?: string
-}
-
-type VerticalTabParams = {
-  depth: number
-  to: To
-  subLinks?: TabOption[]
 }
 
 const NestedVerticalTab: React.FC<PropsWithChildren<VerticalTabParams>> = ({
@@ -60,7 +60,7 @@ const NestedVerticalTab: React.FC<PropsWithChildren<VerticalTabParams>> = ({
   to,
 }) => {
   const resolved = useResolvedPath(to)
-  const active = useMatch({ path: `${resolved.pathname}/*`, end: false })
+  const active = useMatch({ end: false, path: `${resolved.pathname}/*` })
 
   let icon: string
 

@@ -1,5 +1,6 @@
 import React, { ReactNode, useMemo, useState } from 'react'
 
+import { createExactMatchValidator } from '../../../lib/validation/validators/exactMatch'
 import Button from '../Button'
 import { CardModal } from '../CardModal'
 import { Info } from '../Input'
@@ -11,24 +12,23 @@ import {
   Text,
   TextArea,
 } from './styles'
-import { createExactMatchValidator } from '../../../lib/validation/validators/exactMatch'
 
 type DeleteConfirmationModalProps = {
-  show: boolean
-  onHide: () => void
-  subject: string
+  content?: ReactNode
   entityName: string
   onClickRemove: () => void
-  content?: ReactNode
+  onHide: () => void
+  show: boolean
+  subject: string
 }
 
 const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
+  content,
+  entityName,
+  onClickRemove,
   onHide,
   show,
   subject,
-  entityName,
-  onClickRemove,
-  content,
 }) => {
   const onClickHideButton = onHide
   const validatedUserInput = useMemo(

@@ -1,11 +1,11 @@
 import React, { PropsWithChildren, useContext } from 'react'
 
+export type SuccessBannerProviderProps = PropsWithChildren
+
 type SuccessBannerContextProps = {
   clearMessage: () => void
   showMessage: (message: string) => void
 }
-
-export type SuccessBannerProviderProps = PropsWithChildren
 
 export const SuccessMessageContext =
   React.createContext<SuccessBannerContextProps>({

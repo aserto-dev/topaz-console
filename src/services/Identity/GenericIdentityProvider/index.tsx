@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { GenericIdentityProviderProps, identityProviderContext } from './hooks'
 
 const GenericIdentityProvider: React.FC<GenericIdentityProviderProps> = ({

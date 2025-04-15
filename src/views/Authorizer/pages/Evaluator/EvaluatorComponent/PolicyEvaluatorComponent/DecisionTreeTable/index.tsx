@@ -1,6 +1,9 @@
 import React from 'react'
 import { CellProps, Column } from 'react-table'
 
+import DataTable from '../../../../../../../components/common/DataTable'
+import Highlight from '../../../../../../../components/common/Highlight'
+import { V2DecisionTreeResponse } from '../../../../../../../types/authorizer'
 import {
   Cell,
   CellOverflow,
@@ -8,25 +11,17 @@ import {
   DecisionTreeTableWrapper,
   ModuleCell,
 } from './styles'
-
-import { V2DecisionTreeResponse } from '../../../../../../../types/authorizer'
-import Highlight from '../../../../../../../components/common/Highlight'
-import DataTable from '../../../../../../../components/common/DataTable'
 interface DecisionTreeTableProps {
   data: V2DecisionTreeResponse
 }
 
 interface TableData {
-  module: string
   decision: string
+  module: string
 }
 
 const columns: Column<TableData>[] = [
   {
-    Header: 'Module',
-    style: {
-      cellWidth: '70%',
-    },
     Cell: ({ row }: CellProps<TableData>) => (
       <Cell>
         <ModuleCell {...row.getToggleRowExpandedProps()}>
@@ -34,12 +29,12 @@ const columns: Column<TableData>[] = [
         </ModuleCell>
       </Cell>
     ),
+    Header: 'Module',
+    style: {
+      cellWidth: '70%',
+    },
   },
   {
-    Header: 'Decision',
-    style: {
-      cellWidth: '30%',
-    },
     Cell: ({ row }: CellProps<TableData>) => (
       <Cell>
         <CodeCell {...row.getToggleRowExpandedProps()}>
@@ -47,6 +42,10 @@ const columns: Column<TableData>[] = [
         </CodeCell>
       </Cell>
     ),
+    Header: 'Decision',
+    style: {
+      cellWidth: '30%',
+    },
   },
 ]
 
@@ -55,11 +54,11 @@ export const DecisionTreeTable: React.FC<DecisionTreeTableProps> = ({
 }) => {
   const list = Object.keys(data.path!).map((module) => {
     return {
-      module,
       decision: JSON.stringify(data.path![module], null, 1)
         .replace('\n}', ' }')
         .replace('{\n', '{')
         .replace(/,\n/g, ','),
+      module,
     }
   })
 

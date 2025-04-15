@@ -6,9 +6,9 @@ import { theme } from '../../../theme'
 import { Card, Variant } from '../Card'
 
 const CardModalContainer = styled(Modal)<{
-  backgroundcolor?: string
-  fullscreen?: string | boolean
   $minWidth?: string
+  backgroundcolor?: string
+  fullscreen?: boolean | string
 }>`
   overflow-x: hidden;
   border-radius: 20px;
@@ -27,38 +27,38 @@ const CardModalContainer = styled(Modal)<{
 
 type CardModalProps = {
   backgroundColor?: string
+  cardHeight?: number | string
+  cardWidth?: number | string
   centered?: boolean
-  title: string
+  children: React.ReactElement | string
+  closeButton?: boolean
+  fullscreen?: boolean | string
+  minWidth?: string
   onHide?: () => void
   onSubmit?: () => void
-  children: string | React.ReactElement
   show?: boolean
   size?: string
-  cardHeight?: number | string
-  text?: string | React.ReactElement
+  text?: React.ReactElement | string
+  title: string
   variant?: Variant
-  cardWidth?: number | string
-  fullscreen?: string | boolean
-  closeButton?: boolean
-  minWidth?: string
 }
 
 const CardModal: React.FC<CardModalProps> = ({
-  children,
   backgroundColor,
-  centered = true,
-  title,
-  show,
-  onHide,
-  onSubmit,
   cardHeight,
   cardWidth = 500,
+  centered = true,
+  children,
+  closeButton,
   fullscreen,
+  minWidth,
+  onHide,
+  onSubmit,
+  show,
   size,
   text,
+  title,
   variant,
-  closeButton,
-  minWidth,
 }) => {
   const minHeight = '215px'
   return (
@@ -69,7 +69,7 @@ const CardModal: React.FC<CardModalProps> = ({
       data-testid="modal"
       fullscreen={fullscreen}
       show={show}
-      size={size as 'sm' | 'lg' | 'xl' | undefined}
+      size={size as 'lg' | 'sm' | 'xl' | undefined}
       onHide={onHide}
     >
       <Card

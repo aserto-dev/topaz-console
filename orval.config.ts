@@ -1,111 +1,111 @@
 import { defineConfig } from 'orval';
 
 export default defineConfig({
-  directory: {
+  authorizer: {
+    input: {
+      target: process.env.AUTHORIZER_SERVICE_URL
+        ? `${process.env.AUTHORIZER_SERVICE_URL}/openapi.json`
+        : `https://raw.githubusercontent.com/aserto-dev/openapi-authorizer/refs/heads/main/publish/authorizer/openapi.json`,
+    },
     output: {
-      mode: 'single',
-      target: 'src/api/v3/directory.ts',
-      schemas: 'src/types/directory',
+      clean: false,
       client: 'react-query',
-      clean: true,
       mock: false,
+      mode: 'single',
       override: {
-        operations: {
-          'directory.v3.manifest.get': {
-            mutator: {
-              path: 'src/api/clients/rest.ts',
-              name: 'useDirectoryModelClient',
-            },
-          },
-          'directory.v3.manifest.set': {
-            mutator: {
-              path: 'src/api/clients/rest.ts',
-              name: 'useDirectoryModelClient',
-            },
-          },
-          'directory.model.v3.manifest.delete': {
-            mutator: {
-              path: 'src/api/clients/rest.ts',
-              name: 'useDirectoryModelClient',
-            },
-          },
-          'directory.writer.v3.object.set': {
-            mutator: {
-              path: 'src/api/clients/rest.ts',
-              name: 'useDirectoryWriterClient',
-            },
-          },
-          'directory.writer.v3.object.delete': {
-            mutator: {
-              path: 'src/api/clients/rest.ts',
-              name: 'useDirectoryWriterClient',
-            },
-          },
-          'directory.writer.v3.relation.set': {
-            mutator: {
-              path: 'src/api/clients/rest.ts',
-              name: 'useDirectoryWriterClient',
-            },
-          },
-          'directory.writer.v3.relation.delete': {
-            mutator: {
-              path: 'src/api/clients/rest.ts',
-              name: 'useDirectoryWriterClient',
-            },
-          },
-          'directory.reader.v3.objects.list': {
-            query: {
-              useQuery: true,
-              useInfinite: true,
-              useInfiniteQueryParam: "'page.token'",
-            },
-          },
-          'directory.reader.v3.relations.list': {
-            query: {
-              useQuery: true,
-              useInfinite: true,
-              useInfiniteQueryParam: "'page.token'",
-            },
-          },
-          'directory.assertion.v3.assertions.list': {
-            query: {
-              useQuery: true,
-              useInfinite: true,
-              useInfiniteQueryParam: "'page.token'",
-            },
-          },
-        },
         mutator: {
+          name: 'useAuthorizerClient',
           path: 'src/api/clients/rest.ts',
-          name: 'useDirectoryReaderClient',
         },
       },
+      schemas: 'src/types/authorizer',
+      target: 'src/api/v3/authorizer.ts',
     },
+  },
+  directory: {
     input: {
       target: process.env.DIRECTORY_SERVICE_URL
         ? `${process.env.DIRECTORY_SERVICE_URL}/openapi.json`
         : 'https://raw.githubusercontent.com/aserto-dev/openapi-directory/refs/heads/main/publish/directory/openapi.json',
     },
-  },
-  authorizer: {
     output: {
-      mode: 'single',
-      target: 'src/api/v3/authorizer.ts',
-      schemas: 'src/types/authorizer',
+      clean: true,
       client: 'react-query',
-      clean: false,
       mock: false,
+      mode: 'single',
       override: {
         mutator: {
+          name: 'useDirectoryReaderClient',
           path: 'src/api/clients/rest.ts',
-          name: 'useAuthorizerClient',
+        },
+        operations: {
+          'directory.assertion.v3.assertions.list': {
+            query: {
+              useInfinite: true,
+              useInfiniteQueryParam: "'page.token'",
+              useQuery: true,
+            },
+          },
+          'directory.model.v3.manifest.delete': {
+            mutator: {
+              name: 'useDirectoryModelClient',
+              path: 'src/api/clients/rest.ts',
+            },
+          },
+          'directory.reader.v3.objects.list': {
+            query: {
+              useInfinite: true,
+              useInfiniteQueryParam: "'page.token'",
+              useQuery: true,
+            },
+          },
+          'directory.reader.v3.relations.list': {
+            query: {
+              useInfinite: true,
+              useInfiniteQueryParam: "'page.token'",
+              useQuery: true,
+            },
+          },
+          'directory.v3.manifest.get': {
+            mutator: {
+              name: 'useDirectoryModelClient',
+              path: 'src/api/clients/rest.ts',
+            },
+          },
+          'directory.v3.manifest.set': {
+            mutator: {
+              name: 'useDirectoryModelClient',
+              path: 'src/api/clients/rest.ts',
+            },
+          },
+          'directory.writer.v3.object.delete': {
+            mutator: {
+              name: 'useDirectoryWriterClient',
+              path: 'src/api/clients/rest.ts',
+            },
+          },
+          'directory.writer.v3.object.set': {
+            mutator: {
+              name: 'useDirectoryWriterClient',
+              path: 'src/api/clients/rest.ts',
+            },
+          },
+          'directory.writer.v3.relation.delete': {
+            mutator: {
+              name: 'useDirectoryWriterClient',
+              path: 'src/api/clients/rest.ts',
+            },
+          },
+          'directory.writer.v3.relation.set': {
+            mutator: {
+              name: 'useDirectoryWriterClient',
+              path: 'src/api/clients/rest.ts',
+            },
+          },
         },
       },
-    },
-    input: {
-      target: process.env.AUTHORIZER_SERVICE_URL
-        ? `${process.env.AUTHORIZER_SERVICE_URL}/openapi.json`
-        : `https://raw.githubusercontent.com/aserto-dev/openapi-authorizer/refs/heads/main/publish/authorizer/openapi.json`,
+      schemas: 'src/types/directory',
+      target: 'src/api/v3/directory.ts',
     },
   }
 })

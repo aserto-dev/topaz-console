@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import sadAxolotl from "../../assets/axolotl.svg";
 import Button from "../../components/common/Button";
 import { Card } from "../../components/common/Card";
+import { ApiError } from "../../lib/error/ApiError";
+import { InformationalError } from "../../lib/error/InformationalError";
 import Details from "./Details";
 import Overview from "./Overview";
 import {
@@ -15,8 +17,6 @@ import {
   Tab,
   TabContainer,
 } from "./Styles";
-import { ApiError } from "../../lib/error/ApiError";
-import { InformationalError } from "../../lib/error/InformationalError";
 
 interface ErrorModalProps {
   error: Error | null;
@@ -29,7 +29,7 @@ const ErrorModal: React.FC<ErrorModalProps> = ({
   onClose,
   onLogout,
 }) => {
-  const [tab, setTab] = useState<"overview" | "details">("overview");
+  const [tab, setTab] = useState<"details" | "overview">("overview");
   const displaySignoutButton =
     (error as ApiError)?.message.startsWith("E10032") && onLogout;
 

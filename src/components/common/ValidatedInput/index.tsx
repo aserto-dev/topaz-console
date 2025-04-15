@@ -1,30 +1,30 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
+import { UseIsNameAvailable } from '../../../lib/availability/useIsAvailable'
 import { AlwaysValidValidator, Validator } from '../../../lib/validation'
 import Input from '../Input'
-import { UseIsNameAvailable } from '../../../lib/availability/useIsAvailable'
 
 type ValidatedInputProps = Omit<
   React.ComponentProps<typeof Input>,
   'onChange'
 > & {
-  value?: string
   onChange: (s?: string) => void
-  useIsAvailable?: UseIsNameAvailable
   onSubmit?: () => void
+  useIsAvailable?: UseIsNameAvailable
   validator?: Validator<string>
+  value?: string
 }
 
 const ValidatedInput = ({
-  value,
   defaultValue,
   onChange,
+  onSubmit = () => {},
   useIsAvailable = () => ({
     isAvailable: true,
     reason: '',
   }),
-  onSubmit = () => {},
   validator = AlwaysValidValidator,
+  value,
   ...props
 }: ValidatedInputProps) => {
   const onKeyPress = useCallback(

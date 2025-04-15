@@ -8,21 +8,25 @@
 
 export type DirectoryReaderV3RelationsListParams = {
 /**
- * object type
- */
-object_type?: string;
-/**
  * object identifier
  */
 object_id?: string;
 /**
+ * object type
+ */
+object_type?: string;
+/**
+ * requested page size, valid value between 1-100 rows (default 100)
+ */
+'page.size'?: number;
+/**
+ * pagination start token, default ""
+ */
+'page.token'?: string;
+/**
  * relation name
  */
 relation?: string;
-/**
- * subject type
- */
-subject_type?: string;
 /**
  * subject identifier
  */
@@ -32,19 +36,15 @@ subject_id?: string;
  */
 subject_relation?: string;
 /**
- * materialize relation objects
+ * subject type
  */
-with_objects?: boolean;
+subject_type?: string;
 /**
  * only return relations that do not have a subject relation.
  */
 with_empty_subject_relation?: boolean;
 /**
- * requested page size, valid value between 1-100 rows (default 100)
+ * materialize relation objects
  */
-'page.size'?: number;
-/**
- * pagination start token, default ""
- */
-'page.token'?: string;
+with_objects?: boolean;
 };

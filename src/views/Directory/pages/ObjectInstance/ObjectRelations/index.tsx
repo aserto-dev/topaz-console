@@ -1,11 +1,26 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router'
 import { CellProps, Column } from 'react-table'
+
 import { useQueryClient } from '@tanstack/react-query'
 
+import {
+  getNextPage,
+  useDirectoryV3RelationTypesList,
+} from '../../../../../api/directory/customQuery'
+import {
+  useDirectoryReaderV3RelationsListInfinite,
+  useDirectoryWriterV3RelationDelete,
+  useDirectoryWriterV3RelationSet,
+} from '../../../../../api/v3/directory'
 import BinImg from '../../../../../assets/bin.svg'
 import plus from '../../../../../assets/plus.svg'
 import DataTable from '../../../../../components/common/DataTable'
+import EvaluateDisplayState from '../../../../../components/common/EvaluateDisplayState'
+import {
+  Link,
+  UndecoratedLink,
+} from '../../../../../components/common/UndecoratedLink'
 import {
   useDirectoryDataContext,
   useDirectoryDisplayState,
@@ -16,11 +31,6 @@ import {
   V3Object,
   V3Relation,
 } from '../../../../../types/directory'
-import EvaluateDisplayState from '../../../../../components/common/EvaluateDisplayState'
-import {
-  Link,
-  UndecoratedLink,
-} from '../../../../../components/common/UndecoratedLink'
 import { useObjectRelationTypes } from '../../../hooks/useObjectRelationTypes'
 import { ImageButton } from '../../../styles'
 import {
@@ -38,34 +48,25 @@ import {
   Tr,
 } from '../styles'
 import AddRelationModal from './AddRelationModal'
-import {
-  useDirectoryReaderV3RelationsListInfinite,
-  useDirectoryWriterV3RelationDelete,
-  useDirectoryWriterV3RelationSet,
-} from '../../../../../api/v3/directory'
-import {
-  getNextPage,
-  useDirectoryV3RelationTypesList,
-} from '../../../../../api/directory/customQuery'
+
+type RelationCardProp = {
+  relation: string
+  relationCardDisplayName: string
+  relationCardKey: string
+  relationCardType: string
+  removeRelation: () => void
+  subjectRelationName: string
+}
 
 type RelationTypeColumn = {
   name: string | undefined
   relationObjectTypeName: string | undefined
 }
 
-type RelationCardProp = {
-  relation: string
-  relationCardType: string
-  relationCardKey: string
-  relationCardDisplayName: string
-  subjectRelationName: string
-  removeRelation: () => void
-}
-
 const ObjectRelations: React.FC<{
-  relationSide: 'outgoing' | 'incoming'
   object?: V3Object
-}> = ({ relationSide, object }) => {
+  relationSide: 'incoming' | 'outgoing'
+}> = ({ object, relationSide }) => {
   const queryClient = useQueryClient()
   const { id: objectId, type: objectType } = object || {}
 
@@ -88,8 +89,8 @@ const ObjectRelations: React.FC<{
       {
         object_id: objectId,
         object_type: objectType,
-        with_objects: true,
         'page.size': 100,
+        with_objects: true,
       },
       {
         query: {
@@ -101,10 +102,10 @@ const ObjectRelations: React.FC<{
   const { data: incomingRelationsData, queryKey: incomingRelationsQueryKey } =
     useDirectoryReaderV3RelationsListInfinite(
       {
+        'page.size': 100,
         subject_id: objectId,
         subject_type: objectType,
         with_objects: true,
-        'page.size': 100,
       },
       {
         query: {
@@ -157,24 +158,24 @@ const ObjectRelations: React.FC<{
         ? addRelation({
             data: {
               relation: {
-                relation: relationType,
-                object_type: safeObjectType,
-                subject_type: selectedObjectType,
                 object_id: safeObjectId,
+                object_type: safeObjectType,
+                relation: relationType,
                 subject_id: selectedObjectId,
                 subject_relation: selectedSubjectRelation,
+                subject_type: selectedObjectType,
               },
             },
           })
         : addRelation({
             data: {
               relation: {
-                relation: relationType,
-                object_type: selectedObjectType,
-                subject_type: safeObjectType,
-                subject_relation: selectedSubjectRelation,
                 object_id: selectedObjectId,
+                object_type: selectedObjectType,
+                relation: relationType,
                 subject_id: safeObjectId,
+                subject_relation: selectedSubjectRelation,
+                subject_type: safeObjectType,
               },
             },
           })
@@ -185,11 +186,6 @@ const ObjectRelations: React.FC<{
 
   const relationTypesColumns: Column<RelationTypeColumn>[] = [
     {
-      Header: 'Name',
-      style: {
-        cellWidth: 'c50%',
-      },
-      disableSortBy: false,
       Cell: ({ row }: CellProps<RelationTypeColumn>) => {
         return (
           <Link
@@ -203,14 +199,19 @@ const ObjectRelations: React.FC<{
           </Link>
         )
       },
-    },
-    {
-      Header: 'Type',
+      disableSortBy: false,
+      Header: 'Name',
       style: {
         cellWidth: 'c50%',
       },
+    },
+    {
       Cell: ({ row }: CellProps<RelationTypeColumn>) => {
         return <>{row.original.relationObjectTypeName}</>
+      },
+      Header: 'Type',
+      style: {
+        cellWidth: 'c50%',
       },
     },
   ]
@@ -299,21 +300,21 @@ const ObjectRelations: React.FC<{
           .filter((o) => String(o?.relation) === relationType)
           .map((o) => ({
             relation: o?.relation || '',
-            relationCardType: o?.subject_type || '',
-            relationCardKey: o?.subject_id || '',
             relationCardDisplayName: relationCardDisplayName(o, 'subject'),
-            subjectRelationName: subjectRelationName(o),
+            relationCardKey: o?.subject_id || '',
+            relationCardType: o?.subject_type || '',
             removeRelation: () =>
               removeRelation({
                 params: {
-                  object_type: safeObjectType,
                   object_id: safeObjectId,
+                  object_type: safeObjectType,
                   relation: o?.relation || '',
-                  subject_type: o?.subject_type || '',
                   subject_id: o?.subject_id || '',
                   subject_relation: o.subject_relation,
+                  subject_type: o?.subject_type || '',
                 },
               }),
+            subjectRelationName: subjectRelationName(o),
           }))) ||
       [],
     [
@@ -346,21 +347,21 @@ const ObjectRelations: React.FC<{
           )
           .map((o) => ({
             relation: o?.relation || '',
-            relationCardType: o?.object_type || '',
-            relationCardKey: o?.object_id || '',
             relationCardDisplayName: relationCardDisplayName(o, 'object'),
-            subjectRelationName: subjectRelationName(o),
+            relationCardKey: o?.object_id || '',
+            relationCardType: o?.object_type || '',
             removeRelation: () =>
               removeRelation({
                 params: {
-                  object_type: o?.object_type || '',
                   object_id: o?.object_id || '',
+                  object_type: o?.object_type || '',
                   relation: o?.relation || '',
-                  subject_type: safeObjectType,
                   subject_id: safeObjectId,
                   subject_relation: o.subject_relation,
+                  subject_type: safeObjectType,
                 },
               }),
+            subjectRelationName: subjectRelationName(o),
           }))) ||
       [],
     [
@@ -394,8 +395,8 @@ const ObjectRelations: React.FC<{
       <AddRelationModal
         object={object}
         relation={{
-          type: relationType ?? '',
           objectType: relationSubject?.split('#')[0] ?? '',
+          type: relationType ?? '',
         }}
         relationSideProperty={isOutgoingRelations ? 'subject' : 'object'}
         show={showAddRelationModal}

@@ -17,9 +17,7 @@ import ReactFlow, {
   useNodesState,
   useStore,
 } from 'reactflow'
-
 import 'reactflow/dist/style.css'
-
 import styled from 'styled-components'
 
 import {
@@ -27,8 +25,9 @@ import {
   useManifestToYaml,
 } from '../../../../../api/directory/parsers/manifest'
 import NoModel from '../../../../../assets/nomodel.svg'
-import { theme } from '../../../../../theme'
 import EmptyTablePlaceholder from '../../../../../components/common/EmptyTablePlaceholder'
+import { useDirectoryModelContext } from '../../../../../services/DirectoryContextProvider/hooks'
+import { theme } from '../../../../../theme'
 import {
   ObjectTypeNode,
   OperatorNode,
@@ -37,10 +36,9 @@ import {
 } from './CustomNodes'
 import { computeColor } from './CustomNodes/colors'
 import GetGraphData from './Data'
+import { GraphData, markerEnd } from './Data/graphData'
 import parseManifest from './manifestParser'
 import mapNodePath from './mapNodePath'
-import { GraphData, markerEnd } from './Data/graphData'
-import { useDirectoryModelContext } from '../../../../../services/DirectoryContextProvider/hooks'
 
 const ReactFlowContainer = styled.div`
   height: calc(100vh - 160px);
@@ -67,10 +65,10 @@ const ReactFlowContainer = styled.div`
 
 const nodeTypes: NodeTypes = {
   object: ObjectTypeNode,
-  subject: ObjectTypeNode,
+  operator: OperatorNode,
   permission: PermissionNode,
   relation: RelationTypesNode,
-  operator: OperatorNode,
+  subject: ObjectTypeNode,
 }
 
 const ModelFlow = () => {
@@ -94,10 +92,10 @@ const ModelFlow = () => {
   const nodeStyle = useCallback((nodeType: string) => {
     return {
       backgroundColor: theme.primaryBlack,
-      borderRadius: nodeType === 'object' ? '16px' : '4px',
       borderColor: computeColor(nodeType).borderColor,
-      borderWidth: '1px',
+      borderRadius: nodeType === 'object' ? '16px' : '4px',
       borderStyle: 'solid',
+      borderWidth: '1px',
     }
   }, [])
 
@@ -138,10 +136,10 @@ const ModelFlow = () => {
 
             elem.style = {
               ...elem.style,
-              opacity: highlight ? 1 : 0.25,
               backgroundColor: highlight
                 ? computeColor(elem.type!).backgroundColor
                 : theme.primaryBlack,
+              opacity: highlight ? 1 : 0.25,
             }
             elem.data = { ...elem.data, toolbarVisible: highlight }
           }
@@ -163,21 +161,21 @@ const ModelFlow = () => {
 
             elem.style = {
               ...elem.style,
-              stroke: active ? theme.grey100 : theme.grey60,
               opacity: active ? 1 : 0,
+              stroke: active ? theme.grey100 : theme.grey60,
             }
 
             elem.markerEnd = {
+              color: active ? theme.grey100 : theme.grey60,
+              height: 20,
               type: MarkerType.ArrowClosed,
               width: 20,
-              height: 20,
-              color: active ? theme.grey100 : theme.grey60,
             }
           } else {
             elem.style = {
               ...elem.style,
-              stroke: theme.grey60,
               opacity: 1,
+              stroke: theme.grey60,
             }
           }
           return elem
@@ -192,9 +190,9 @@ const ModelFlow = () => {
         if (isNode(elem)) {
           elem.style = {
             ...elem.style,
-            opacity: 1,
             backgroundColor: theme.primaryBlack,
             borderWidth: '1px',
+            opacity: 1,
           }
 
           elem.data = { ...elem.data, toolbarVisible: false }
@@ -208,8 +206,8 @@ const ModelFlow = () => {
         if (isEdge(elem)) {
           elem.style = {
             ...elem.style,
-            stroke: theme.grey60,
             opacity: 1,
+            stroke: theme.grey60,
           }
           elem.markerEnd = markerEnd
         }

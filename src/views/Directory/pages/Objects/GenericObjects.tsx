@@ -3,22 +3,22 @@ import { useParams } from 'react-router'
 import { CellProps, Column } from 'react-table'
 import styled from 'styled-components'
 
-import NoObjectsImage from '../../../../assets/shapes.svg'
-import DataTable from '../../../../components/common/DataTable'
-import EmptyTablePlaceholder from '../../../../components/common/EmptyTablePlaceholder'
-import { V3Object } from '../../../../types/directory'
-import { Link } from '../../../../components/common/UndecoratedLink'
-import ObjectsHeader from './ObjectsHeader'
-import { useIsScrollable } from './useIsScrollable'
-import { FindButton, PageHeaderInput } from './UserObjects/styles'
-import {
-  useDirectoryReaderV3ObjectGet,
-  useDirectoryReaderV3ObjectsListInfinite,
-} from '../../../../api/v3/directory'
 import {
   getNextPage,
   useDirectoryV3ObjectTypesList,
 } from '../../../../api/directory/customQuery'
+import {
+  useDirectoryReaderV3ObjectGet,
+  useDirectoryReaderV3ObjectsListInfinite,
+} from '../../../../api/v3/directory'
+import NoObjectsImage from '../../../../assets/shapes.svg'
+import DataTable from '../../../../components/common/DataTable'
+import EmptyTablePlaceholder from '../../../../components/common/EmptyTablePlaceholder'
+import { Link } from '../../../../components/common/UndecoratedLink'
+import { V3Object } from '../../../../types/directory'
+import ObjectsHeader from './ObjectsHeader'
+import { useIsScrollable } from './useIsScrollable'
+import { FindButton, PageHeaderInput } from './UserObjects/styles'
 
 const Container = styled.div`
   width: 100%;
@@ -31,7 +31,7 @@ const BreakDiv = styled.div`
 `
 type ObjectSummary = {
   key: string
-  name?: string | undefined | null
+  name?: null | string | undefined
 }
 
 const Objects: React.FC = () => {
@@ -47,9 +47,9 @@ const Objects: React.FC = () => {
 
   const {
     data: objectsData,
-    isFetching: isFetchingObjects,
-    hasNextPage: hasMoreObjects,
     fetchNextPage: fetchMoreObjects,
+    hasNextPage: hasMoreObjects,
+    isFetching: isFetchingObjects,
   } = useDirectoryReaderV3ObjectsListInfinite(
     {
       object_type: objectTypeName,
@@ -57,8 +57,8 @@ const Objects: React.FC = () => {
     },
     {
       query: {
-        getNextPageParam: getNextPage,
         enabled: objectTypes.includes(safeObjectType),
+        getNextPageParam: getNextPage,
       },
     },
   )
@@ -70,10 +70,10 @@ const Objects: React.FC = () => {
     {
       query: {
         enabled: false,
-        retry: false,
         meta: {
           showError: false,
         },
+        retry: false,
       },
     },
   )
@@ -88,30 +88,25 @@ const Objects: React.FC = () => {
   }, [listObjects])
 
   const fetchData = useIsScrollable({
-    isFetching: isFetchingObjects,
-    hasMoreData: hasMoreObjects || false,
     fetchNextData: fetchMoreObjects,
+    hasMoreData: hasMoreObjects || false,
+    isFetching: isFetchingObjects,
   })
   useCallback(() => {
     fetchData()
   }, [fetchData])
   const columns: Column<ObjectSummary>[] = [
     {
+      Cell: ({ row }: CellProps<ObjectSummary>) => {
+        return <BreakDiv>{row.original.key}</BreakDiv>
+      },
       Header: 'ID',
       style: {
         cellWidth: '50%',
       },
-      Cell: ({ row }: CellProps<ObjectSummary>) => {
-        return <BreakDiv>{row.original.key}</BreakDiv>
-      },
     },
 
     {
-      Header: 'Name',
-      style: {
-        cellWidth: '50%',
-      },
-
       Cell: ({ row }: CellProps<ObjectSummary>) => {
         return (
           <Link
@@ -120,6 +115,11 @@ const Objects: React.FC = () => {
             <BreakDiv>{row.original.name}</BreakDiv>
           </Link>
         )
+      },
+      Header: 'Name',
+
+      style: {
+        cellWidth: '50%',
       },
     },
   ]
@@ -155,18 +155,18 @@ const Objects: React.FC = () => {
           <DataTable
             columns={columns}
             data={objects.map((object) => {
-              return { name: object.display_name || object.id, key: object.id }
+              return { key: object.id, name: object.display_name || object.id }
             })}
             paging={{
               dataLength: objects.length,
+              getNext: () => fetchMoreObjects(),
+              hasMore: () => !!hasMoreObjects,
               loadingContent: [
                 {
                   key: 'loading...',
                   name: 'loading...',
                 },
               ],
-              hasMore: () => !!hasMoreObjects,
-              getNext: () => fetchMoreObjects(),
             }}
             sticky={true}
           />

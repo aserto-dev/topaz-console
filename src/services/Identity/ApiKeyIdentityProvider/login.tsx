@@ -4,8 +4,8 @@ import styled from 'styled-components'
 import Logo from '../../../assets/topaz-logo.svg'
 import Button from '../../../components/common/Button'
 import Input from '../../../components/common/Input'
-import { RpcStatus } from '../../../types/directory'
 import { theme } from '../../../theme'
+import { RpcStatus } from '../../../types/directory'
 
 const ScreenContainer = styled.div`
   display: flex;
@@ -84,10 +84,10 @@ const ContinueButtonContainer = styled(Button)`
 `
 
 type ApiLoginProps = {
+  loginFunc: (key: string) => Promise<Error | RpcStatus | undefined>
   setApiKey: (apiKey: string) => void
-  loginFunc: (key: string) => Promise<RpcStatus | Error | undefined>
 }
-const ApiKeyLogin: React.FC<ApiLoginProps> = ({ setApiKey, loginFunc }) => {
+const ApiKeyLogin: React.FC<ApiLoginProps> = ({ loginFunc, setApiKey }) => {
   const [formApiKey, setFormApiKey] = useState('')
   const [errorMessage, setErrorMessage] = useState<string>('')
 

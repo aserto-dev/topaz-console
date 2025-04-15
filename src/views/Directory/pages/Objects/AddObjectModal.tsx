@@ -1,7 +1,14 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+
 import { Query, useQueryClient } from '@tanstack/react-query'
 
+import {
+  getDirectoryReaderV3ObjectGetQueryKey,
+  getDirectoryReaderV3ObjectsListQueryKey,
+  getDirectoryReaderV3RelationsListQueryKey,
+  useDirectoryWriterV3ObjectSet,
+} from '../../../../api/v3/directory'
 import Button from '../../../../components/common/Button'
 import { CardModal } from '../../../../components/common/CardModal'
 import ValidatedInput from '../../../../components/common/ValidatedInput'
@@ -9,12 +16,6 @@ import useIsIdAvailable from '../../../../lib/availability/useIsObjectIdAvailabl
 import { DisplayNameValidator, IdValidator } from '../../../../lib/validation'
 import { useShowError } from '../../../../services/ErrorModalProvider'
 import { V3Object } from '../../../../types/directory'
-import {
-  getDirectoryReaderV3ObjectGetQueryKey,
-  getDirectoryReaderV3ObjectsListQueryKey,
-  getDirectoryReaderV3RelationsListQueryKey,
-  useDirectoryWriterV3ObjectSet,
-} from '../../../../api/v3/directory'
 
 const ContentContainer = styled.div`
   padding: 20px;
@@ -47,10 +48,10 @@ const ButtonsContainer = styled.div`
 
 type AddObjectModalProps = {
   objectTypeName: string | undefined
+  onHide: () => void
   onSuccess?: (object: V3Object) => void
   queryKey?: string
   show: boolean
-  onHide: () => void
 }
 
 const AddObjectModal: React.FC<AddObjectModalProps> = ({
@@ -159,9 +160,9 @@ const AddObjectModal: React.FC<AddObjectModalProps> = ({
                 setObject.mutate({
                   data: {
                     object: {
-                      type: objectTypeName,
-                      id: id,
                       display_name: displayName,
+                      id: id,
+                      type: objectTypeName,
                     },
                   },
                 })

@@ -1,21 +1,23 @@
 import 'rapidoc'
+
 import './index.css'
 
 import React, { useEffect } from 'react'
+
 import { theme } from '../../theme'
 
-interface RapiDocElement extends HTMLElement {
-  setApiKey(key: string, value: string): boolean
-}
-
 type ApiBrowserProps = {
-  openApiUrl: string
   apiKeys: {
     key: string
     value: string
   }[]
+  openApiUrl: string
 }
-const ApiBrowser: React.FC<ApiBrowserProps> = ({ openApiUrl, apiKeys }) => {
+
+interface RapiDocElement extends HTMLElement {
+  setApiKey(key: string, value: string): boolean
+}
+const ApiBrowser: React.FC<ApiBrowserProps> = ({ apiKeys, openApiUrl }) => {
   useEffect(() => {
     const rapidocEL = document.getElementById('docs') as RapiDocElement
     if (rapidocEL) {

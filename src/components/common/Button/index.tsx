@@ -9,36 +9,36 @@ import {
   SecondaryButton,
 } from './styles'
 
+interface ButtonProps extends BootstrapButtonProps {
+  displayState?: DisplayState
+  variant?: Variant
+}
+
 type DisplayState = {
-  visible?: boolean
   enabled?: boolean
+  visible?: boolean
 }
 
 type Variant =
-  | 'primary'
-  | 'secondary'
   | 'danger'
-  | 'secondary-borderless'
+  | 'primary'
   | 'primary-outline'
-
-interface ButtonProps extends BootstrapButtonProps {
-  variant?: Variant
-  displayState?: DisplayState
-}
+  | 'secondary'
+  | 'secondary-borderless'
 
 const getButtonFromVariant = (variant: Variant) => {
   const variantObj = {
-    primary: PrimaryButton,
-    secondary: SecondaryButton,
     danger: DangerButton,
-    'secondary-borderless': SecondaryBorderlessButton,
+    primary: PrimaryButton,
     'primary-outline': PrimaryOutline,
+    secondary: SecondaryButton,
+    'secondary-borderless': SecondaryBorderlessButton,
   }
   return variantObj[variant] || variantObj.primary
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant = 'primary', displayState, ...props }, ref) => {
+  ({ displayState, variant = 'primary', ...props }, ref) => {
     const ButtonComponent = getButtonFromVariant(variant)
     if (!displayState) {
       return <ButtonComponent ref={ref} {...props} />

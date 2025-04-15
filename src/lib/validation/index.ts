@@ -1,10 +1,10 @@
-export type Validity = 'VALID' | 'VALID_FRAGMENT' | 'INVALID'
-
 export interface Validator<T> {
   getValidityOf: (input: T) => Validity
   isValid: (input: T) => boolean
   ruleText: string
 }
+
+export type Validity = 'INVALID' | 'VALID' | 'VALID_FRAGMENT'
 
 export const AlwaysValidValidator: Validator<string> = {
   getValidityOf: () => 'VALID',
@@ -13,8 +13,8 @@ export const AlwaysValidValidator: Validator<string> = {
 }
 
 export const IdValidator: Validator<string> = {
-  isValid: (s) => isValidId(s),
   getValidityOf: (s) => (isValidId(s) ? 'VALID' : 'INVALID'),
+  isValid: (s) => isValidId(s),
   ruleText: 'Must be at most 256 characters and cannot contain whitespaces',
 }
 
@@ -25,8 +25,8 @@ const isValidId = (value: string): boolean => {
 }
 
 export const DisplayNameValidator: Validator<string> = {
-  isValid: (s) => isValidDisplayName(s),
   getValidityOf: (s) => (isValidDisplayName(s) ? 'VALID' : 'INVALID'),
+  isValid: (s) => isValidDisplayName(s),
   ruleText: 'Must not contain angled brackets, ampersands, or double quotes',
 }
 

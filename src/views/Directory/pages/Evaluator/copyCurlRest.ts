@@ -5,7 +5,7 @@ import { RequestPayload } from '.'
 import { useConfig } from '../../../../services/ConfigProvider/hooks'
 
 export const useCopyCurlRest = (request: string, requestData: RequestPayload, path: string) => {
-  const { directoryServiceUrl, directoryApiKey } = useConfig()
+  const { directoryApiKey, directoryServiceUrl } = useConfig()
 
 
 
@@ -63,14 +63,14 @@ export const useCopyCurlRest = (request: string, requestData: RequestPayload, pa
     switch (request) {
       case 'check':
         return checkCurl()
+      case 'find_objects':
+        return getGraphCurl()
+      case 'find_users':
+        return getGraphCurl()
       case 'objects':
         return objectsCurl()
       case 'relations':
         return relationsCurl()
-      case 'find_users':
-        return getGraphCurl()
-      case 'find_objects':
-        return getGraphCurl()
       default:
         return objectCurl()
     }

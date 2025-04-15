@@ -28,15 +28,15 @@ type DataTablePagingProps<Data extends object> = Omit<
 type DataTableProps<Data extends object> = {
   columns: readonly Column<Data>[]
   data: readonly Data[]
-  hideHeaders?: boolean
   getCellProps?: (cell: Cell<Data>) => void
+  hideHeaders?: boolean
+  initialState?: Partial<TableState<Data>>
+  mRef?: React.RefObject<null | TableInstance<Data>>
   paging?: DataTablePagingProps<Data>
   renderRowSubComponent?: SubComponent<Data>
   rowComponent?: React.ComponentType<
-    TableRowProps & { isExpanded: boolean; $row: Row<Data> }
+    TableRowProps & { $row: Row<Data>; isExpanded: boolean; }
   >
-  initialState?: Partial<TableState<Data>>
-  mRef?: React.RefObject<TableInstance<Data> | null>
   sticky?: boolean
 }
 
@@ -106,11 +106,11 @@ const DataTable = <Data extends object>({
   data,
   getCellProps,
   hideHeaders = false,
+  initialState,
+  mRef,
   paging,
   renderRowSubComponent,
   rowComponent,
-  initialState,
-  mRef,
   sticky,
 }: DataTableProps<Data>) => {
   const defaultColumn = {
@@ -118,14 +118,14 @@ const DataTable = <Data extends object>({
   }
   const instance = useTable<Data>(
     {
-      defaultColumn,
       autoResetExpanded: false,
+      autoResetFilters: false,
       columns,
       data,
+      defaultColumn,
+      disableSortRemove: true,
       expandSubRows: false,
       initialState,
-      disableSortRemove: true,
-      autoResetFilters: false,
     },
     useFilters,
     useSortBy,
@@ -133,11 +133,11 @@ const DataTable = <Data extends object>({
   )
 
   const {
-    getTableProps,
     getTableBodyProps,
+    getTableProps,
     headerGroups,
-    rows,
     prepareRow,
+    rows,
     visibleColumns,
   } = instance
 
@@ -168,6 +168,10 @@ const DataTable = <Data extends object>({
         paging={
           paging && {
             dataLength: data.length,
+            getNext: () => {
+              paging?.getNext()
+            },
+            hasMore: () => !!paging?.hasMore(),
             loader: (
               <DataTable
                 columns={columns}
@@ -175,10 +179,6 @@ const DataTable = <Data extends object>({
                 hideHeaders
               />
             ),
-            hasMore: () => !!paging?.hasMore(),
-            getNext: () => {
-              paging?.getNext()
-            },
             scrollableTarget: paging.scrollableTarget || 'scrollTarget',
           }
         }
@@ -206,42 +206,42 @@ const DataTable = <Data extends object>({
 // Must use module declaration augmentation to type the useSortBy and useExpanded plugins
 // https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-table#configuration-using-declaration-merging
 declare module 'react-table' {
-  export interface TableOptions<D extends object>
-    extends UseExpandedOptions<D>,
-      UseSortByOptions<D>,
-      UseFiltersOptions<D> {}
+  export interface Cell<D extends object = {}>
+    extends UseRowStateCellProps<D> {}
+  export interface ColumnInstance<D extends object = {}>
+    extends UseFiltersColumnProps<D>,
+      UseSortByColumnProps<D> {
+    // DataTable-specific properties
+    style?: {
+      cellWidth?: number | string
+      headerCell?: React.CSSProperties
+    }
+  }
+  export interface ColumnInterface<D extends object = {}>
+    extends UseFiltersColumnOptions<D>,
+      UseSortByColumnOptions<D> {
+    // DataTable-specific properties
+    style?: {
+      cellWidth?: number | string
+      headerCell?: React.CSSProperties
+    }
+  }
   export interface Hooks<D extends object = {}>
     extends UseExpandedHooks<D>,
       UseSortByHooks<D> {}
+  export interface Row<D extends object = {}> extends UseExpandedRowProps<D> {}
   export interface TableInstance<D extends object = {}>
     extends UseExpandedInstanceProps<D>,
-      UseSortByInstanceProps<D>,
-      UseFiltersInstanceProps<D> {}
+      UseFiltersInstanceProps<D>,
+      UseSortByInstanceProps<D> {}
+  export interface TableOptions<D extends object>
+    extends UseExpandedOptions<D>,
+      UseFiltersOptions<D>,
+      UseSortByOptions<D> {}
   export interface TableState<D extends object = {}>
     extends UseExpandedState<D>,
-      UseSortByState<D>,
-      UseFiltersState<D> {}
-  export interface ColumnInterface<D extends object = {}>
-    extends UseSortByColumnOptions<D>,
-      UseFiltersColumnOptions<D> {
-    // DataTable-specific properties
-    style?: {
-      cellWidth?: string | number
-      headerCell?: React.CSSProperties
-    }
-  }
-  export interface ColumnInstance<D extends object = {}>
-    extends UseSortByColumnProps<D>,
-      UseFiltersColumnProps<D> {
-    // DataTable-specific properties
-    style?: {
-      cellWidth?: string | number
-      headerCell?: React.CSSProperties
-    }
-  }
-  export interface Cell<D extends object = {}>
-    extends UseRowStateCellProps<D> {}
-  export interface Row<D extends object = {}> extends UseExpandedRowProps<D> {}
+      UseFiltersState<D>,
+      UseSortByState<D> {}
 }
 /*eslint-enable @typescript-eslint/no-empty-object-type */
 export default DataTable

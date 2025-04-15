@@ -1,6 +1,5 @@
 import React, { Dispatch } from 'react'
 
-import { PolicyEvaluatorContent } from './PolicyEvaluatorContent'
 import {
   ApiModule,
   V2DecisionTreeRequest,
@@ -10,24 +9,25 @@ import {
   V2QueryRequest,
   V2QueryResponse,
 } from '../../../../../../types/authorizer'
+import { PolicyEvaluatorContent } from './PolicyEvaluatorContent'
 
 export type PolicyEvaluatorProps = {
+  fetchNextUsersData?: () => object
+  filter?: string
+  hasMoreUsers?: boolean
+  isRebac?: boolean
+  onRequestChange?: () => void
+  onSubmit: () => void
   output:
-    | V2QueryResponse
-    | V2IsResponse
-    | V2DecisionTreeResponse
     | string
     | undefined
-  onSubmit: () => void
-  onRequestChange?: () => void
+    | V2DecisionTreeResponse
+    | V2IsResponse
+    | V2QueryResponse
   policyModules: Array<ApiModule> | undefined
-  selectedModuleId?: string | null
-  filter?: string
+  requestBody?: V2DecisionTreeRequest | V2IsRequest | V2QueryRequest
+  selectedModuleId?: null | string
   setFilter?: Dispatch<React.SetStateAction<string>>
-  hasMoreUsers?: boolean
-  fetchNextUsersData?: () => object
-  isRebac?: boolean
-  requestBody?: V2QueryRequest | V2IsRequest | V2DecisionTreeRequest
 }
 
 export const PolicyEvaluatorComponent: React.FC<PolicyEvaluatorProps> = (

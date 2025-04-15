@@ -1,14 +1,15 @@
-import { Edge, Node, MarkerType } from 'reactflow'
+import { Edge, MarkerType, Node } from 'reactflow'
+
 import { theme } from '../../../../../../theme'
 
 export type GraphData = {
-  nodes: Node[]
   edges: Edge[]
+  nodes: Node[]
 }
 
 export const markerEnd = {
+  color: theme.grey60,
+  height: 20,
   type: MarkerType.ArrowClosed,
   width: 20,
-  height: 20,
-  color: theme.grey60,
 }

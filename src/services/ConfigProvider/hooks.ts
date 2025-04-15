@@ -1,15 +1,16 @@
 import React, { useContext } from "react"
+
 import { Config } from "../../types/general"
 
 const emptyConfig = {
-  authorizerServiceUrl: '',
+  authenticationType: '',
   authorizerApiKey: '',
-  directoryServiceUrl: '',
-  directoryReaderServiceUrl: '',
-  directoryWriterServiceUrl: '',
-  directoryModelServiceUrl: '',
+  authorizerServiceUrl: '',
   directoryApiKey: '',
-  authenticationType: ''
+  directoryModelServiceUrl: '',
+  directoryReaderServiceUrl: '',
+  directoryServiceUrl: '',
+  directoryWriterServiceUrl: ''
 }
 export const ConfigContext = React.createContext<Config>(emptyConfig)
 

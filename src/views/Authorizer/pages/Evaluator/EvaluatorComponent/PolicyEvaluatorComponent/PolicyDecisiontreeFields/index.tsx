@@ -1,15 +1,15 @@
-import { Decisions } from '../PolicyCommonFields/Decisions'
-import { ResourceContext } from '../PolicyCommonFields/ResourceContext'
-import { FieldContainer, SectionTitleContainer } from '../styles'
-import { SubField } from '../Subfield'
+import Input from '../../../../../../../components/common/Input'
+import Label from '../../../../../../../components/common/Label'
+import { Row } from '../../../../../../../components/common/Row'
 import Select, {
   SelectOption,
 } from '../../../../../../../components/common/Select'
 import { useDecisionTreePolicyEvaluatorContext } from '../../../../../../../services/PolicyEvaluatorContextProvider/hooks'
 import { V2PathSeparator } from '../../../../../../../types/authorizer'
-import Label from '../../../../../../../components/common/Label'
-import { Row } from '../../../../../../../components/common/Row'
-import Input from '../../../../../../../components/common/Input'
+import { Decisions } from '../PolicyCommonFields/Decisions'
+import { ResourceContext } from '../PolicyCommonFields/ResourceContext'
+import { FieldContainer, SectionTitleContainer } from '../styles'
+import { SubField } from '../Subfield'
 
 const decisionTreeOptions: Array<SelectOption> = [
   {
@@ -23,7 +23,7 @@ const decisionTreeOptions: Array<SelectOption> = [
 ]
 
 export const PolicyDecisiontreeFields = () => {
-  const { options, setOptions, pathFreeText, setPathFreeText } =
+  const { options, pathFreeText, setOptions, setPathFreeText } =
     useDecisionTreePolicyEvaluatorContext()
 
   return (

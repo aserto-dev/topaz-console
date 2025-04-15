@@ -9,8 +9,6 @@ type BreadCrumbPart = {
   url?: string
 }
 
-type Variant = 'large' | 'small'
-
 type BreadcrumbProps = {
   breadcrumbParts?: BreadCrumbPart[]
   testId?: string
@@ -19,6 +17,8 @@ type BreadcrumbProps = {
   variant?: Variant
 }
 
+type Variant = 'large' | 'small'
+
 const BreadcrumbContainer = styled.div<{ $variant: Variant }>`
   width: 100%;
   font-size: ${({ $variant }) => ($variant === 'large' ? `24px` : `16px`)};
@@ -26,9 +26,9 @@ const BreadcrumbContainer = styled.div<{ $variant: Variant }>`
 `
 
 const Breadcrumb: React.FC<BreadcrumbProps> = ({
+  breadcrumbParts,
   title,
   usePathAsBreadcrumb,
-  breadcrumbParts,
   variant = 'large',
 }) => {
   // if the flag was passed as true, construct the breadcrumb from the path

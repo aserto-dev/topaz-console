@@ -2,25 +2,25 @@ import React, { useMemo } from 'react'
 import { Navbar } from 'react-bootstrap'
 import { NavLink, useMatch, useResolvedPath } from 'react-router'
 
-import Logo from '../../../assets/topaz-logo.svg'
 import separator from '../../../assets/separator.svg'
+import Logo from '../../../assets/topaz-logo.svg'
 import { NavBarBrand, NavBarContainer, Separator } from './styles'
-
-type expandSteps = 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
 
 type BaseNavBarProps = {
   children?: React.ReactNode
-  logo?: React.ReactNode
-  uncollapsableContent?: React.ReactNode
-  showBrandSeparator?: boolean
-  topPosition?: number
   expand?: expandSteps
+  logo?: React.ReactNode
+  showBrandSeparator?: boolean
   testId?: string
+  topPosition?: number
+  uncollapsableContent?: React.ReactNode
 }
+
+type expandSteps = 'lg' | 'md' | 'sm' | 'xl' | 'xxl'
 const styleBreakpointsMap: Record<expandSteps, number | undefined> = {
-  sm: 575,
-  md: 767,
   lg: 991,
+  md: 767,
+  sm: 575,
   xl: 1199,
   xxl: 1399,
 }
@@ -28,19 +28,19 @@ const DEFAULT_LOGO = <img alt="logo" src={Logo} />
 const DEFAULT_EXPAND = 'xl'
 
 interface BaseNavLinkProps {
-  to: string
-  title: string
   end?: string
+  title: string
+  to: string
 }
 
 export const BaseNavLink = React.memo(
-  ({ to, title, end }: BaseNavLinkProps) => {
+  ({ end, title, to }: BaseNavLinkProps) => {
     const resolved = useResolvedPath(to)
     const pathname = useMemo(
       () => (end ? resolved.pathname.replace(end, '') : resolved.pathname),
       [resolved, end],
     )
-    const match = useMatch({ path: pathname, end: false })
+    const match = useMatch({ end: false, path: pathname })
 
     return (
       <NavLink

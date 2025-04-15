@@ -38,9 +38,9 @@ const colorList = [
 ]
 
 function hashCode(s: string) {
-  let hash = 0,
-    i,
-    chr
+  let chr,
+    hash = 0,
+    i
   if (s.length === 0) {
     return hash
   }

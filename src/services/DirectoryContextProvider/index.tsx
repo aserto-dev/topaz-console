@@ -1,28 +1,28 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 import React, { useEffect, useMemo, useState } from 'react'
 import { useLocation } from 'react-router'
+
 import { QueryKey } from '@tanstack/react-query'
 
+import { useDirectoryReaderV3ObjectGet } from '../../api/v3/directory'
 import { SelectOption } from '../../components/common/Select'
 import { V3CheckRequest } from '../../types/directory'
-import { useDirectoryReaderV3ObjectGet } from '../../api/v3/directory'
 import { DirectoryContext, DisplayStateMap } from './hooks'
 
 const DirectoryContextProvider = ({
-  displayState,
   children,
+  displayState,
 }: {
-  displayState: DisplayStateMap
   children: React.ReactNode
+  displayState: DisplayStateMap
 }) => {
   // model State
   const location: { state: V3CheckRequest } = useLocation()
   const {
-    object_type,
     object_id,
-    subject_type,
-    subject_id,
+    object_type,
     relation: check_relation,
+    subject_id,
+    subject_type,
   } = location.state || {}
 
   const object = useDirectoryReaderV3ObjectGet(object_type, object_id)
@@ -68,12 +68,12 @@ const DirectoryContextProvider = ({
   const [code, setCode] = useState<string>('')
   const [request, setRequest] = useState('check')
   const [subjectType, setSubjectType] = useState('user')
-  const [subjectInstance, setSubjectInstance] = useState<SelectOption | null>(
+  const [subjectInstance, setSubjectInstance] = useState<null | SelectOption>(
     null,
   )
-  const [relationType, setRelationType] = useState<SelectOption | null>(null)
+  const [relationType, setRelationType] = useState<null | SelectOption>(null)
   const [objectType, setObjectType] = useState('group')
-  const [objectInstance, setObjectInstance] = useState<SelectOption | null>(
+  const [objectInstance, setObjectInstance] = useState<null | SelectOption>(
     null,
   )
 
@@ -119,43 +119,43 @@ const DirectoryContextProvider = ({
 
   const value = useMemo(
     () => ({
-      model: {
-        visible,
-        setVisible,
-        code,
-        setCode,
-      },
-      evaluator: {
-        request,
-        subjectType,
-        subjectInstance,
-        relationType,
-        objectType,
-        objectInstance,
-        setRequest,
-        setSubjectType,
-        setSubjectInstance,
-        setRelationType,
-        setObjectType,
-        setObjectInstance,
-      },
       data: {
-        objectType: dataObjectType,
-        setObjectType: setDataObjectType,
-        subjectType: dataSubjectType,
-        setSubjectType: setDataSubjectType,
-        relation,
-        setRelation,
-        subjectRelation,
-        setSubjectRelation,
         objectId,
-        setObjectId,
-        subjectId,
-        setSubjectId,
+        objectType: dataObjectType,
+        relation,
         relationsQueryKey,
+        setObjectId,
+        setObjectType: setDataObjectType,
+        setRelation,
         setRelationsQueryKey,
+        setSubjectId,
+        setSubjectRelation,
+        setSubjectType: setDataSubjectType,
+        subjectId,
+        subjectRelation,
+        subjectType: dataSubjectType,
       },
       displayState: displayState,
+      evaluator: {
+        objectInstance,
+        objectType,
+        relationType,
+        request,
+        setObjectInstance,
+        setObjectType,
+        setRelationType,
+        setRequest,
+        setSubjectInstance,
+        setSubjectType,
+        subjectInstance,
+        subjectType,
+      },
+      model: {
+        code,
+        setCode,
+        setVisible,
+        visible,
+      },
     }),
     [
       visible,

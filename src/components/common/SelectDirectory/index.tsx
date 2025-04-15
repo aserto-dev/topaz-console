@@ -31,12 +31,12 @@ const CircleContainer = styled.div`
   gap: 8px;
 `
 export type SelectOption = {
-  value: string | number
-  label: string
   group: string
-  shouldStopPropagation?: boolean
-  onClick?: () => void
   hide?: boolean
+  label: string
+  onClick?: () => void
+  shouldStopPropagation?: boolean
+  value: number | string
 }
 
 type ReactSelectElement = SelectInstance<SelectOption>
@@ -44,17 +44,17 @@ type ReactSelectElement = SelectInstance<SelectOption>
 interface SelectProps
   extends Omit<
     Props<SelectOption, false>,
-    'isDisabled' | 'inputId' | 'styles' | 'formatGroupId' | 'components'
+    'components' | 'formatGroupId' | 'inputId' | 'isDisabled' | 'styles'
   > {
   defaultValue?: SelectOption
   disabled?: boolean
+  disableLabel?: boolean
   label?: string
-  value?: SelectOption | null
-  style?: React.CSSProperties
   modifyCustomStyle?: (
     styles: StylesConfig<SelectOption, false>,
   ) => StylesConfig<SelectOption, false>
-  disableLabel?: boolean
+  style?: React.CSSProperties
+  value?: null | SelectOption
 }
 
 const formatGroupLabel = (group: GroupBase<SelectOption>) => (
@@ -62,18 +62,18 @@ const formatGroupLabel = (group: GroupBase<SelectOption>) => (
 )
 
 const SelectDirectory: React.ForwardRefExoticComponent<
-  SelectProps & React.RefAttributes<ReactSelectElement>
+  React.RefAttributes<ReactSelectElement> & SelectProps
 > = React.forwardRef(
   (
     {
-      onChange,
-      label,
       disabled,
+      disableLabel,
+      label,
+      modifyCustomStyle,
+      name,
+      onChange,
       style,
       value,
-      disableLabel,
-      name,
-      modifyCustomStyle,
       ...props
     },
     ref,
@@ -86,9 +86,9 @@ const SelectDirectory: React.ForwardRefExoticComponent<
     const [menuIsOpen, setMenuIsOpen] = useState(false)
 
     const removeFocusBox = {
+      boxShadow: 'none',
       outline: 'none',
       webkitBoxShadow: 'none',
-      boxShadow: 'none',
     }
     const Option = useCallback((props: OptionProps<SelectOption, false>) => {
       return (
@@ -144,123 +144,123 @@ const SelectDirectory: React.ForwardRefExoticComponent<
       control: (styles, { isDisabled, isFocused }) => {
         return {
           ...styles,
-          marginLeft: 24,
-          overflowY: 'hidden',
-          minHeight: 36,
-          backgroundColor: isDisabled ? theme.grey40 : theme.primaryBlack,
-          color: isDisabled ? theme.grey40 : theme.grey100,
-          borderColor: isFocused ? theme.indogoAccent2 : theme.grey40,
-          opacity: isDisabled ? 0.6 : 1,
-          outline: isFocused ? 'none' : '',
-          boxShadow: 'none',
           ':hover': {
             ...styles[':hover'],
             backgroundColor: theme.grey10,
             borderColor: theme.indogoAccent1,
             color: theme.grey100,
           },
+          backgroundColor: isDisabled ? theme.grey40 : theme.primaryBlack,
+          borderColor: isFocused ? theme.indogoAccent2 : theme.grey40,
+          boxShadow: 'none',
+          color: isDisabled ? theme.grey40 : theme.grey100,
+          marginLeft: 24,
+          minHeight: 36,
+          opacity: isDisabled ? 0.6 : 1,
+          outline: isFocused ? 'none' : '',
+          overflowY: 'hidden',
         }
       },
-      option: (styles, { isDisabled, isSelected }) => {
-        return {
-          ...styles,
-          backgroundColor: isDisabled
-            ? theme.grey20
-            : isSelected
-              ? theme.grey20
-              : theme.grey20,
-          ':hover': {
-            backgroundColor: theme.grey40,
-            color: theme.grey100,
-          },
-          height: '100%',
-          minHeight: 30,
-          fontSize: 14,
-          paddingLeft: isSelected ? '16px' : '38px',
-          cursor: isDisabled ? 'not-allowed' : 'default',
-          ':active': {
-            ...styles[':active'],
-            backgroundColor: theme.grey40,
-          },
-        }
-      },
-      groupHeading: (styles) => {
-        return {
-          ...styles,
-          paddingLeft: 6,
-          margin: 0,
-          minHeight: 40,
-          fontSize: 14,
-          height: '100%',
-          color: theme.grey100,
-          backgroundColor: theme.grey20,
-          ':hover': {
-            backgroundColor: theme.grey40,
-          },
-        }
-      },
+      dropdownIndicator: (styles, { isDisabled }) => ({
+        ...styles,
+        color: isDisabled ? theme.grey40 : theme.grey70,
+        padding: 7,
+      }),
       group: (styles) => {
         return {
           ...styles,
           padding: 0,
         }
       },
+      groupHeading: (styles) => {
+        return {
+          ...styles,
+          ':hover': {
+            backgroundColor: theme.grey40,
+          },
+          backgroundColor: theme.grey20,
+          color: theme.grey100,
+          fontSize: 14,
+          height: '100%',
+          margin: 0,
+          minHeight: 40,
+          paddingLeft: 6,
+        }
+      },
+      indicatorSeparator: (styles, { isDisabled }) => ({
+        ...styles,
+        backgroundColor: isDisabled ? theme.grey30 : theme.grey30,
+      }),
       input: (styles) => {
         return {
           ...styles,
-          color: theme.grey100,
           borderColor: theme.grey60,
+          color: theme.grey100,
+        }
+      },
+      loadingMessage: (styles) => ({
+        ...styles,
+        backgroundColor: theme.grey20,
+        minHeight: 36,
+      }),
+      menu: (styles) => ({
+        ...styles,
+        backgroundColor: theme.grey20,
+        boxShadow: '0px 2px 6px 4px rgba(0,0,0,0.3)',
+        marginLeft: 23,
+        marginTop: 1,
+        width: '96%',
+        zIndex: 2,
+      }),
+      menuList: (style) => ({
+        ...style,
+        border: `1px solid ${theme.grey40}`,
+        borderBottomLeftRadius: '4px',
+        borderBottomRightRadius: '2px',
+        minHeight: 284,
+        padding: 0,
+        zIndex: 5,
+      }),
+
+      noOptionsMessage: (styles) => ({
+        ...styles,
+        backgroundColor: theme.grey20,
+      }),
+      option: (styles, { isDisabled, isSelected }) => {
+        return {
+          ...styles,
+          ':active': {
+            ...styles[':active'],
+            backgroundColor: theme.grey40,
+          },
+          ':hover': {
+            backgroundColor: theme.grey40,
+            color: theme.grey100,
+          },
+          backgroundColor: isDisabled
+            ? theme.grey20
+            : isSelected
+              ? theme.grey20
+              : theme.grey20,
+          cursor: isDisabled ? 'not-allowed' : 'default',
+          fontSize: 14,
+          height: '100%',
+          minHeight: 30,
+          paddingLeft: isSelected ? '16px' : '38px',
         }
       },
       placeholder: (styles, { isDisabled }) => ({
         ...styles,
         color: isDisabled ? theme.grey40 : theme.grey90,
       }),
-      menu: (styles) => ({
-        ...styles,
-        marginLeft: 23,
-        zIndex: 2,
-        width: '96%',
-        marginTop: 1,
-        backgroundColor: theme.grey20,
-        boxShadow: '0px 2px 6px 4px rgba(0,0,0,0.3)',
-      }),
-      menuList: (style) => ({
-        ...style,
-        zIndex: 5,
-        padding: 0,
-        border: `1px solid ${theme.grey40}`,
-        borderBottomLeftRadius: '4px',
-        borderBottomRightRadius: '2px',
-        minHeight: 284,
-      }),
-      dropdownIndicator: (styles, { isDisabled }) => ({
-        ...styles,
-        color: isDisabled ? theme.grey40 : theme.grey70,
-        padding: 7,
-      }),
-
-      indicatorSeparator: (styles, { isDisabled }) => ({
-        ...styles,
-        backgroundColor: isDisabled ? theme.grey30 : theme.grey30,
-      }),
-      valueContainer: (styles) => ({
-        ...styles,
-        fontSize: 14,
-      }),
-      noOptionsMessage: (styles) => ({
-        ...styles,
-        backgroundColor: theme.grey20,
-      }),
-      loadingMessage: (styles) => ({
-        ...styles,
-        backgroundColor: theme.grey20,
-        minHeight: 36,
-      }),
       singleValue: (styles, { isDisabled }) => ({
         ...styles,
         color: isDisabled ? theme.grey40 : theme.grey100,
         ...removeFocusBox,
+      }),
+      valueContainer: (styles) => ({
+        ...styles,
+        fontSize: 14,
       }),
     }
 
@@ -284,7 +284,7 @@ const SelectDirectory: React.ForwardRefExoticComponent<
           onMenuClose={() => setMenuIsOpen(false)}
           onMenuOpen={() => setMenuIsOpen(true)}
           {...props}
-          components={{ Option, GroupHeading }}
+          components={{ GroupHeading, Option }}
           styles={
             modifyCustomStyle ? modifyCustomStyle(colourStyles) : colourStyles
           }

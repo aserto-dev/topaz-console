@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+
 import { theme } from '../../theme'
 
 export const SuccessContent = styled.div<{ $show?: boolean }>`

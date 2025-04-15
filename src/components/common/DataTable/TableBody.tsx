@@ -41,7 +41,7 @@ type TableBodyProps<Data extends object> = {
   prepareRow: (row: Row<Data>) => void
   renderRowSubComponent?: SubComponent<Data>
   rowComponent?: React.ComponentType<
-    TableRowProps & { isExpanded: boolean; $row: Row<Data> }
+    TableRowProps & { $row: Row<Data>; isExpanded: boolean; }
   >
   rows: Row<Data>[]
   visibleColumns: Array<ColumnInstance<Data>>
@@ -93,17 +93,17 @@ const TableBody = <Data extends object>({
               colSpan={visibleColumns.length}
               style={{
                 backgroundColor: theme.grey10,
+                maxHeight: 300,
+                opacity: 1,
                 padding: 20,
                 transition:
                   'max-height 900ms ease, opacity 900ms, padding-top 200ms',
-                maxHeight: 300,
-                opacity: 1,
                 ...(!shouldShowSubRow && {
-                  maxHeight: 0,
                   height: 0,
-                  padding: 0,
+                  maxHeight: 0,
                   opacity: 0,
                   overflow: 'hidden',
+                  padding: 0,
                 }),
               }}
             >
@@ -111,8 +111,8 @@ const TableBody = <Data extends object>({
                 style={{
                   transition: 'all 10ms',
                   ...(!shouldShowSubRow && {
-                    visibility: 'hidden',
                     height: 0,
+                    visibility: 'hidden',
                   }),
                 }}
               >

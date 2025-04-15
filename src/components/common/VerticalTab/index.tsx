@@ -16,7 +16,7 @@ const TabContainer = styled.div`
   }
 `
 
-const TabItem = styled.div<{ selected?: boolean; disabled?: boolean }>`
+const TabItem = styled.div<{ disabled?: boolean; selected?: boolean; }>`
   padding: 12px 20px;
   ${({ disabled }) => {
     return disabled
@@ -57,26 +57,26 @@ const ComingSoonText = styled.span`
 `
 
 type TabOption = {
+  hidden?: boolean
+  isDisabled?: boolean
   label: string
   value: string
-  isDisabled?: boolean
-  hidden?: boolean
 }
 
 type VerticalTabProps = {
+  addVerticalTabButton?: ReactElement
+  onChange: (value: string) => void
   options: Array<TabOption>
   selectedValue?: string
-  onChange: (value: string) => void
   title?: string
-  addVerticalTabButton?: ReactElement
 }
 
 export const VerticalTab: React.FC<VerticalTabProps> = ({
+  addVerticalTabButton,
+  onChange,
   options,
   selectedValue,
-  onChange,
   title,
-  addVerticalTabButton,
 }) => {
   return (
     <>

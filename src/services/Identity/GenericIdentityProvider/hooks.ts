@@ -1,22 +1,22 @@
 import React from "react"
 
- type User = {
-  sub?: string
-  email?: string
-  name?: string
-  picture?: string
-  nickname?: string
+ export type GenericIdentityProviderProps = {
+  children: React.ReactNode
+  identity: IdentityProviderContextProps
 }
 
 type IdentityProviderContextProps = {
-  user?: User
   getAccessToken: () => Promise<string>
   logout: () => void
+  user?: User
 }
 
-export type GenericIdentityProviderProps = {
-  children: React.ReactNode
-  identity: IdentityProviderContextProps
+type User = {
+  email?: string
+  name?: string
+  nickname?: string
+  picture?: string
+  sub?: string
 }
 
 export const identityProviderContext = React.createContext<

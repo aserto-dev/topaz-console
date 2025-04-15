@@ -1,13 +1,13 @@
 import React, { useCallback, useState } from 'react'
 
 import close from '../../assets/close.svg'
-import { SuccessContent } from './style'
 import { SuccessBannerProviderProps, SuccessMessageContext } from './hooks'
+import { SuccessContent } from './style'
 
 const SuccessBannerProvider: React.FC<SuccessBannerProviderProps> = ({
   children,
 }) => {
-  const [message, setMessage] = useState<string | null>(null)
+  const [message, setMessage] = useState<null | string>(null)
   const clearMessage = useCallback(() => setMessage(null), [])
   const showMessage = useCallback((message: string) => setMessage(message), [])
 

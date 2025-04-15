@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
-import { theme } from '../../../../theme'
 import Input from '../../../../components/common/Input'
+import { theme } from '../../../../theme'
 
 export const DataContainer = styled.div`
   padding-left: 12px;

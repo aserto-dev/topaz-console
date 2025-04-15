@@ -9,7 +9,7 @@ import styled from 'styled-components'
 
 import { theme } from '../../../../../theme'
 
-const LabelDiv = styled.div<{ transform: string; highlight?: boolean }>`
+const LabelDiv = styled.div<{ highlight?: boolean; transform: string; }>`
   position: absolute;
   background: transparent;
   color: ${({ highlight }) => (highlight ? theme.grey100 : theme.grey50)};
@@ -22,13 +22,13 @@ const LabelDiv = styled.div<{ transform: string; highlight?: boolean }>`
 `
 
 const EdgeLabel = ({
-  transform,
-  label,
   highlight,
+  label,
+  transform,
 }: {
-  transform: string
-  label: string
   highlight?: boolean
+  label: string
+  transform: string
 }) => {
   return (
     <LabelDiv highlight={highlight} transform={transform}>
@@ -38,24 +38,24 @@ const EdgeLabel = ({
 }
 
 const CustomEdge: FC<EdgeProps> = ({
+  data,
   id,
+  markerEnd,
+  sourcePosition,
   sourceX,
   sourceY,
+  style = {},
+  targetPosition,
   targetX,
   targetY,
-  sourcePosition,
-  targetPosition,
-  data,
-  style = {},
-  markerEnd,
 }) => {
   const [edgePath] = getBezierPath({
+    sourcePosition,
     sourceX,
     sourceY,
-    sourcePosition,
+    targetPosition,
     targetX,
     targetY,
-    targetPosition,
   })
 
   return (
@@ -66,9 +66,9 @@ const CustomEdge: FC<EdgeProps> = ({
         markerEnd={markerEnd}
         path={edgePath}
         style={{
-          strokeWidth: data.subjectRelation ? 2 : 1,
           stroke: theme.grey50,
           strokeDasharray: data.subjectRelation && '5,5',
+          strokeWidth: data.subjectRelation ? 2 : 1,
           ...style,
         }}
       />

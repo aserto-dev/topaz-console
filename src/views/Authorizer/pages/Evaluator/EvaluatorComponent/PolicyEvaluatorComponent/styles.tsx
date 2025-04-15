@@ -1,10 +1,11 @@
 import styled, { css } from 'styled-components'
-import Input from '../../../../../../components/common/Input'
-import { theme } from '../../../../../../theme'
+
 import Button from '../../../../../../components/common/Button'
+import Input from '../../../../../../components/common/Input'
 import Label from '../../../../../../components/common/Label'
-import { TextBox } from '../../../../../Directory/pages/Evaluator/styles'
 import TextArea from '../../../../../../components/common/TextArea'
+import { theme } from '../../../../../../theme'
+import { TextBox } from '../../../../../Directory/pages/Evaluator/styles'
 
 export const Container = styled.div`
   position: relative;
@@ -50,8 +51,8 @@ export const HeaderTitle = styled.div`
 
 export const SideContent = styled.div<{
   $left?: boolean
-  $right?: boolean
   $overflow?: string
+  $right?: boolean
 }>`
   height: calc(100vh - 14rem);
   @media (max-width: 1328px) {
@@ -91,9 +92,9 @@ export const Curve = styled.div`
 `
 
 export const FieldContainer = styled.div<{
-  $marginTop?: number
-  $marginLeft?: number
   $marginBottom?: number
+  $marginLeft?: number
+  $marginTop?: number
 }>`
   flex: 1;
   margin-top: ${({ $marginTop }) => `${$marginTop}px`};

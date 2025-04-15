@@ -1,12 +1,13 @@
-import { useState, useCallback } from 'react'
+import { useCallback, useState } from 'react'
+
+import { ErrorContext, ErrorModalProviderProps } from '.'
 import ensureError from '../../lib/error/ensureError'
 import ErrorModal from './ErrorModal'
-import { ErrorContext, ErrorModalProviderProps } from '.'
 
 const ErrorModalProvider: React.FC<ErrorModalProviderProps> = ({
   children,
 }) => {
-  const [logout, setLogout] = useState<() => void | undefined>()
+  const [logout, setLogout] = useState<() => undefined | void>()
   const [error, setError] = useState<Error | null>(null)
   const clearError = useCallback(() => setError(null), [])
   const showError = useCallback((error: unknown) => {
@@ -28,8 +29,8 @@ const ErrorModalProvider: React.FC<ErrorModalProviderProps> = ({
     <ErrorContext.Provider
       value={{
         clearError,
-        showError,
         isErrorVisible: !!error,
+        showError,
         showErrorWithLogout,
       }}
     >

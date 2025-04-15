@@ -1,15 +1,15 @@
 import { useCallback, useEffect } from 'react'
 
 type Props = {
-  isFetching: boolean
-  hasMoreData: boolean
   fetchNextData: () => void
+  hasMoreData: boolean
+  isFetching: boolean
 }
 
 export const useIsScrollable = ({
-  isFetching,
-  hasMoreData,
   fetchNextData,
+  hasMoreData,
+  isFetching,
 }: Props) => {
   const fetchData = useCallback(() => {
     fetchNextData()

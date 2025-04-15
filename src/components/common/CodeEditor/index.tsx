@@ -5,15 +5,15 @@ import { StyledCodeEditor } from './styles'
 const CodeEditor: React.FC<{
   hasError?: boolean
   language?: string
+  onValueChange?: (value: string) => void
   readOnly?: boolean
   value: string
-  onValueChange?: (value: string) => void
 }> = ({
   hasError = false,
-  readOnly = true,
-  value,
   language,
   onValueChange = () => {},
+  readOnly = true,
+  value,
 }) => {
   return (
     <>

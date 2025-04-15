@@ -1,7 +1,6 @@
 import 'prismjs/components/prism-json'
 import 'prismjs/components/prism-yaml'
 import 'prism-themes/themes/prism-atom-dark.css'
-
 import Editor from 'react-simple-code-editor'
 import styled from 'styled-components'
 

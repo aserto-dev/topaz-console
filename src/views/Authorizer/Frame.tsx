@@ -1,9 +1,9 @@
 import React, { PropsWithChildren } from 'react'
 
-import HeaderComponent from './Header'
-import { Content, Grid, Sidebar } from './styles'
 import PaddedContent from '../../components/common/PaddedContent'
+import HeaderComponent from './Header'
 import AuthorizerSidebar from './Sidebar'
+import { Content, Grid, Sidebar } from './styles'
 
 const Frame: React.FC<PropsWithChildren<object>> = ({ children }) => {
   return (

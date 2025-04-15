@@ -1,5 +1,4 @@
 import 'reactflow/dist/style.css'
-
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import ReactFlow, {
   Controls,
@@ -16,6 +15,8 @@ import ReactFlow, {
   useNodesState,
 } from 'reactflow'
 
+import { getNextPage } from '../../../../../api/directory/customQuery'
+import { useDirectoryReaderV3RelationsListInfinite } from '../../../../../api/v3/directory'
 import { theme } from '../../../../../theme'
 import {
   V3GetRelationsResponseObjects,
@@ -25,8 +26,6 @@ import {
 import { computeColor } from './colors'
 import CustomEdge from './CustomEdge'
 import CustomNode, { Filter, FilterSpan, ResetFilter } from './CustomNode'
-import { useDirectoryReaderV3RelationsListInfinite } from '../../../../../api/v3/directory'
-import { getNextPage } from '../../../../../api/directory/customQuery'
 
 const edgeTypes: EdgeTypes = {
   custom: CustomEdge,
@@ -58,15 +57,15 @@ const ObjectGraphComponent: React.FC<ObjectGraphComponentProps> = ({
       {
         object_id: objectId,
         object_type: objectType,
-        with_objects: true,
         'page.size': 100,
+        with_objects: true,
       },
       {
         query: {
+          getNextPageParam: getNextPage,
           meta: {
             showError: true,
           },
-          getNextPageParam: getNextPage,
         },
       },
     )
@@ -74,17 +73,17 @@ const ObjectGraphComponent: React.FC<ObjectGraphComponentProps> = ({
   const { data: incomingRelationsData } =
     useDirectoryReaderV3RelationsListInfinite(
       {
+        'page.size': 100,
         subject_id: object?.id || objectId,
         subject_type: object?.type || objectType,
         with_objects: true,
-        'page.size': 100,
       },
       {
         query: {
+          getNextPageParam: getNextPage,
           meta: {
             showError: true,
           },
-          getNextPageParam: getNextPage,
         },
       },
     )
@@ -142,21 +141,21 @@ const ObjectGraphComponent: React.FC<ObjectGraphComponentProps> = ({
     if (!!objectType && !!objectId) {
       return [
         {
-          id: `object:${objectType}:${objectId}`,
-          type: 'custom',
           data: {
+            color: computeColor(objectType),
+            id: objectId,
             label:
               object?.display_name ||
               objects[`${objectType}:${objectId}`]?.display_name ||
               objectId,
-            targetHandle: true,
-            sourceHandle: true,
-            color: computeColor(objectType),
             objectType: { name: objectType, value: objectType },
-            id: objectId,
             onObjectTypeClick: toggleObjectTypeFilter,
+            sourceHandle: true,
+            targetHandle: true,
           },
+          id: `object:${objectType}:${objectId}`,
           position: { x: 450, y: 200 },
+          type: 'custom',
         },
       ]
     }
@@ -172,19 +171,19 @@ const ObjectGraphComponent: React.FC<ObjectGraphComponentProps> = ({
   const incomingNodes: Node[] = useMemo(
     () =>
       incomingRelations.map((o, i) => ({
-        id: `incoming:${o?.object_type}:${o?.object_id}#${o.relation}#${o.subject_relation || ''}`,
-        type: 'custom',
         data: {
+          color: computeColor(o?.object_type || ''),
+          id: o?.object_id,
           label:
             objects[`${o?.object_type}:${o?.object_id}`]?.display_name ||
             o?.object_id,
-          sourceHandle: true,
-          color: computeColor(o?.object_type || ''),
           objectType: { name: o?.object_type, value: o?.object_type },
-          id: o?.object_id,
           onObjectTypeClick: toggleObjectTypeFilter,
+          sourceHandle: true,
         },
+        id: `incoming:${o?.object_type}:${o?.object_id}#${o.relation}#${o.subject_relation || ''}`,
         position: { x: 50, y: 100 * i + 50 },
+        type: 'custom',
       })),
     [incomingRelations, toggleObjectTypeFilter, objects],
   )
@@ -196,23 +195,23 @@ const ObjectGraphComponent: React.FC<ObjectGraphComponentProps> = ({
           o?.subject_id
         }#${o.subject_relation || ''}`
         return {
-          id,
           data: o.subject_relation
             ? {
                 startLabel: o.relation,
-                subjectRelation: { val: o.subject_relation, highlight: false },
+                subjectRelation: { highlight: false, val: o.subject_relation },
               }
             : { startLabel: o?.relation },
+          id,
+          markerEnd: {
+            color: `${theme.grey50}`,
+            height: o.subject_relation ? 10 : 20,
+            type: MarkerType.ArrowClosed,
+            width: o.subject_relation ? 10 : 20,
+          },
           source: `incoming:${o?.object_type}:${o?.object_id}#${o.relation}#${
             o.subject_relation || ''
           }`,
           target: `object:${o?.subject_type}:${o?.subject_id}`,
-          markerEnd: {
-            type: MarkerType.ArrowClosed,
-            width: o.subject_relation ? 10 : 20,
-            height: o.subject_relation ? 10 : 20,
-            color: `${theme.grey50}`,
-          },
           type: 'custom',
         }
       }),
@@ -222,26 +221,26 @@ const ObjectGraphComponent: React.FC<ObjectGraphComponentProps> = ({
   const outgoingNodes: Node[] = useMemo(
     () =>
       outgoingRelations.map((o, i) => ({
-        id: `outgoing:${o?.subject_type}:${o?.subject_id}#${o.relation}#${
-          o.subject_relation || ''
-        }`,
-        type: 'custom',
         data: {
+          color: computeColor(o?.subject_type || ''),
+          id: o?.subject_id,
           label:
             objects[`${o?.subject_type}:${o?.subject_id}`]?.display_name ||
             o?.subject_id,
-          targetHandle: true,
-          color: computeColor(o?.subject_type || ''),
           objectType: {
             name: o.subject_relation
               ? `${o?.subject_type}#${o?.subject_relation}`
               : o?.subject_type,
             value: o?.subject_type,
           },
-          id: o?.subject_id,
           onObjectTypeClick: toggleObjectTypeFilter,
+          targetHandle: true,
         },
+        id: `outgoing:${o?.subject_type}:${o?.subject_id}#${o.relation}#${
+          o.subject_relation || ''
+        }`,
         position: { x: 850, y: 100 * i + 50 },
+        type: 'custom',
       })),
     [outgoingRelations, toggleObjectTypeFilter, objects],
   )
@@ -249,25 +248,25 @@ const ObjectGraphComponent: React.FC<ObjectGraphComponentProps> = ({
   const outgoingEdges: Edge[] = useMemo(
     () =>
       outgoingRelations.map((o) => ({
-        id: `outgoing-e${o?.object_type}:${o?.object_id}#${o.relation}-${o?.subject_type}:${
-          o?.subject_id
-        }#${o.subject_relation || ''}`,
         data: o.subject_relation
           ? {
               endLabel: o.relation,
-              subjectRelation: { val: o.subject_relation, highlight: false },
+              subjectRelation: { highlight: false, val: o.subject_relation },
             }
           : { endLabel: o?.relation },
+        id: `outgoing-e${o?.object_type}:${o?.object_id}#${o.relation}-${o?.subject_type}:${
+          o?.subject_id
+        }#${o.subject_relation || ''}`,
+        markerEnd: {
+          color: `${theme.grey50}`,
+          height: o.subject_relation ? 10 : 20,
+          type: MarkerType.ArrowClosed,
+          width: o.subject_relation ? 10 : 20,
+        },
         source: `object:${o?.object_type}:${o?.object_id}`,
         target: `outgoing:${o?.subject_type}:${o?.subject_id}#${o.relation}#${
           o.subject_relation || ''
         }`,
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          width: o.subject_relation ? 10 : 20,
-          height: o.subject_relation ? 10 : 20,
-          color: `${theme.grey50}`,
-        },
         type: 'custom',
       })),
     [outgoingRelations],
@@ -306,10 +305,10 @@ const ObjectGraphComponent: React.FC<ObjectGraphComponentProps> = ({
         if (isNode(elem)) {
           elem.style = {
             ...elem.style,
-            borderWidth: '2px',
             borderColor: nodeIds.includes(elem.id)
               ? theme.grey100
               : theme.grey30,
+            borderWidth: '2px',
             opacity: nodeIds.includes(elem.id) ? 1 : 0.25,
           }
           if (elem.id === centerNode) {
@@ -327,9 +326,9 @@ const ObjectGraphComponent: React.FC<ObjectGraphComponentProps> = ({
       previousEdges?.map((elem) => {
         const highlight = edgeIds.includes(elem.id)
         elem.style = {
-          stroke: highlight ? theme.grey100 : theme.grey50,
-          opacity: highlight ? 1 : 0.25,
           color: theme.grey100,
+          opacity: highlight ? 1 : 0.25,
+          stroke: highlight ? theme.grey100 : theme.grey50,
         }
 
         elem.markerEnd = {
@@ -381,8 +380,8 @@ const ObjectGraphComponent: React.FC<ObjectGraphComponentProps> = ({
           }
           elem.style = {
             ...elem.style,
-            stroke: theme.grey60,
             opacity: 1,
+            stroke: theme.grey60,
           }
           elem.markerEnd = {
             ...(elem.markerEnd as EdgeMarker),
@@ -426,10 +425,10 @@ const ObjectGraphComponent: React.FC<ObjectGraphComponentProps> = ({
         position="top-right"
         style={{
           backgroundColor: theme.primaryBlack,
+          borderRadius: '2px',
+          marginTop: '0px',
           opacity: 0.95,
           padding: '15px 8px',
-          marginTop: '0px',
-          borderRadius: '2px',
         }}
       >
         <FilterSpan>Filter:</FilterSpan>

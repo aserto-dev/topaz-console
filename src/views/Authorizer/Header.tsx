@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { Header } from './styles'
 import PageHeader from '../../components/common/PageHeader'
+import { Header } from './styles'
 
 const HeaderComponent: React.FC = () => {
   return (
