@@ -3,7 +3,7 @@
  * Do not edit manually.
  * Directory
  * Directory service
- * OpenAPI spec version: v0.33.2
+ * OpenAPI spec version: v0.33.5
  */
 import {
   useInfiniteQuery,
@@ -44,6 +44,16 @@ import type {
   DirectoryWriterV3ObjectDeleteParams,
   DirectoryWriterV3RelationDeleteParams,
   RpcStatus,
+  V1ActionSearchRequest,
+  V1ActionSearchResponse,
+  V1EvaluationRequest,
+  V1EvaluationResponse,
+  V1EvaluationsRequest,
+  V1EvaluationsResponse,
+  V1ResourceSearchRequest,
+  V1ResourceSearchResponse,
+  V1SubjectSearchRequest,
+  V1SubjectSearchResponse,
   V3CheckPermissionRequest,
   V3CheckPermissionResponse,
   V3CheckRelationRequest,
@@ -75,6 +85,346 @@ import type {
 import { useDirectoryReaderClient } from '../clients/rest';
 import { useDirectoryModelClient } from '../clients/rest';
 import { useDirectoryWriterClient } from '../clients/rest';
+/**
+ * TBD
+ * @summary Access Evaluation API
+ */
+export const useOpenidAuthzenAccessV1EvaluationPostHook = () => {
+        const openidAuthzenAccessV1EvaluationPost = useDirectoryReaderClient<V1EvaluationResponse>();
+
+        return useCallback((
+    v1EvaluationRequest: V1EvaluationRequest,
+ signal?: AbortSignal
+) => {
+        return openidAuthzenAccessV1EvaluationPost(
+          {url: `/access/v1/evaluation`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: v1EvaluationRequest, signal
+    },
+          );
+        }, [openidAuthzenAccessV1EvaluationPost])
+      }
+    
+
+
+export const useOpenidAuthzenAccessV1EvaluationPostMutationOptions = <TError = unknown | RpcStatus,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1EvaluationPostHook>>>, TError,{data: V1EvaluationRequest}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1EvaluationPostHook>>>, TError,{data: V1EvaluationRequest}, TContext> => {
+    
+const mutationKey = ['openidAuthzenAccessV1EvaluationPost'];
+const {mutation: mutationOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }};
+
+      const openidAuthzenAccessV1EvaluationPost =  useOpenidAuthzenAccessV1EvaluationPostHook()
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1EvaluationPostHook>>>, {data: V1EvaluationRequest}> = (props) => {
+          const {data} = props ?? {};
+
+          return  openidAuthzenAccessV1EvaluationPost(data,)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type OpenidAuthzenAccessV1EvaluationPostMutationResult = NonNullable<Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1EvaluationPostHook>>>>
+    export type OpenidAuthzenAccessV1EvaluationPostMutationBody = V1EvaluationRequest
+    export type OpenidAuthzenAccessV1EvaluationPostMutationError = unknown | RpcStatus
+
+    /**
+ * @summary Access Evaluation API
+ */
+export const useOpenidAuthzenAccessV1EvaluationPost = <TError = unknown | RpcStatus,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1EvaluationPostHook>>>, TError,{data: V1EvaluationRequest}, TContext>, }
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1EvaluationPostHook>>>,
+        TError,
+        {data: V1EvaluationRequest},
+        TContext
+      > => {
+
+      const mutationOptions = useOpenidAuthzenAccessV1EvaluationPostMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
+    }
+    
+/**
+ * TBD.
+ * @summary Access Evaluations API
+ */
+export const useOpenidAuthzenAccessV1EvaluationsPostHook = () => {
+        const openidAuthzenAccessV1EvaluationsPost = useDirectoryReaderClient<V1EvaluationsResponse>();
+
+        return useCallback((
+    v1EvaluationsRequest: V1EvaluationsRequest,
+ signal?: AbortSignal
+) => {
+        return openidAuthzenAccessV1EvaluationsPost(
+          {url: `/access/v1/evaluations`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: v1EvaluationsRequest, signal
+    },
+          );
+        }, [openidAuthzenAccessV1EvaluationsPost])
+      }
+    
+
+
+export const useOpenidAuthzenAccessV1EvaluationsPostMutationOptions = <TError = unknown | RpcStatus,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1EvaluationsPostHook>>>, TError,{data: V1EvaluationsRequest}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1EvaluationsPostHook>>>, TError,{data: V1EvaluationsRequest}, TContext> => {
+    
+const mutationKey = ['openidAuthzenAccessV1EvaluationsPost'];
+const {mutation: mutationOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }};
+
+      const openidAuthzenAccessV1EvaluationsPost =  useOpenidAuthzenAccessV1EvaluationsPostHook()
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1EvaluationsPostHook>>>, {data: V1EvaluationsRequest}> = (props) => {
+          const {data} = props ?? {};
+
+          return  openidAuthzenAccessV1EvaluationsPost(data,)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type OpenidAuthzenAccessV1EvaluationsPostMutationResult = NonNullable<Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1EvaluationsPostHook>>>>
+    export type OpenidAuthzenAccessV1EvaluationsPostMutationBody = V1EvaluationsRequest
+    export type OpenidAuthzenAccessV1EvaluationsPostMutationError = unknown | RpcStatus
+
+    /**
+ * @summary Access Evaluations API
+ */
+export const useOpenidAuthzenAccessV1EvaluationsPost = <TError = unknown | RpcStatus,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1EvaluationsPostHook>>>, TError,{data: V1EvaluationsRequest}, TContext>, }
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1EvaluationsPostHook>>>,
+        TError,
+        {data: V1EvaluationsRequest},
+        TContext
+      > => {
+
+      const mutationOptions = useOpenidAuthzenAccessV1EvaluationsPostMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
+    }
+    
+/**
+ * TBD.
+ * @summary Action Search API
+ */
+export const useOpenidAuthzenAccessV1SearchActionPostHook = () => {
+        const openidAuthzenAccessV1SearchActionPost = useDirectoryReaderClient<V1ActionSearchResponse>();
+
+        return useCallback((
+    v1ActionSearchRequest: V1ActionSearchRequest,
+ signal?: AbortSignal
+) => {
+        return openidAuthzenAccessV1SearchActionPost(
+          {url: `/access/v1/search/action`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: v1ActionSearchRequest, signal
+    },
+          );
+        }, [openidAuthzenAccessV1SearchActionPost])
+      }
+    
+
+
+export const useOpenidAuthzenAccessV1SearchActionPostMutationOptions = <TError = unknown | RpcStatus,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1SearchActionPostHook>>>, TError,{data: V1ActionSearchRequest}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1SearchActionPostHook>>>, TError,{data: V1ActionSearchRequest}, TContext> => {
+    
+const mutationKey = ['openidAuthzenAccessV1SearchActionPost'];
+const {mutation: mutationOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }};
+
+      const openidAuthzenAccessV1SearchActionPost =  useOpenidAuthzenAccessV1SearchActionPostHook()
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1SearchActionPostHook>>>, {data: V1ActionSearchRequest}> = (props) => {
+          const {data} = props ?? {};
+
+          return  openidAuthzenAccessV1SearchActionPost(data,)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type OpenidAuthzenAccessV1SearchActionPostMutationResult = NonNullable<Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1SearchActionPostHook>>>>
+    export type OpenidAuthzenAccessV1SearchActionPostMutationBody = V1ActionSearchRequest
+    export type OpenidAuthzenAccessV1SearchActionPostMutationError = unknown | RpcStatus
+
+    /**
+ * @summary Action Search API
+ */
+export const useOpenidAuthzenAccessV1SearchActionPost = <TError = unknown | RpcStatus,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1SearchActionPostHook>>>, TError,{data: V1ActionSearchRequest}, TContext>, }
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1SearchActionPostHook>>>,
+        TError,
+        {data: V1ActionSearchRequest},
+        TContext
+      > => {
+
+      const mutationOptions = useOpenidAuthzenAccessV1SearchActionPostMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
+    }
+    
+/**
+ * TBD.
+ * @summary Resource Search API
+ */
+export const useOpenidAuthzenAccessV1SearchPostHook = () => {
+        const openidAuthzenAccessV1SearchPost = useDirectoryReaderClient<V1ResourceSearchResponse>();
+
+        return useCallback((
+    v1ResourceSearchRequest: V1ResourceSearchRequest,
+ signal?: AbortSignal
+) => {
+        return openidAuthzenAccessV1SearchPost(
+          {url: `/access/v1/search/resource`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: v1ResourceSearchRequest, signal
+    },
+          );
+        }, [openidAuthzenAccessV1SearchPost])
+      }
+    
+
+
+export const useOpenidAuthzenAccessV1SearchPostMutationOptions = <TError = unknown | RpcStatus,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1SearchPostHook>>>, TError,{data: V1ResourceSearchRequest}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1SearchPostHook>>>, TError,{data: V1ResourceSearchRequest}, TContext> => {
+    
+const mutationKey = ['openidAuthzenAccessV1SearchPost'];
+const {mutation: mutationOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }};
+
+      const openidAuthzenAccessV1SearchPost =  useOpenidAuthzenAccessV1SearchPostHook()
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1SearchPostHook>>>, {data: V1ResourceSearchRequest}> = (props) => {
+          const {data} = props ?? {};
+
+          return  openidAuthzenAccessV1SearchPost(data,)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type OpenidAuthzenAccessV1SearchPostMutationResult = NonNullable<Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1SearchPostHook>>>>
+    export type OpenidAuthzenAccessV1SearchPostMutationBody = V1ResourceSearchRequest
+    export type OpenidAuthzenAccessV1SearchPostMutationError = unknown | RpcStatus
+
+    /**
+ * @summary Resource Search API
+ */
+export const useOpenidAuthzenAccessV1SearchPost = <TError = unknown | RpcStatus,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1SearchPostHook>>>, TError,{data: V1ResourceSearchRequest}, TContext>, }
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1SearchPostHook>>>,
+        TError,
+        {data: V1ResourceSearchRequest},
+        TContext
+      > => {
+
+      const mutationOptions = useOpenidAuthzenAccessV1SearchPostMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
+    }
+    
+/**
+ * TBD.
+ * @summary Subject Search API
+ */
+export const useOpenidAuthzenAccessV1SearchSubjectPostHook = () => {
+        const openidAuthzenAccessV1SearchSubjectPost = useDirectoryReaderClient<V1SubjectSearchResponse>();
+
+        return useCallback((
+    v1SubjectSearchRequest: V1SubjectSearchRequest,
+ signal?: AbortSignal
+) => {
+        return openidAuthzenAccessV1SearchSubjectPost(
+          {url: `/access/v1/search/subject`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: v1SubjectSearchRequest, signal
+    },
+          );
+        }, [openidAuthzenAccessV1SearchSubjectPost])
+      }
+    
+
+
+export const useOpenidAuthzenAccessV1SearchSubjectPostMutationOptions = <TError = unknown | RpcStatus,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1SearchSubjectPostHook>>>, TError,{data: V1SubjectSearchRequest}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1SearchSubjectPostHook>>>, TError,{data: V1SubjectSearchRequest}, TContext> => {
+    
+const mutationKey = ['openidAuthzenAccessV1SearchSubjectPost'];
+const {mutation: mutationOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }};
+
+      const openidAuthzenAccessV1SearchSubjectPost =  useOpenidAuthzenAccessV1SearchSubjectPostHook()
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1SearchSubjectPostHook>>>, {data: V1SubjectSearchRequest}> = (props) => {
+          const {data} = props ?? {};
+
+          return  openidAuthzenAccessV1SearchSubjectPost(data,)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type OpenidAuthzenAccessV1SearchSubjectPostMutationResult = NonNullable<Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1SearchSubjectPostHook>>>>
+    export type OpenidAuthzenAccessV1SearchSubjectPostMutationBody = V1SubjectSearchRequest
+    export type OpenidAuthzenAccessV1SearchSubjectPostMutationError = unknown | RpcStatus
+
+    /**
+ * @summary Subject Search API
+ */
+export const useOpenidAuthzenAccessV1SearchSubjectPost = <TError = unknown | RpcStatus,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1SearchSubjectPostHook>>>, TError,{data: V1SubjectSearchRequest}, TContext>, }
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<ReturnType<typeof useOpenidAuthzenAccessV1SearchSubjectPostHook>>>,
+        TError,
+        {data: V1SubjectSearchRequest},
+        TContext
+      > => {
+
+      const mutationOptions = useOpenidAuthzenAccessV1SearchSubjectPostMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
+    }
+    
 /**
  * Set assertion.
  * @summary Set assertion
@@ -527,6 +877,7 @@ export const useDirectoryReaderV3Check = <TError = RpcStatus,
     
 /**
  * Returns check permission outcome.
+ * @deprecated
  * @summary Check permission
  */
 export const useDirectoryReaderV3CheckPermissionHook = () => {
@@ -577,6 +928,7 @@ const {mutation: mutationOptions} = options ?
     export type DirectoryReaderV3CheckPermissionMutationError = RpcStatus
 
     /**
+ * @deprecated
  * @summary Check permission
  */
 export const useDirectoryReaderV3CheckPermission = <TError = RpcStatus,
@@ -595,6 +947,7 @@ export const useDirectoryReaderV3CheckPermission = <TError = RpcStatus,
     
 /**
  * Returns check relation outcome.
+ * @deprecated
  * @summary Check relation
  */
 export const useDirectoryReaderV3CheckRelationHook = () => {
@@ -645,6 +998,7 @@ const {mutation: mutationOptions} = options ?
     export type DirectoryReaderV3CheckRelationMutationError = RpcStatus
 
     /**
+ * @deprecated
  * @summary Check relation
  */
 export const useDirectoryReaderV3CheckRelation = <TError = RpcStatus,
@@ -912,83 +1266,83 @@ export const useDirectoryModelV3ManifestDelete = <TError = RpcStatus,
  * Get manifest.
  * @summary Get manifest
  */
-export const useDirectoryV3ManifestGetHook = () => {
-        const directoryV3ManifestGet = useDirectoryModelClient<Blob>();
+export const useDirectoryModelV3ManifestGetHook = () => {
+        const directoryModelV3ManifestGet = useDirectoryReaderClient<Blob>();
 
         return useCallback((
     
  signal?: AbortSignal
 ) => {
-        return directoryV3ManifestGet(
+        return directoryModelV3ManifestGet(
           {url: `/api/v3/directory/manifest`, method: 'GET',
         responseType: 'blob', signal
     },
           );
-        }, [directoryV3ManifestGet])
+        }, [directoryModelV3ManifestGet])
       }
     
 
-export const getDirectoryV3ManifestGetQueryKey = () => {
+export const getDirectoryModelV3ManifestGetQueryKey = () => {
     return [`/api/v3/directory/manifest`] as const;
     }
 
     
-export const useDirectoryV3ManifestGetQueryOptions = <TData = Awaited<ReturnType<ReturnType<typeof useDirectoryV3ManifestGetHook>>>, TError = void | RpcStatus>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<ReturnType<typeof useDirectoryV3ManifestGetHook>>>, TError, TData>>, }
+export const useDirectoryModelV3ManifestGetQueryOptions = <TData = Awaited<ReturnType<ReturnType<typeof useDirectoryModelV3ManifestGetHook>>>, TError = void | RpcStatus>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<ReturnType<typeof useDirectoryModelV3ManifestGetHook>>>, TError, TData>>, }
 ) => {
 
 const {query: queryOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getDirectoryV3ManifestGetQueryKey();
+  const queryKey =  queryOptions?.queryKey ?? getDirectoryModelV3ManifestGetQueryKey();
 
-  const directoryV3ManifestGet =  useDirectoryV3ManifestGetHook();
+  const directoryModelV3ManifestGet =  useDirectoryModelV3ManifestGetHook();
 
-    const queryFn: QueryFunction<Awaited<ReturnType<ReturnType<typeof useDirectoryV3ManifestGetHook>>>> = ({ signal }) => directoryV3ManifestGet(signal);
-
-      
+    const queryFn: QueryFunction<Awaited<ReturnType<ReturnType<typeof useDirectoryModelV3ManifestGetHook>>>> = ({ signal }) => directoryModelV3ManifestGet(signal);
 
       
 
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<ReturnType<typeof useDirectoryV3ManifestGetHook>>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<ReturnType<typeof useDirectoryModelV3ManifestGetHook>>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export type DirectoryV3ManifestGetQueryResult = NonNullable<Awaited<ReturnType<ReturnType<typeof useDirectoryV3ManifestGetHook>>>>
-export type DirectoryV3ManifestGetQueryError = void | RpcStatus
+export type DirectoryModelV3ManifestGetQueryResult = NonNullable<Awaited<ReturnType<ReturnType<typeof useDirectoryModelV3ManifestGetHook>>>>
+export type DirectoryModelV3ManifestGetQueryError = void | RpcStatus
 
 
-export function useDirectoryV3ManifestGet<TData = Awaited<ReturnType<ReturnType<typeof useDirectoryV3ManifestGetHook>>>, TError = void | RpcStatus>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<ReturnType<typeof useDirectoryV3ManifestGetHook>>>, TError, TData>> & Pick<
+export function useDirectoryModelV3ManifestGet<TData = Awaited<ReturnType<ReturnType<typeof useDirectoryModelV3ManifestGetHook>>>, TError = void | RpcStatus>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<ReturnType<typeof useDirectoryModelV3ManifestGetHook>>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<ReturnType<typeof useDirectoryV3ManifestGetHook>>>,
+          Awaited<ReturnType<ReturnType<typeof useDirectoryModelV3ManifestGetHook>>>,
           TError,
-          Awaited<ReturnType<ReturnType<typeof useDirectoryV3ManifestGetHook>>>
+          Awaited<ReturnType<ReturnType<typeof useDirectoryModelV3ManifestGetHook>>>
         > , 'initialData'
       >, }
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useDirectoryV3ManifestGet<TData = Awaited<ReturnType<ReturnType<typeof useDirectoryV3ManifestGetHook>>>, TError = void | RpcStatus>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<ReturnType<typeof useDirectoryV3ManifestGetHook>>>, TError, TData>> & Pick<
+export function useDirectoryModelV3ManifestGet<TData = Awaited<ReturnType<ReturnType<typeof useDirectoryModelV3ManifestGetHook>>>, TError = void | RpcStatus>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<ReturnType<typeof useDirectoryModelV3ManifestGetHook>>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<ReturnType<typeof useDirectoryV3ManifestGetHook>>>,
+          Awaited<ReturnType<ReturnType<typeof useDirectoryModelV3ManifestGetHook>>>,
           TError,
-          Awaited<ReturnType<ReturnType<typeof useDirectoryV3ManifestGetHook>>>
+          Awaited<ReturnType<ReturnType<typeof useDirectoryModelV3ManifestGetHook>>>
         > , 'initialData'
       >, }
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useDirectoryV3ManifestGet<TData = Awaited<ReturnType<ReturnType<typeof useDirectoryV3ManifestGetHook>>>, TError = void | RpcStatus>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<ReturnType<typeof useDirectoryV3ManifestGetHook>>>, TError, TData>>, }
+export function useDirectoryModelV3ManifestGet<TData = Awaited<ReturnType<ReturnType<typeof useDirectoryModelV3ManifestGetHook>>>, TError = void | RpcStatus>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<ReturnType<typeof useDirectoryModelV3ManifestGetHook>>>, TError, TData>>, }
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
  * @summary Get manifest
  */
 
-export function useDirectoryV3ManifestGet<TData = Awaited<ReturnType<ReturnType<typeof useDirectoryV3ManifestGetHook>>>, TError = void | RpcStatus>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<ReturnType<typeof useDirectoryV3ManifestGetHook>>>, TError, TData>>, }
+export function useDirectoryModelV3ManifestGet<TData = Awaited<ReturnType<ReturnType<typeof useDirectoryModelV3ManifestGetHook>>>, TError = void | RpcStatus>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<ReturnType<typeof useDirectoryModelV3ManifestGetHook>>>, TError, TData>>, }
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const queryOptions = useDirectoryV3ManifestGetQueryOptions(options)
+  const queryOptions = useDirectoryModelV3ManifestGetQueryOptions(options)
 
   const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
@@ -1004,40 +1358,40 @@ export function useDirectoryV3ManifestGet<TData = Awaited<ReturnType<ReturnType<
  * Get manifest metadata.
  * @summary Get manifest metadata
  */
-export const useDirectoryV3ManifestGetMetadataHook = () => {
-        const directoryV3ManifestGetMetadata = useDirectoryReaderClient<void>();
+export const useDirectoryModelV3ManifestGetMetadataHook = () => {
+        const directoryModelV3ManifestGetMetadata = useDirectoryReaderClient<void>();
 
         return useCallback((
     
  signal?: AbortSignal
 ) => {
-        return directoryV3ManifestGetMetadata(
+        return directoryModelV3ManifestGetMetadata(
           {url: `/api/v3/directory/manifest`, method: 'HEAD', signal
     },
           );
-        }, [directoryV3ManifestGetMetadata])
+        }, [directoryModelV3ManifestGetMetadata])
       }
     
 
 
-export const useDirectoryV3ManifestGetMetadataMutationOptions = <TError = RpcStatus,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useDirectoryV3ManifestGetMetadataHook>>>, TError,void, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useDirectoryV3ManifestGetMetadataHook>>>, TError,void, TContext> => {
+export const useDirectoryModelV3ManifestGetMetadataMutationOptions = <TError = RpcStatus,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useDirectoryModelV3ManifestGetMetadataHook>>>, TError,void, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useDirectoryModelV3ManifestGetMetadataHook>>>, TError,void, TContext> => {
     
-const mutationKey = ['directoryV3ManifestGetMetadata'];
+const mutationKey = ['directoryModelV3ManifestGetMetadata'];
 const {mutation: mutationOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
       : {...options, mutation: {...options.mutation, mutationKey}}
       : {mutation: { mutationKey, }};
 
-      const directoryV3ManifestGetMetadata =  useDirectoryV3ManifestGetMetadataHook()
+      const directoryModelV3ManifestGetMetadata =  useDirectoryModelV3ManifestGetMetadataHook()
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<ReturnType<typeof useDirectoryV3ManifestGetMetadataHook>>>, void> = () => {
+      const mutationFn: MutationFunction<Awaited<ReturnType<ReturnType<typeof useDirectoryModelV3ManifestGetMetadataHook>>>, void> = () => {
           
 
-          return  directoryV3ManifestGetMetadata()
+          return  directoryModelV3ManifestGetMetadata()
         }
 
         
@@ -1045,23 +1399,23 @@ const {mutation: mutationOptions} = options ?
 
   return  { mutationFn, ...mutationOptions }}
 
-    export type DirectoryV3ManifestGetMetadataMutationResult = NonNullable<Awaited<ReturnType<ReturnType<typeof useDirectoryV3ManifestGetMetadataHook>>>>
+    export type DirectoryModelV3ManifestGetMetadataMutationResult = NonNullable<Awaited<ReturnType<ReturnType<typeof useDirectoryModelV3ManifestGetMetadataHook>>>>
     
-    export type DirectoryV3ManifestGetMetadataMutationError = RpcStatus
+    export type DirectoryModelV3ManifestGetMetadataMutationError = RpcStatus
 
     /**
  * @summary Get manifest metadata
  */
-export const useDirectoryV3ManifestGetMetadata = <TError = RpcStatus,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useDirectoryV3ManifestGetMetadataHook>>>, TError,void, TContext>, }
+export const useDirectoryModelV3ManifestGetMetadata = <TError = RpcStatus,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useDirectoryModelV3ManifestGetMetadataHook>>>, TError,void, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<ReturnType<typeof useDirectoryV3ManifestGetMetadataHook>>>,
+        Awaited<ReturnType<ReturnType<typeof useDirectoryModelV3ManifestGetMetadataHook>>>,
         TError,
         void,
         TContext
       > => {
 
-      const mutationOptions = useDirectoryV3ManifestGetMetadataMutationOptions(options);
+      const mutationOptions = useDirectoryModelV3ManifestGetMetadataMutationOptions(options);
 
       return useMutation(mutationOptions , queryClient);
     }
@@ -1070,42 +1424,42 @@ export const useDirectoryV3ManifestGetMetadata = <TError = RpcStatus,
  * Set manifest.
  * @summary Set manifest
  */
-export const useDirectoryV3ManifestSetHook = () => {
-        const directoryV3ManifestSet = useDirectoryModelClient<V3SetManifestResponse>();
+export const useDirectoryModelV3ManifestSetHook = () => {
+        const directoryModelV3ManifestSet = useDirectoryReaderClient<V3SetManifestResponse>();
 
         return useCallback((
-    directoryV3ManifestSetBody: Blob,
+    directoryModelV3ManifestSetBody: Blob,
  signal?: AbortSignal
 ) => {
-        return directoryV3ManifestSet(
+        return directoryModelV3ManifestSet(
           {url: `/api/v3/directory/manifest`, method: 'POST',
       headers: {'Content-Type': 'application/yaml', },
-      data: directoryV3ManifestSetBody, signal
+      data: directoryModelV3ManifestSetBody, signal
     },
           );
-        }, [directoryV3ManifestSet])
+        }, [directoryModelV3ManifestSet])
       }
     
 
 
-export const useDirectoryV3ManifestSetMutationOptions = <TError = void | RpcStatus,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useDirectoryV3ManifestSetHook>>>, TError,{data: Blob}, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useDirectoryV3ManifestSetHook>>>, TError,{data: Blob}, TContext> => {
+export const useDirectoryModelV3ManifestSetMutationOptions = <TError = void | RpcStatus,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useDirectoryModelV3ManifestSetHook>>>, TError,{data: Blob}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useDirectoryModelV3ManifestSetHook>>>, TError,{data: Blob}, TContext> => {
     
-const mutationKey = ['directoryV3ManifestSet'];
+const mutationKey = ['directoryModelV3ManifestSet'];
 const {mutation: mutationOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
       : {...options, mutation: {...options.mutation, mutationKey}}
       : {mutation: { mutationKey, }};
 
-      const directoryV3ManifestSet =  useDirectoryV3ManifestSetHook()
+      const directoryModelV3ManifestSet =  useDirectoryModelV3ManifestSetHook()
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<ReturnType<typeof useDirectoryV3ManifestSetHook>>>, {data: Blob}> = (props) => {
+      const mutationFn: MutationFunction<Awaited<ReturnType<ReturnType<typeof useDirectoryModelV3ManifestSetHook>>>, {data: Blob}> = (props) => {
           const {data} = props ?? {};
 
-          return  directoryV3ManifestSet(data,)
+          return  directoryModelV3ManifestSet(data,)
         }
 
         
@@ -1113,23 +1467,23 @@ const {mutation: mutationOptions} = options ?
 
   return  { mutationFn, ...mutationOptions }}
 
-    export type DirectoryV3ManifestSetMutationResult = NonNullable<Awaited<ReturnType<ReturnType<typeof useDirectoryV3ManifestSetHook>>>>
-    export type DirectoryV3ManifestSetMutationBody = Blob
-    export type DirectoryV3ManifestSetMutationError = void | RpcStatus
+    export type DirectoryModelV3ManifestSetMutationResult = NonNullable<Awaited<ReturnType<ReturnType<typeof useDirectoryModelV3ManifestSetHook>>>>
+    export type DirectoryModelV3ManifestSetMutationBody = Blob
+    export type DirectoryModelV3ManifestSetMutationError = void | RpcStatus
 
     /**
  * @summary Set manifest
  */
-export const useDirectoryV3ManifestSet = <TError = void | RpcStatus,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useDirectoryV3ManifestSetHook>>>, TError,{data: Blob}, TContext>, }
+export const useDirectoryModelV3ManifestSet = <TError = void | RpcStatus,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<ReturnType<typeof useDirectoryModelV3ManifestSetHook>>>, TError,{data: Blob}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<ReturnType<typeof useDirectoryV3ManifestSetHook>>>,
+        Awaited<ReturnType<ReturnType<typeof useDirectoryModelV3ManifestSetHook>>>,
         TError,
         {data: Blob},
         TContext
       > => {
 
-      const mutationOptions = useDirectoryV3ManifestSetMutationOptions(options);
+      const mutationOptions = useDirectoryModelV3ManifestSetMutationOptions(options);
 
       return useMutation(mutationOptions , queryClient);
     }

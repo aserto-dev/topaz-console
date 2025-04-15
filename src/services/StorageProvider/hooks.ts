@@ -50,3 +50,4 @@ export const useStorage = <T,>(
 
   return [storedValue, setValue] as const
 }
+

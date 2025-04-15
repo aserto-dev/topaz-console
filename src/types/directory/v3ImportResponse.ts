@@ -3,7 +3,7 @@
  * Do not edit manually.
  * Directory
  * Directory service
- * OpenAPI spec version: v0.33.2
+ * OpenAPI spec version: v0.33.5
  */
 import type { V3ImportCounter } from './v3ImportCounter';
 import type { V3ImportStatus } from './v3ImportStatus';

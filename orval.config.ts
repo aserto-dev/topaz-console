@@ -84,7 +84,7 @@ export default defineConfig({
     input: {
       target: process.env.DIRECTORY_SERVICE_URL
         ? `${process.env.DIRECTORY_SERVICE_URL}/openapi.json`
-        : 'https://directory.prod.aserto.com/openapi.json',
+        : 'https://raw.githubusercontent.com/aserto-dev/openapi-directory/refs/heads/main/publish/directory/openapi.json',
     },
   },
   authorizer: {

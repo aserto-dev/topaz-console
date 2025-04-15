@@ -3,7 +3,7 @@
  * Do not edit manually.
  * Directory
  * Directory service
- * OpenAPI spec version: v0.33.2
+ * OpenAPI spec version: v0.33.5
  */
 import type { V3GetGraphResponseExplanation } from './v3GetGraphResponseExplanation';
 import type { V3ObjectIdentifier } from './v3ObjectIdentifier';

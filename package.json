@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc -b && vite build",
+    "check": "tsc --noEmit",
     "detect-unused-exports": "knip --include exports,types,nsExports,nsTypes,duplicates,unlisted,classMembers,enumMembers",
     "dev": "vite",
     "generate:rest": "./scripts/rest.sh",
