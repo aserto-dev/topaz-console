@@ -7,7 +7,7 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    name: Run lint
+    name: Lint
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -35,7 +35,7 @@ jobs:
 
   dead_code:
     runs-on: ubuntu-latest
-    name: Run checks for dead code
+    name: Unsed code
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
