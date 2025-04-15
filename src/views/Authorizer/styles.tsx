@@ -71,3 +71,10 @@ export const SelectContainer = styled.div`
     width: 100%;
   }
 `
+export const LeftContainer = styled.div`
+  margin-right: 20px;
+  min-width: 250px;
+  @media (max-width: 1327px) {
+    display: none;
+  }
+`
