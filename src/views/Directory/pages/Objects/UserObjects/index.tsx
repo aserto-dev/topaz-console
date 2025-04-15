@@ -157,9 +157,9 @@ const UserObjects: React.FC = () => {
         ) : (
           <EmptyTablePlaceholder
             body={`To add one, click the "Add" button in the top left.`}
+            header=""
             imgAlt="Empty Directory"
             imgSrc={NoUsersImage}
-            header={''}
           />
         )}
       </UsersContainer>

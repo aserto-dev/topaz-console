@@ -233,9 +233,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               isInvalid={shouldShowErrorState}
               isValid={isValid && !shouldShowErrorState}
               style={style}
-              onChange={onChange}
               type={inputType}
               value={String(value)}
+              onChange={onChange}
               onKeyDown={(event) => {
                 if (event.key === 'Enter') {
                   onClickSearch?.()

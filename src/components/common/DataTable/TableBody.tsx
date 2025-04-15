@@ -64,7 +64,7 @@ const TableBody = <Data extends object>({
       const { key, ...rowProps } = row.getRowProps()
       return (
         <React.Fragment key={key}>
-          <Tr key={key} isExpanded={row.isExpanded} $row={row} {...rowProps}>
+          <Tr key={key} $row={row} isExpanded={row.isExpanded} {...rowProps}>
             {row.cells.map((cell) => {
               const customCellProps = getCellProps ? getCellProps(cell) : {}
               const cellProps = cell.getCellProps()

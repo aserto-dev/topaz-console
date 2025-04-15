@@ -94,9 +94,9 @@ const Checkbox: React.FC<CheckboxProps> = ({
         />
         <StyledCheckbox
           $disabled={disabled}
+          $hasLabel={!!label}
           checked={checked === undefined ? false : checked}
           className={className}
-          $hasLabel={!!label}
         >
           {checked && (
             <Icon viewBox="0 0 24 24">

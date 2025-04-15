@@ -55,7 +55,7 @@ const DangerZone: React.FC = () => {
           Reset to an empty directory
         </Text>
         <Text color={theme.mojoAccent3} size="14px">
-          {`Permanently delete the model and all the data in the directory.`}
+          Permanently delete the model and all the data in the directory.
           <br />
         </Text>
         <br />

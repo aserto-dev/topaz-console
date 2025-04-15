@@ -9,8 +9,8 @@ export const NavBar = () => {
       <BaseNavBar
         expand="xl"
         logo={
-          <a href={'/ui/directory/model'}>
-            <img height={48} alt="topaz" src={TopazLogo} />
+          <a href="/ui/directory/model">
+            <img alt="topaz" height={48} src={TopazLogo} />
           </a>
         }
       >

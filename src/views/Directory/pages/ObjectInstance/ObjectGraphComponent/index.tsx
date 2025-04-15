@@ -402,6 +402,7 @@ const ObjectGraphComponent: React.FC<ObjectGraphComponentProps> = ({
       nodesConnectable={false}
       nodeTypes={nodeTypes}
       proOptions={{ hideAttribution: true }}
+      snapToGrid={true}
       onEdgeMouseEnter={(_e, edge) =>
         edge.target === objectNode[0].id &&
         !!edge.data.subjectRelation &&
@@ -419,7 +420,6 @@ const ObjectGraphComponent: React.FC<ObjectGraphComponentProps> = ({
         }
         setObject(object)
       }}
-      snapToGrid={true}
     >
       <Panel
         hidden={!objectTypeFilter}
