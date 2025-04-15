@@ -1,9 +1,9 @@
 import React from 'react'
 import { CellProps, Column } from 'react-table'
 
-import DataTable from '../../../../../../../components/common/DataTable'
-import Highlight from '../../../../../../../components/common/Highlight'
-import { V2DecisionTreeResponse } from '../../../../../../../types/authorizer'
+import DataTable from '../../../../../../components/common/DataTable'
+import Highlight from '../../../../../../components/common/Highlight'
+import { V2DecisionTreeResponse } from '../../../../../../types/authorizer'
 import {
   Cell,
   CellOverflow,

@@ -3,14 +3,14 @@ import React, { useMemo } from 'react'
 import {
   useDirectoryV3PermissionsList,
   useDirectoryV3RelationTypesList,
-} from '../../../../../../../api/directory/customQuery'
-import Label from '../../../../../../../components/common/Label'
-import { SelectOption } from '../../../../../../../components/common/Select'
+} from '../../../../../../api/directory/customQuery'
+import Label from '../../../../../../components/common/Label'
+import { SelectOption } from '../../../../../../components/common/Select'
 import {
   useCommonPolicyEvaluatorContext,
   usePolicyEvaluatorErrorContext,
   useRebacPolicyEvaluatorContext,
-} from '../../../../../../../services/PolicyEvaluatorContextProvider/hooks'
+} from '../../../../../../services/PolicyEvaluatorContextProvider/hooks'
 import { FieldContainer, ResourceTextArea } from '../styles'
 
 export const ResourceContext = () => {

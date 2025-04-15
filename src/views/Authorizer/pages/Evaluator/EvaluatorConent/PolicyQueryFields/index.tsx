@@ -1,13 +1,13 @@
-import Checkbox from '../../../../../../../components/common/Checkbox'
-import Input from '../../../../../../../components/common/Input'
-import Label from '../../../../../../../components/common/Label'
-import { Row } from '../../../../../../../components/common/Row'
+import Checkbox from '../../../../../../components/common/Checkbox'
+import Input from '../../../../../../components/common/Input'
+import Label from '../../../../../../components/common/Label'
+import { Row } from '../../../../../../components/common/Row'
 import Select, {
   SelectOption,
-} from '../../../../../../../components/common/Select'
-import TextArea from '../../../../../../../components/common/TextArea'
-import { useQueryPolicyEvaluatorContext } from '../../../../../../../services/PolicyEvaluatorContextProvider/hooks'
-import { V2TraceLevel } from '../../../../../../../types/authorizer'
+} from '../../../../../../components/common/Select'
+import TextArea from '../../../../../../components/common/TextArea'
+import { useQueryPolicyEvaluatorContext } from '../../../../../../services/PolicyEvaluatorContextProvider/hooks'
+import { V2TraceLevel } from '../../../../../../types/authorizer'
 import { Decisions } from '../PolicyCommonFields/Decisions'
 import { ResourceContext } from '../PolicyCommonFields/ResourceContext'
 import {

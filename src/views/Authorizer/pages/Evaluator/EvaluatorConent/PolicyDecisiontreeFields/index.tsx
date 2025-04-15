@@ -1,11 +1,11 @@
-import Input from '../../../../../../../components/common/Input'
-import Label from '../../../../../../../components/common/Label'
-import { Row } from '../../../../../../../components/common/Row'
+import Input from '../../../../../../components/common/Input'
+import Label from '../../../../../../components/common/Label'
+import { Row } from '../../../../../../components/common/Row'
 import Select, {
   SelectOption,
-} from '../../../../../../../components/common/Select'
-import { useDecisionTreePolicyEvaluatorContext } from '../../../../../../../services/PolicyEvaluatorContextProvider/hooks'
-import { V2PathSeparator } from '../../../../../../../types/authorizer'
+} from '../../../../../../components/common/Select'
+import { useDecisionTreePolicyEvaluatorContext } from '../../../../../../services/PolicyEvaluatorContextProvider/hooks'
+import { V2PathSeparator } from '../../../../../../types/authorizer'
 import { Decisions } from '../PolicyCommonFields/Decisions'
 import { ResourceContext } from '../PolicyCommonFields/ResourceContext'
 import { FieldContainer, SectionTitleContainer } from '../styles'

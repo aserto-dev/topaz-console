@@ -1,19 +1,19 @@
 import React, { useEffect, useMemo } from 'react'
 
-import { useDirectoryV3PermissionsList } from '../../../../../../../api/directory/customQuery'
+import { useDirectoryV3PermissionsList } from '../../../../../../api/directory/customQuery'
 import {
   useDirectoryV3ObjectTypesList,
   useDirectoryV3RelationTypesList,
-} from '../../../../../../../api/directory/customQuery'
-import { Row } from '../../../../../../../components/common/Row'
-import Select from '../../../../../../../components/common/Select'
-import { colourStyles } from '../../../../../../../components/common/Select/colourStyles'
+} from '../../../../../../api/directory/customQuery'
+import { Row } from '../../../../../../components/common/Row'
+import Select from '../../../../../../components/common/Select'
+import { colourStyles } from '../../../../../../components/common/Select/colourStyles'
 import {
   useCommonPolicyEvaluatorContext,
   useContentPolicyEvaluatorContext,
   useIsPolicyEvaluatorContext,
   useRebacPolicyEvaluatorContext,
-} from '../../../../../../../services/PolicyEvaluatorContextProvider/hooks'
+} from '../../../../../../services/PolicyEvaluatorContextProvider/hooks'
 import { EvaluatorStyledInput, FieldContainer, InputTopMargin } from '../styles'
 
 export const RebacEvaluator: React.FC = () => {

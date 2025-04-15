@@ -1,7 +1,7 @@
 import copy from 'copy-to-clipboard'
 import { useCallback } from 'react'
 
-import { useConfig } from '../../../../../../services/ConfigProvider/hooks'
+import { useConfig } from '../../../../../services/ConfigProvider/hooks'
 
 
 
