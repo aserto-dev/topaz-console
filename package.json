@@ -14,7 +14,7 @@
     "test": "vitest",
     "test:watch": "vitest watch",
     "test:coverage": "vitest run --coverage",
-    "test:ci": "CI=true vitest run --coverage"
+    "test:ci": "CI=true vitest run --coverage --reporter=json"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",
