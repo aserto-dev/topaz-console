@@ -6,7 +6,7 @@ import React, { useEffect } from 'react'
 
 import { theme } from '../../theme'
 
-type ApiBrowserProps = {
+export type ApiBrowserProps = {
   apiKeys: {
     key: string
     value: string
