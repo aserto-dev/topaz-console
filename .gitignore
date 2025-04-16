@@ -32,4 +32,4 @@ dist-ssr
 !.yarn/sdks
 !.yarn/versions
 
-# coverage
+coverage
