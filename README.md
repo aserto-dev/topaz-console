@@ -2,6 +2,11 @@
 
 A modern web console for [Topaz](https://github.com/aserto-dev/topaz)
 
+[![codecov](https://codecov.io/gh/aserto-dev/topaz-console/branch/main/graph/badge.svg?token=V6F5G43JXU)](https://codecov.io/gh/aserto-dev/topaz-console)
+[![Tests](https://github.com/aserto-dev/topaz-console/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/aserto-dev/topaz-console/actions/workflows/tests.yml)
+[<img src="https://img.shields.io/badge/slack-@asertocommunity-yellow.svg?logo=slack">](https://www.aserto.com/slack)
+
+
 ## 📋 Prerequisites
 
 - Node.js (LTS version recommended)
@@ -20,7 +25,7 @@ yarn install
 ```
 ## ENV
 
-Check `.env` file
+Check the .env` file
 ```sh
 VITE_REACT_APP_DISCOVERY_SERVICE_URL #topaz console service gateway address
 ```
