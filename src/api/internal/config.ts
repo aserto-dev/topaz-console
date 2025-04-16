@@ -11,7 +11,6 @@ export const useInternalConfig = (
   >
 ) => {
   const { get } = useInternalConfigClient()
-
   return useQuery({
     queryFn: () => get<Configurations>({ path: 'config' }),
     queryKey: [QueryKeys.Config],

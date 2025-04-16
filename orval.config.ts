@@ -10,8 +10,8 @@ export default defineConfig({
     output: {
       clean: false,
       client: 'react-query',
-      mock: false,
-      mode: 'single',
+      mock: true,
+      mode: 'split',
       override: {
         mutator: {
           name: 'useAuthorizerClient',
@@ -29,10 +29,10 @@ export default defineConfig({
         : 'https://raw.githubusercontent.com/aserto-dev/openapi-directory/refs/heads/main/publish/directory/openapi.json',
     },
     output: {
-      clean: true,
+      clean: false,
       client: 'react-query',
-      mock: false,
-      mode: 'single',
+      mock: true,
+      mode: 'split',
       override: {
         mutator: {
           name: 'useDirectoryReaderClient',

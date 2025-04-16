@@ -54,6 +54,33 @@ The build output will be in the `dist` directory.
 - `yarn generate:rest` - Generate REST API types
 - `yarn detect-unused-exports` - Detect unused exports
 
+## 🧪 Testing
+
+The project uses [Vitest](https://vitest.dev/) for testing and [MSW (Mock Service Worker)](https://mswjs.io/) for API mocking.
+
+### Running Tests
+
+```bash
+# Run tests in watch mode
+yarn test
+
+# Run tests once
+yarn test:ci
+
+# Run tests with coverage
+yarn test:coverage
+```
+
+### Test Structure
+
+- Tests are located alongside components in `*.test.tsx` files
+- API mocks are generated using Orval and located in `src/api/*.msw.ts`
+- Test utilities and custom render functions are in `src/testing/`
+
+**Component Tests**
+  - Use `renderWithProviders` from `src/testing/render` for consistent test setup
+  - Mock API calls using MSW handlers
+  - Test both success and error scenarios
 
 ## 🛠️ Tech Stack
 

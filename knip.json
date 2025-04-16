@@ -3,7 +3,7 @@
   "ignore": [
     "src/types/authorizer/**/*.ts",
     "src/types/directory/**/*.ts",
-    "src/api/v3/directory.ts",
-    "src/api/v3/authorizer.ts"
+    "src/api/v3/directory.*",
+    "src/api/v3/authorizer.*"
   ]
 }

@@ -47,6 +47,10 @@ import type {
 } from '../../types/authorizer';
 
 import { useAuthorizerClient } from '../clients/rest';
+
+
+
+
 /**
  * Executes a partial query on the loaded policy runtime.
  * @summary Compile
@@ -597,3 +601,7 @@ export function usePoliciesGet<TData = Awaited<ReturnType<ReturnType<typeof useP
 
   return query;
 }
+
+
+
+
