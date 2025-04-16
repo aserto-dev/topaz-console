@@ -14,7 +14,7 @@
     "test": "vitest",
     "test:watch": "vitest watch",
     "test:coverage": "vitest run --coverage",
-    "test:ci": "CI=true vitest run --coverage --reporter=json"
+    "test:ci": "CI=true vitest run --coverage"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",
@@ -43,6 +43,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@codecov/vite-plugin": "^1.9.0",
     "@eslint/js": "^9.21.0",
     "@faker-js/faker": "^9.7.0",
     "@tanstack/react-query-devtools": "^5.72.2",
