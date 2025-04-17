@@ -13,6 +13,7 @@ type DataTableProps<Data extends object> = {
   ) => void
   isFetching?: boolean
   table: Table<Data>
+  topDistance?: number
 }
 
 const RowComponent = styled.tr<{ $isExpanded?: boolean }>`
@@ -32,6 +33,7 @@ const DataTable = <Data extends object>({
   fetchMoreOnBottomReached,
   isFetching = false,
   table,
+  topDistance,
 }: DataTableProps<Data>) => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null)
 
@@ -51,109 +53,99 @@ const DataTable = <Data extends object>({
   })
 
   return (
-    <TableContainer>
-      <div
-        ref={tableContainerRef}
-        className="container"
-        style={{
-          height: '420px', //should be a fixed height
-          maxWidth: '100%',
-          overflow: 'auto', //our scrollable table container
-          position: 'relative', //needed for sticky header
-        }}
-        onScroll={(e) => fetchMoreOnBottomReached?.(e.currentTarget)}
-      >
-        <StyledTable style={{ display: 'grid' }}>
-          <thead
-            style={{
-              backgroundColor: theme.primaryBlack,
-              display: 'grid',
-              position: 'sticky',
-              top: 0,
-              zIndex: 1,
-            }}
-          >
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr
-                key={headerGroup.id}
-                style={{ display: 'flex', width: '100%' }}
-              >
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <th
-                      key={header.id}
-                      style={{
-                        display: 'flex',
-                        width: header.getSize(),
+    <TableContainer
+      ref={tableContainerRef}
+      $topDistance={topDistance}
+      className="container"
+      onScroll={(e) => fetchMoreOnBottomReached?.(e.currentTarget)}
+    >
+      <StyledTable style={{ display: 'grid' }}>
+        <thead
+          style={{
+            backgroundColor: theme.primaryBlack,
+            display: 'grid',
+            position: 'sticky',
+            top: 0,
+            zIndex: 1,
+          }}
+        >
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id} style={{ display: 'flex', width: '100%' }}>
+              {headerGroup.headers.map((header) => {
+                return (
+                  <th
+                    key={header.id}
+                    style={{
+                      display: 'flex',
+                      width: header.getSize(),
+                    }}
+                  >
+                    <div
+                      {...{
+                        className: header.column.getCanSort()
+                          ? 'cursor-pointer select-none'
+                          : '',
+                        onClick: header.column.getToggleSortingHandler(),
                       }}
                     >
-                      <div
-                        {...{
-                          className: header.column.getCanSort()
-                            ? 'cursor-pointer select-none'
-                            : '',
-                          onClick: header.column.getToggleSortingHandler(),
-                        }}
-                      >
-                        {flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
-                        {{
-                          asc: ' 🔼',
-                          desc: ' 🔽',
-                        }[header.column.getIsSorted() as string] ?? null}
-                      </div>
-                    </th>
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
+                      {{
+                        asc: ' 🔼',
+                        desc: ' 🔽',
+                      }[header.column.getIsSorted() as string] ?? null}
+                    </div>
+                  </th>
+                )
+              })}
+            </tr>
+          ))}
+        </thead>
+        <tbody
+          style={{
+            display: 'grid',
+            height: `${rowVirtualizer.getTotalSize()}px`, //tells scrollbar how big the table is
+            position: 'relative', //needed for absolute positioning of rows
+          }}
+        >
+          {rowVirtualizer.getVirtualItems().map((virtualRow) => {
+            const row = rows[virtualRow.index] as Row<Data>
+            return (
+              <RowComponent
+                key={row.id}
+                ref={(node) => rowVirtualizer.measureElement(node)} //measure dynamic row height
+                $isExpanded={row.getIsSelected()}
+                data-index={virtualRow.index} //needed for dynamic row height measurement
+                style={{
+                  display: 'flex',
+                  position: 'absolute',
+                  transform: `translateY(${virtualRow.start}px)`, //this should always be a `style` as it changes on scroll
+                  width: '100%',
+                }}
+              >
+                {row.getVisibleCells().map((cell) => {
+                  return (
+                    <td
+                      key={cell.id}
+                      style={{
+                        display: 'flex',
+                        width: cell.column.getSize(),
+                      }}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </td>
                   )
                 })}
-              </tr>
-            ))}
-          </thead>
-          <tbody
-            style={{
-              display: 'grid',
-              height: `${rowVirtualizer.getTotalSize()}px`, //tells scrollbar how big the table is
-              position: 'relative', //needed for absolute positioning of rows
-            }}
-          >
-            {rowVirtualizer.getVirtualItems().map((virtualRow) => {
-              const row = rows[virtualRow.index] as Row<Data>
-              return (
-                <RowComponent
-                  key={row.id}
-                  ref={(node) => rowVirtualizer.measureElement(node)} //measure dynamic row height
-                  $isExpanded={row.getIsSelected()}
-                  data-index={virtualRow.index} //needed for dynamic row height measurement
-                  style={{
-                    display: 'flex',
-                    position: 'absolute',
-                    transform: `translateY(${virtualRow.start}px)`, //this should always be a `style` as it changes on scroll
-                    width: '100%',
-                  }}
-                >
-                  {row.getVisibleCells().map((cell) => {
-                    return (
-                      <td
-                        key={cell.id}
-                        style={{
-                          display: 'flex',
-                          width: cell.column.getSize(),
-                        }}
-                      >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </td>
-                    )
-                  })}
-                </RowComponent>
-              )
-            })}
-          </tbody>
-        </StyledTable>
-      </div>
+              </RowComponent>
+            )
+          })}
+        </tbody>
+      </StyledTable>
       {isFetching && <div>...</div>}
     </TableContainer>
   )

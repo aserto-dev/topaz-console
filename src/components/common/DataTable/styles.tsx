@@ -2,12 +2,13 @@ import styled from 'styled-components'
 
 import { theme } from '../../../theme'
 
-export const TableContainer = styled.div`
+export const TableContainer = styled.div<{ $topDistance?: number }>`
+  ${({ $topDistance }) => `height: calc(100vh - ${$topDistance || 244}px)`};
+  position: relative;
   .tableWrap {
     border-bottom: 1px solid black;
   }
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow-x: hidden;
   width: 100%;
 `
 

@@ -26,8 +26,6 @@ import {
   EmptyTableContainer,
   FieldsContainer,
   FilterInput,
-  Label,
-  LabelContainer,
   ObjectContainer,
   ObjectIdContainer,
   ObjectTypeContainer,
@@ -109,7 +107,7 @@ const RelationsTable: React.FC = () => {
     {
       object_id: objectId || '',
       object_type: objectType || '',
-      'page.size': 10,
+      'page.size': 100,
       relation: relation || '',
       subject_id: subjectId || '',
       subject_relation: subjectRelation || '',
@@ -137,7 +135,7 @@ const RelationsTable: React.FC = () => {
         return <div>{row.original.object_type}</div>
       },
       id: 'Object Type',
-      size: 170,
+      size: 180,
     },
     {
       cell: ({ row }) => {
@@ -166,14 +164,14 @@ const RelationsTable: React.FC = () => {
         return <div></div>
       },
       id: 'delimiter',
-      size: 2,
+      size: 0,
     },
     {
       cell: () => {
         return <div></div>
       },
       id: 'blank',
-      size: 8,
+      size: 0,
     },
     {
       cell: ({ row }) => {
@@ -221,12 +219,11 @@ const RelationsTable: React.FC = () => {
     <>
       <SelectContainer>
         <ObjectContainer>
-          <Label>Object</Label>
           <FieldsContainer>
             <ObjectTypeContainer>
               <Select
                 defaultValue={{ label: 'All', value: '' }}
-                label="Type"
+                label="Object Type"
                 options={objectTypeOptions}
                 value={objectTypeOptions.find(
                   (option) => option.value === objectType || '',
@@ -247,7 +244,7 @@ const RelationsTable: React.FC = () => {
             <ObjectIdContainer>
               <FilterInput
                 disabled={!objectType || objectType === ''}
-                label="Id"
+                label="Object Id"
                 placeholder=""
                 value={objectId || ''}
                 onChange={(e: { target: { value: string } }) => {
@@ -263,7 +260,7 @@ const RelationsTable: React.FC = () => {
               <Select
                 defaultValue={{ label: 'All', value: '' }}
                 disabled={!objectType || objectType === ''}
-                label="Relation"
+                label="Object Relation"
                 options={objectRelationTypeOptions}
                 value={objectRelationTypeOptions.find(
                   (option) => option.value === relation || '',
@@ -277,14 +274,11 @@ const RelationsTable: React.FC = () => {
           </FieldsContainer>
         </ObjectContainer>
         <SubjectContainer>
-          <LabelContainer>
-            <Label>Subject</Label>
-          </LabelContainer>
           <FieldsContainer>
             <SubjectTypeContainer>
               <Select
                 defaultValue={{ label: 'All', value: '' }}
-                label="Type"
+                label="Subject Type"
                 options={objectTypeOptions}
                 value={objectTypeOptions.find(
                   (option) => option.value === (subjectType || ''),
@@ -305,7 +299,7 @@ const RelationsTable: React.FC = () => {
             <SubjectIdContainer>
               <FilterInput
                 disabled={!subjectType || subjectType === ''}
-                label="Id"
+                label="Subject Id"
                 placeholder=""
                 value={subjectId || ''}
                 onChange={(e: { target: { value: string } }) => {
@@ -321,7 +315,7 @@ const RelationsTable: React.FC = () => {
               <Select
                 defaultValue={{ label: 'All', value: '' }}
                 disabled={!subjectType || subjectType === ''}
-                label="Relation"
+                label="Subject Relation"
                 options={subjectRelationTypeOptions}
                 value={subjectRelationTypeOptions.find(
                   (option) => option.value === (subjectRelation || ''),
@@ -345,6 +339,7 @@ const RelationsTable: React.FC = () => {
             fetchMoreOnBottomReached={fetchMoreOnBottomReached}
             isFetching={isFetchingRelations}
             table={table}
+            topDistance={150}
           />
         </TableWrapper>
       ) : (

@@ -40,12 +40,6 @@ export const SubjectContainer = styled.div`
   }
 `
 
-export const Label = styled.h5`
-  padding-bottom: 12px;
-  border-bottom: 2px solid ${theme.grey20};
-  width: 100%;
-`
-
 export const FieldsContainer = styled.div`
   padding-top: 12px;
   gap: 16px;
@@ -90,7 +84,6 @@ export const FilterInput = styled(Input)`
 `
 
 export const TableWrapper = styled.div`
-  margin-top: 166px;
   table {
     width: 100%;
   }
@@ -106,12 +99,6 @@ export const TableWrapper = styled.div`
   tbody tr td:nth-child(4) {
     border-right: 2px solid ${theme.grey20};
   }
-`
-
-export const LabelContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 `
 
 export const EmptyTableContainer = styled.div`
