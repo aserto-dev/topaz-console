@@ -8,66 +8,25 @@ export const DataContainer = styled.div`
   width: 100%;
 `
 
-export const SelectContainer = styled.div`
-  display: inline-flex;
-  z-index: 1;
-  position: fixed;
-  width: calc(98% - 222px);
-  padding-top: 8px;
-  background-color: ${theme.primaryBlack};
-  @media (max-width: 912px) {
-    width: calc(98% + 12px);
-    padding-top: 12px;
-  }
-`
-
-export const ObjectContainer = styled.div`
+export const ObjectTypeContainer = styled.td`
   width: 100%;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  padding-left: 12px;
-  padding-right: 16px;
+  margin: 8px;
+  margin-left: 0px;
 `
-
-export const SubjectContainer = styled.div`
-  padding-top: 12px;
-  padding-bottom: 12px;
-  padding-right: 32px;
+export const ObjectIdContainer = styled.td`
   width: 100%;
-  padding-left: 16px;
-  @media (max-width: 912px) {
-    padding-right: 12px;
-  }
+  margin: 8px;
 `
-
-export const FieldsContainer = styled.div`
-  padding-top: 12px;
-  gap: 16px;
-  display: inline-flex;
+export const RelationsContainer = styled.td`
   width: 100%;
+  margin: 8px;
 `
-
-export const ObjectTypeContainer = styled.div`
+export const SubjectTypeContainer = styled(ObjectIdContainer)``
+export const SubjectIdContainer = styled(ObjectIdContainer)``
+export const SubjectRelationContainer = styled.td`
   width: 100%;
-`
-
-export const ObjectIdContainer = styled.div`
-  width: 100%;
-}
-`
-export const RelationsContainer = styled.div`
-  width: 100%;
-`
-export const SubjectTypeContainer = styled.div`
-  width: 100%;
-`
-
-export const SubjectIdContainer = styled.div`
-  width: 100%;
-`
-
-export const SubjectRelationContainer = styled.div`
-  width: 100%;
+  margin: 8px;
+  margin-right: 0px;
 `
 
 export const BreakDiv = styled.div`
@@ -87,17 +46,19 @@ export const TableWrapper = styled.div`
   table {
     width: 100%;
   }
-  thead {
-    height: 0;
-  }
+
   tbody tr {
     border: none;
   }
   tbody tr td {
     padding: 8px;
   }
-  tbody tr td:nth-child(4) {
+  tbody tr td:nth-child(3) {
     border-right: 2px solid ${theme.grey20};
+    margin-left: 4px;
+  }
+  tbody tr td:nth-child(4) {
+    margin-left: 4px;
   }
 `
 

@@ -4,6 +4,7 @@ import { keepPreviousData } from '@tanstack/react-query'
 import {
   ColumnDef,
   getCoreRowModel,
+  getFilteredRowModel,
   useReactTable,
 } from '@tanstack/react-table'
 
@@ -24,14 +25,10 @@ import { V3Relation } from '../../../../../types/directory'
 import {
   BreakDiv,
   EmptyTableContainer,
-  FieldsContainer,
   FilterInput,
-  ObjectContainer,
   ObjectIdContainer,
   ObjectTypeContainer,
   RelationsContainer,
-  SelectContainer,
-  SubjectContainer,
   SubjectIdContainer,
   SubjectRelationContainer,
   SubjectTypeContainer,
@@ -131,13 +128,37 @@ const RelationsTable: React.FC = () => {
 
   const columns: ColumnDef<V3Relation>[] = [
     {
-      cell: ({ row }) => {
-        return <div>{row.original.object_type}</div>
+      accessorKey: 'object_type',
+      header: 'Object Type',
+      meta: {
+        filter: (
+          <ObjectTypeContainer key="object_type">
+            <Select
+              defaultValue={{ label: 'All', value: '' }}
+              label="Object Type"
+              options={objectTypeOptions}
+              value={objectTypeOptions.find(
+                (option) => option.value === objectType || '',
+              )}
+              onChange={(option) => {
+                if (option?.value !== '') {
+                  setObjectType(String(option?.value))
+                  setRelation('')
+                } else {
+                  setObjectType(undefined)
+                  setRelation('')
+                  setObjectId('')
+                }
+                setIsFilter(true)
+              }}
+            />
+          </ObjectTypeContainer>
+        ),
       },
-      id: 'Object Type',
       size: 180,
     },
     {
+      accessorKey: 'object_id',
       cell: ({ row }) => {
         return (
           <Link
@@ -149,38 +170,84 @@ const RelationsTable: React.FC = () => {
           </Link>
         )
       },
-      id: 'Object Id',
+      header: 'Object Id',
+      meta: {
+        filter: (
+          <ObjectIdContainer key="object_id">
+            <FilterInput
+              disabled={!objectType || objectType === ''}
+              label="Object Id"
+              placeholder=""
+              value={objectId || ''}
+              onChange={(e: { target: { value: string } }) => {
+                setIsFilter(false)
+                setObjectId(e.target.value)
+              }}
+              onClickSearch={() => {
+                setIsFilter(true)
+              }}
+            ></FilterInput>
+          </ObjectIdContainer>
+        ),
+      },
       size: 180,
     },
     {
-      cell: ({ row }) => {
-        return <div>{row.original.relation}</div>
-      },
+      accessorKey: 'relation',
       id: 'Relation',
-      size: 168,
+      meta: {
+        filter: (
+          <RelationsContainer key="object_relation">
+            <Select
+              defaultValue={{ label: 'All', value: '' }}
+              disabled={!objectType || objectType === ''}
+              label="Object Relation"
+              options={objectRelationTypeOptions}
+              value={objectRelationTypeOptions.find(
+                (option) => option.value === relation || '',
+              )}
+              onChange={(option) => {
+                setRelation(String(option?.value))
+                setIsFilter(true)
+              }}
+            />
+          </RelationsContainer>
+        ),
+      },
+      size: 180,
     },
     {
-      cell: () => {
-        return <div></div>
-      },
-      id: 'delimiter',
-      size: 0,
-    },
-    {
-      cell: () => {
-        return <div></div>
-      },
-      id: 'blank',
-      size: 0,
-    },
-    {
-      cell: ({ row }) => {
-        return <div>{row.original.subject_type}</div>
-      },
+      accessorKey: 'subject_type',
       id: 'Subject Type',
-      size: 170,
+      meta: {
+        filter: (
+          <SubjectTypeContainer key="subject_type">
+            <Select
+              defaultValue={{ label: 'All', value: '' }}
+              label="Subject Type"
+              options={objectTypeOptions}
+              value={objectTypeOptions.find(
+                (option) => option.value === (subjectType || ''),
+              )}
+              onChange={(option) => {
+                if (option?.value !== '') {
+                  setSubjectType(String(option?.value))
+                  setSubjectRelation(undefined)
+                } else {
+                  setSubjectType(undefined)
+                  setSubjectRelation(undefined)
+                  setSubjectId('')
+                }
+                setIsFilter(true)
+              }}
+            />
+          </SubjectTypeContainer>
+        ),
+      },
+      size: 180,
     },
     {
+      accessorKey: 'subject_id',
       cell: ({ row }) => {
         return (
           <Link
@@ -193,14 +260,54 @@ const RelationsTable: React.FC = () => {
         )
       },
       id: 'Subject Id',
-      size: 190,
+      meta: {
+        filter: (
+          <SubjectIdContainer key="subject_id">
+            <FilterInput
+              disabled={!subjectType || subjectType === ''}
+              label="Subject Id"
+              placeholder=""
+              value={subjectId || ''}
+              onChange={(e: { target: { value: string } }) => {
+                setIsFilter(false)
+                setSubjectId(e.target.value)
+              }}
+              onClickSearch={() => {
+                setIsFilter(true)
+              }}
+            ></FilterInput>
+          </SubjectIdContainer>
+        ),
+      },
+      size: 180,
     },
     {
-      cell: ({ row }) => {
-        return <div>{row.original.subject_relation}</div>
-      },
+      accessorKey: 'subject_relation',
       id: 'Subject Relation',
-      size: 100,
+      meta: {
+        filter: (
+          <SubjectRelationContainer key="subject_relation">
+            <Select
+              defaultValue={{ label: 'All', value: '' }}
+              disabled={!subjectType || subjectType === ''}
+              label="Subject Relation"
+              options={subjectRelationTypeOptions}
+              value={subjectRelationTypeOptions.find(
+                (option) => option.value === (subjectRelation || ''),
+              )}
+              onChange={(option) => {
+                if (option?.value !== '') {
+                  setSubjectRelation(String(option?.value))
+                } else {
+                  setSubjectRelation(undefined)
+                }
+                setIsFilter(true)
+              }}
+            />
+          </SubjectRelationContainer>
+        ),
+      },
+      size: 180,
     },
   ]
 
@@ -208,6 +315,8 @@ const RelationsTable: React.FC = () => {
     columns: columns,
     data: relations,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    manualFiltering: true,
   })
 
   const fetchMoreOnBottomReached = useFetchMoreOnBottomReached({
@@ -217,123 +326,7 @@ const RelationsTable: React.FC = () => {
 
   return (
     <>
-      <SelectContainer>
-        <ObjectContainer>
-          <FieldsContainer>
-            <ObjectTypeContainer>
-              <Select
-                defaultValue={{ label: 'All', value: '' }}
-                label="Object Type"
-                options={objectTypeOptions}
-                value={objectTypeOptions.find(
-                  (option) => option.value === objectType || '',
-                )}
-                onChange={(option) => {
-                  if (option?.value !== '') {
-                    setObjectType(String(option?.value))
-                    setRelation('')
-                  } else {
-                    setObjectType(undefined)
-                    setRelation('')
-                    setObjectId('')
-                  }
-                  setIsFilter(true)
-                }}
-              />
-            </ObjectTypeContainer>
-            <ObjectIdContainer>
-              <FilterInput
-                disabled={!objectType || objectType === ''}
-                label="Object Id"
-                placeholder=""
-                value={objectId || ''}
-                onChange={(e: { target: { value: string } }) => {
-                  setIsFilter(false)
-                  setObjectId(e.target.value)
-                }}
-                onClickSearch={() => {
-                  setIsFilter(true)
-                }}
-              ></FilterInput>
-            </ObjectIdContainer>
-            <RelationsContainer>
-              <Select
-                defaultValue={{ label: 'All', value: '' }}
-                disabled={!objectType || objectType === ''}
-                label="Object Relation"
-                options={objectRelationTypeOptions}
-                value={objectRelationTypeOptions.find(
-                  (option) => option.value === relation || '',
-                )}
-                onChange={(option) => {
-                  setRelation(String(option?.value))
-                  setIsFilter(true)
-                }}
-              />
-            </RelationsContainer>
-          </FieldsContainer>
-        </ObjectContainer>
-        <SubjectContainer>
-          <FieldsContainer>
-            <SubjectTypeContainer>
-              <Select
-                defaultValue={{ label: 'All', value: '' }}
-                label="Subject Type"
-                options={objectTypeOptions}
-                value={objectTypeOptions.find(
-                  (option) => option.value === (subjectType || ''),
-                )}
-                onChange={(option) => {
-                  if (option?.value !== '') {
-                    setSubjectType(String(option?.value))
-                    setSubjectRelation(undefined)
-                  } else {
-                    setSubjectType(undefined)
-                    setSubjectRelation(undefined)
-                    setSubjectId('')
-                  }
-                  setIsFilter(true)
-                }}
-              />
-            </SubjectTypeContainer>
-            <SubjectIdContainer>
-              <FilterInput
-                disabled={!subjectType || subjectType === ''}
-                label="Subject Id"
-                placeholder=""
-                value={subjectId || ''}
-                onChange={(e: { target: { value: string } }) => {
-                  setIsFilter(false)
-                  setSubjectId(e.target.value)
-                }}
-                onClickSearch={() => {
-                  setIsFilter(true)
-                }}
-              ></FilterInput>
-            </SubjectIdContainer>
-            <SubjectRelationContainer>
-              <Select
-                defaultValue={{ label: 'All', value: '' }}
-                disabled={!subjectType || subjectType === ''}
-                label="Subject Relation"
-                options={subjectRelationTypeOptions}
-                value={subjectRelationTypeOptions.find(
-                  (option) => option.value === (subjectRelation || ''),
-                )}
-                onChange={(option) => {
-                  if (option?.value !== '') {
-                    setSubjectRelation(String(option?.value))
-                  } else {
-                    setSubjectRelation(undefined)
-                  }
-                  setIsFilter(true)
-                }}
-              />
-            </SubjectRelationContainer>
-          </FieldsContainer>
-        </SubjectContainer>
-      </SelectContainer>
-      {isFetchingRelations || !!relations.length ? (
+      {isFetchingRelations || !!relations.length || isFilter ? (
         <TableWrapper>
           <DataTable
             fetchMoreOnBottomReached={fetchMoreOnBottomReached}

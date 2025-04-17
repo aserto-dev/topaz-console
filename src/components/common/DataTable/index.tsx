@@ -72,7 +72,9 @@ const DataTable = <Data extends object>({
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id} style={{ display: 'flex', width: '100%' }}>
               {headerGroup.headers.map((header) => {
-                return (
+                return header.column.getCanFilter() ? (
+                  header.column.columnDef.meta?.filter
+                ) : (
                   <th
                     key={header.id}
                     style={{
