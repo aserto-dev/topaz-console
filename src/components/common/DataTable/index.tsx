@@ -8,6 +8,7 @@ import { theme } from '../../../theme'
 import { StyledTable, TableContainer } from './styles'
 
 type DataTableProps<Data extends object> = {
+  breakTopDistance?: number
   fetchMoreOnBottomReached?: (
     containerRefElement?: HTMLDivElement | null,
   ) => void
@@ -30,6 +31,7 @@ const RowComponent = styled.tr<{ $isExpanded?: boolean }>`
 `
 
 const DataTable = <Data extends object>({
+  breakTopDistance,
   fetchMoreOnBottomReached,
   isFetching = false,
   table,
@@ -55,8 +57,8 @@ const DataTable = <Data extends object>({
   return (
     <TableContainer
       ref={tableContainerRef}
+      $breakTopDistance={breakTopDistance}
       $topDistance={topDistance}
-      className="container"
       onScroll={(e) => fetchMoreOnBottomReached?.(e.currentTarget)}
     >
       <StyledTable style={{ display: 'grid' }}>
@@ -133,7 +135,9 @@ const DataTable = <Data extends object>({
                       key={cell.id}
                       style={{
                         display: 'flex',
-                        width: cell.column.getSize(),
+                        width:
+                          cell.column.columnDef.meta?.size ||
+                          cell.column.getSize(),
                       }}
                     >
                       {flexRender(

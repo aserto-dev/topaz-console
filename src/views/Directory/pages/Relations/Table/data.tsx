@@ -329,10 +329,11 @@ const RelationsTable: React.FC = () => {
       {isFetchingRelations || !!relations.length || isFilter ? (
         <TableWrapper>
           <DataTable
+            breakTopDistance={202}
             fetchMoreOnBottomReached={fetchMoreOnBottomReached}
             isFetching={isFetchingRelations}
             table={table}
-            topDistance={150}
+            topDistance={162}
           />
         </TableWrapper>
       ) : (

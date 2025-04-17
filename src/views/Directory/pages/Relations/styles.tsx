@@ -43,9 +43,7 @@ export const FilterInput = styled(Input)`
 `
 
 export const TableWrapper = styled.div`
-  table {
-    width: 100%;
-  }
+  margin-top: 12px;
 
   tbody tr {
     border: none;

@@ -2,7 +2,10 @@ import styled from 'styled-components'
 
 import { theme } from '../../../theme'
 
-export const TableContainer = styled.div<{ $topDistance?: number }>`
+export const TableContainer = styled.div<{
+  $breakTopDistance?: number
+  $topDistance?: number
+}>`
   ${({ $topDistance }) => `height: calc(100vh - ${$topDistance || 244}px)`};
   position: relative;
   .tableWrap {
@@ -10,6 +13,10 @@ export const TableContainer = styled.div<{ $topDistance?: number }>`
   }
   overflow-x: hidden;
   width: 100%;
+  @media (max-width: 912px) {
+    ${({ $breakTopDistance }) =>
+      `height: calc(100vh - ${$breakTopDistance || 318}px)`};
+  }
 `
 
 export const StyledTable = styled.table`

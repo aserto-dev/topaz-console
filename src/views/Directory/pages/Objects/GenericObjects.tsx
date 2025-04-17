@@ -93,7 +93,9 @@ const Objects: React.FC = () => {
         return <BreakDiv>{row.original.id}</BreakDiv>
       },
       header: 'ID',
-      size: 500,
+      meta: {
+        size: '50%',
+      },
     },
 
     {
@@ -107,7 +109,9 @@ const Objects: React.FC = () => {
         )
       },
       header: 'Name',
-      size: 500,
+      meta: {
+        size: '50%',
+      },
     },
   ]
 
