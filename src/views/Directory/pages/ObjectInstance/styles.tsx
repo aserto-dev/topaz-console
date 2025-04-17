@@ -1,7 +1,6 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 import Button from '../../../../components/common/Button'
-import { RowComponent } from '../../../../components/common/DataTable/TableBody'
 import { theme } from '../../../../theme'
 
 export const AddButton = styled(Button)`
@@ -69,18 +68,6 @@ export const RelationTypesTableContainer = styled.div`
   div {
     overflow-x: hidden;
   }
-`
-
-export const Tr = styled(RowComponent)<{ active: boolean }>`
-  border-left: none !important;
-  border-right: none !important;
-  ${({ active }) =>
-    active &&
-    css`
-      background-color: ${theme.grey20};
-      color: ${theme.grey100};
-      box-shadow: inset 4px 0px 0px -1px ${theme.indogoAccent4} !important;
-    `}}
 `
 
 export const RelationsContainer = styled.div`

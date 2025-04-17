@@ -1,8 +1,12 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router'
-import { CellProps, Column } from 'react-table'
 
 import { useQueryClient } from '@tanstack/react-query'
+import {
+  ColumnDef,
+  getCoreRowModel,
+  useReactTable,
+} from '@tanstack/react-table'
 
 import {
   getNextPage,
@@ -45,7 +49,6 @@ import {
   RelationCardsContainer,
   RelationsContainer,
   RelationTypesTableContainer,
-  Tr,
 } from '../styles'
 import AddRelationModal from './AddRelationModal'
 
@@ -184,9 +187,9 @@ const ObjectRelations: React.FC<{
 
   const { data: relationTypes } = useDirectoryV3RelationTypesList()
 
-  const relationTypesColumns: Column<RelationTypeColumn>[] = [
+  const columns: ColumnDef<RelationTypeColumn>[] = [
     {
-      Cell: ({ row }: CellProps<RelationTypeColumn>) => {
+      cell: ({ row }) => {
         return (
           <Link
             to={`/ui/directory/objects/${safeObjectType}/${encodeURIComponent(
@@ -194,25 +197,21 @@ const ObjectRelations: React.FC<{
             )}/${relationSide}-relations/${row.original.relationObjectTypeName || ''}/${
               row.original.name || ''
             }`}
+            onClick={() => {
+              table.setRowSelection({ [row.id]: !row.getIsSelected() })
+            }}
           >
             {row.original.name ?? ''}
           </Link>
         )
       },
-      disableSortBy: false,
-      Header: 'Name',
-      style: {
-        cellWidth: 'c50%',
-      },
+      header: 'Name',
     },
     {
-      Cell: ({ row }: CellProps<RelationTypeColumn>) => {
+      cell: ({ row }) => {
         return <>{row.original.relationObjectTypeName}</>
       },
-      Header: 'Type',
-      style: {
-        cellWidth: 'c50%',
-      },
+      header: 'Type',
     },
   ]
 
@@ -390,6 +389,19 @@ const ObjectRelations: React.FC<{
 
   const displayState = useDirectoryDisplayState()
 
+  const [rowSelection, setRowSelection] = useState({})
+
+  const table = useReactTable({
+    columns: columns,
+    data: relationTypesTableData,
+    enableRowSelection: true,
+    getCoreRowModel: getCoreRowModel(),
+    onRowSelectionChange: setRowSelection,
+    state: {
+      rowSelection,
+    },
+  })
+
   return (
     <>
       <AddRelationModal
@@ -411,21 +423,7 @@ const ObjectRelations: React.FC<{
       <ContentContainer>
         <RelationTypesTableContainer>
           {relationTypesTableData.length ? (
-            <DataTable
-              columns={relationTypesColumns}
-              data={relationTypesTableData}
-              rowComponent={(rowProps) => (
-                <Tr
-                  {...rowProps}
-                  active={
-                    rowProps.$row.original.relationObjectTypeName ===
-                      relationSubject &&
-                    rowProps.$row.original.name === relationType
-                  }
-                />
-              )}
-              sticky={true}
-            ></DataTable>
+            <DataTable table={table}></DataTable>
           ) : (
             `This ${objectType} has no ${relationSide} relations.`
           )}

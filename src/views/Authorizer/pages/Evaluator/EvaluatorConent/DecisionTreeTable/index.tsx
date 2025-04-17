@@ -1,5 +1,10 @@
 import React from 'react'
-import { CellProps, Column } from 'react-table'
+
+import {
+  ColumnDef,
+  getCoreRowModel,
+  useReactTable,
+} from '@tanstack/react-table'
 
 import DataTable from '../../../../../../components/common/DataTable'
 import Highlight from '../../../../../../components/common/Highlight'
@@ -20,32 +25,26 @@ interface TableData {
   module: string
 }
 
-const columns: Column<TableData>[] = [
+const columns: ColumnDef<TableData>[] = [
   {
-    Cell: ({ row }: CellProps<TableData>) => (
+    cell: ({ row }) => (
       <Cell>
-        <ModuleCell {...row.getToggleRowExpandedProps()}>
+        <ModuleCell>
           <CellOverflow>{row.original.module}</CellOverflow>
         </ModuleCell>
       </Cell>
     ),
-    Header: 'Module',
-    style: {
-      cellWidth: '70%',
-    },
+    header: 'Module',
   },
   {
-    Cell: ({ row }: CellProps<TableData>) => (
+    cell: ({ row }) => (
       <Cell>
-        <CodeCell {...row.getToggleRowExpandedProps()}>
+        <CodeCell>
           <Highlight language="json">{row.original.decision}</Highlight>
         </CodeCell>
       </Cell>
     ),
-    Header: 'Decision',
-    style: {
-      cellWidth: '30%',
-    },
+    header: 'Decision',
   },
 ]
 
@@ -62,9 +61,15 @@ export const DecisionTreeTable: React.FC<DecisionTreeTableProps> = ({
     }
   })
 
+  const table = useReactTable({
+    columns: columns,
+    data: list,
+    getCoreRowModel: getCoreRowModel(),
+  })
+
   return (
     <DecisionTreeTableWrapper>
-      <DataTable columns={columns} data={list} sticky={true} />
+      <DataTable table={table} />
     </DecisionTreeTableWrapper>
   )
 }

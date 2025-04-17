@@ -14,6 +14,7 @@ export const Cell = styled.div`
 `
 
 export const ModuleCell = styled.div`
+  padding: 14px 2px;
   box-sizing: border-box;
   display: block;
   overflow: hidden;

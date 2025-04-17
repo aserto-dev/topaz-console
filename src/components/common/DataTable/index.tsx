@@ -1,247 +1,160 @@
-import React, { useEffect, useImperativeHandle, useState } from 'react'
-import {
-  Cell,
-  Column,
-  Row,
-  TableInstance,
-  TableRowProps,
-  TableState,
-  useExpanded,
-  useFilters,
-  useSortBy,
-  useTable,
-} from 'react-table'
+import React from 'react'
 import styled, { css } from 'styled-components'
 
-import { theme } from '../../../theme'
-import DataLoader, { PagingConfig } from './DataLoader'
-import TableBody, { SubComponent } from './TableBody'
-import TableHeader from './TableHeader'
+import { flexRender, Row, Table } from '@tanstack/react-table'
+import { useVirtualizer } from '@tanstack/react-virtual'
 
-type DataTablePagingProps<Data extends object> = Omit<
-  PagingConfig,
-  'loader'
-> & {
-  loadingContent: Data[]
-}
+import { theme } from '../../../theme'
+import { StyledTable, TableContainer } from './styles'
 
 type DataTableProps<Data extends object> = {
-  columns: readonly Column<Data>[]
-  data: readonly Data[]
-  getCellProps?: (cell: Cell<Data>) => void
-  hideHeaders?: boolean
-  initialState?: Partial<TableState<Data>>
-  mRef?: React.RefObject<null | TableInstance<Data>>
-  paging?: DataTablePagingProps<Data>
-  renderRowSubComponent?: SubComponent<Data>
-  rowComponent?: React.ComponentType<
-    TableRowProps & { $row: Row<Data>; isExpanded: boolean; }
-  >
-  sticky?: boolean
+  breakTopDistance?: number
+  fetchMoreOnBottomReached?: (
+    containerRefElement?: HTMLDivElement | null,
+  ) => void
+  isFetching?: boolean
+  table: Table<Data>
+  topDistance?: number
 }
 
-const TableContainer = styled.div<{
-  $sticky?: boolean
-  $topDistance?: number
-}>`
-  .tableWrap {
-    border-bottom: 1px solid black;
-  }
-  ${({ $sticky }) =>
-    $sticky &&
-    css<{ $topDistance?: number }>`
-      .scrollTarget {
-        ${({ $topDistance }) => `height: calc(100vh - ${$topDistance || 0}px)`};
-        overflow: auto;
-      }
-    `};
-
-  overflow-x: auto;
-  overflow-y: hidden;
-  width: 100%;
-`
-
-const Table = styled.table<{ $sticky?: boolean }>`
-  width: 98%;
-  margin-left: auto;
-  margin-right: auto;
-  ${({ $sticky }) =>
-    $sticky &&
-    css`
-      thead {
-        top: 0;
-        position: sticky;
-        z-index: 1;
-        width: fit-content;
-        background-color: ${theme.primaryBlack};
-      }
-    `};
-
-  thead {
-    th {
-      min-width: 120px;
-      vertical-align: top;
-      padding: 20px;
+const RowComponent = styled.tr<{ $isExpanded?: boolean }>`
+  ${({ $isExpanded: isExpanded }) => {
+    if (isExpanded) {
+      return css`
+        background-color: ${theme.grey30};
+        color: ${theme.grey100} !important;
+        cursor: pointer;
+        box-shadow: inset 4px 0px 0px -1px ${theme.indogoAccent4} !important;
+      `
     }
-    tr {
-      color: ${theme.grey100};
-      font-weight: bold;
-      font-size: 16px;
-    }
-  }
-  tbody {
-    font-size: 14px;
-    tr {
-      color: ${theme.grey70};
-      box-shadow: inset 0px 0px 0px 1px ${theme.grey20};
-      td {
-        padding: 20px;
-      }
-    }
-  }
+  }}
 `
 
 const DataTable = <Data extends object>({
-  columns,
-  data,
-  getCellProps,
-  hideHeaders = false,
-  initialState,
-  mRef,
-  paging,
-  renderRowSubComponent,
-  rowComponent,
-  sticky,
+  breakTopDistance,
+  fetchMoreOnBottomReached,
+  isFetching = false,
+  table,
+  topDistance,
 }: DataTableProps<Data>) => {
-  const defaultColumn = {
-    Filter: '',
-  }
-  const instance = useTable<Data>(
-    {
-      autoResetExpanded: false,
-      autoResetFilters: false,
-      columns,
-      data,
-      defaultColumn,
-      disableSortRemove: true,
-      expandSubRows: false,
-      initialState,
-    },
-    useFilters,
-    useSortBy,
-    useExpanded,
-  )
+  const tableContainerRef = React.useRef<HTMLDivElement>(null)
 
-  const {
-    getTableBodyProps,
-    getTableProps,
-    headerGroups,
-    prepareRow,
-    rows,
-    visibleColumns,
-  } = instance
+  const { rows } = table.getRowModel()
 
-  useImperativeHandle(mRef, () => instance)
-
-  useEffect(() => {
-    if (sticky) {
-      document.body.classList.add('overflow-y-hidden')
-      return () => {
-        document.body.classList.remove('overflow-y-hidden')
-      }
-    }
-  }, [sticky])
-
-  const elDistanceToTop =
-    window.scrollY +
-    (document.getElementById('tableContainer')?.getBoundingClientRect()?.top ||
-      0)
-
-  const [top, setTop] = useState(200)
-  useEffect(() => {
-    setTop(elDistanceToTop)
-  }, [elDistanceToTop])
+  const rowVirtualizer = useVirtualizer({
+    count: rows.length,
+    estimateSize: () => 33, //estimate row height for accurate scrollbar dragging
+    getScrollElement: () => tableContainerRef.current,
+    //measure dynamic row height, except in firefox because it measures table border height incorrectly
+    measureElement:
+      typeof window !== 'undefined' &&
+      navigator.userAgent.indexOf('Firefox') === -1
+        ? (element) => element?.getBoundingClientRect().height
+        : undefined,
+    overscan: 5,
+  })
 
   return (
-    <TableContainer $sticky={sticky} $topDistance={top} id="tableContainer">
-      <DataLoader
-        paging={
-          paging && {
-            dataLength: data.length,
-            getNext: () => {
-              paging?.getNext()
-            },
-            hasMore: () => !!paging?.hasMore(),
-            loader: (
-              <DataTable
-                columns={columns}
-                data={paging.loadingContent}
-                hideHeaders
-              />
-            ),
-            scrollableTarget: paging.scrollableTarget || 'scrollTarget',
-          }
-        }
-      >
-        <div className="scrollTarget" id="scrollTarget">
-          <Table $sticky={sticky} {...getTableProps()}>
-            {!hideHeaders && <TableHeader headerGroups={headerGroups} />}
-            <TableBody
-              getCellProps={getCellProps}
-              getTableBodyProps={getTableBodyProps}
-              prepareRow={prepareRow}
-              renderRowSubComponent={renderRowSubComponent}
-              rowComponent={rowComponent}
-              rows={rows}
-              visibleColumns={visibleColumns}
-            />
-          </Table>
-        </div>
-      </DataLoader>
+    <TableContainer
+      ref={tableContainerRef}
+      $breakTopDistance={breakTopDistance}
+      $topDistance={topDistance}
+      onScroll={(e) => fetchMoreOnBottomReached?.(e.currentTarget)}
+    >
+      <StyledTable style={{ display: 'grid' }}>
+        <thead
+          style={{
+            backgroundColor: theme.primaryBlack,
+            display: 'grid',
+            position: 'sticky',
+            top: 0,
+            zIndex: 1,
+          }}
+        >
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id} style={{ display: 'flex', width: '100%' }}>
+              {headerGroup.headers.map((header) => {
+                return header.column.getCanFilter() ? (
+                  header.column.columnDef.meta?.filter
+                ) : (
+                  <th
+                    key={header.id}
+                    style={{
+                      display: 'flex',
+                      width: header.getSize(),
+                    }}
+                  >
+                    <div
+                      {...{
+                        className: header.column.getCanSort()
+                          ? 'cursor-pointer select-none'
+                          : '',
+                        onClick: header.column.getToggleSortingHandler(),
+                      }}
+                    >
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
+                      {{
+                        asc: ' 🔼',
+                        desc: ' 🔽',
+                      }[header.column.getIsSorted() as string] ?? null}
+                    </div>
+                  </th>
+                )
+              })}
+            </tr>
+          ))}
+        </thead>
+        <tbody
+          style={{
+            display: 'grid',
+            height: `${rowVirtualizer.getTotalSize()}px`, //tells scrollbar how big the table is
+            position: 'relative', //needed for absolute positioning of rows
+          }}
+        >
+          {rowVirtualizer.getVirtualItems().map((virtualRow) => {
+            const row = rows[virtualRow.index] as Row<Data>
+            return (
+              <RowComponent
+                key={row.id}
+                ref={(node) => rowVirtualizer.measureElement(node)} //measure dynamic row height
+                $isExpanded={row.getIsSelected()}
+                data-index={virtualRow.index} //needed for dynamic row height measurement
+                style={{
+                  display: 'flex',
+                  position: 'absolute',
+                  transform: `translateY(${virtualRow.start}px)`, //this should always be a `style` as it changes on scroll
+                  width: '100%',
+                }}
+              >
+                {row.getVisibleCells().map((cell) => {
+                  return (
+                    <td
+                      key={cell.id}
+                      style={{
+                        display: 'flex',
+                        width:
+                          cell.column.columnDef.meta?.size ||
+                          cell.column.getSize(),
+                      }}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </td>
+                  )
+                })}
+              </RowComponent>
+            )
+          })}
+        </tbody>
+      </StyledTable>
+      {isFetching && <div>...</div>}
     </TableContainer>
   )
 }
 
-/*eslint-disable @typescript-eslint/no-empty-object-type */
-// Must use module declaration augmentation to type the useSortBy and useExpanded plugins
-// https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-table#configuration-using-declaration-merging
-declare module 'react-table' {
-  export interface Cell<D extends object = {}>
-    extends UseRowStateCellProps<D> {}
-  export interface ColumnInstance<D extends object = {}>
-    extends UseFiltersColumnProps<D>,
-      UseSortByColumnProps<D> {
-    // DataTable-specific properties
-    style?: {
-      cellWidth?: number | string
-      headerCell?: React.CSSProperties
-    }
-  }
-  export interface ColumnInterface<D extends object = {}>
-    extends UseFiltersColumnOptions<D>,
-      UseSortByColumnOptions<D> {
-    // DataTable-specific properties
-    style?: {
-      cellWidth?: number | string
-      headerCell?: React.CSSProperties
-    }
-  }
-  export interface Hooks<D extends object = {}>
-    extends UseExpandedHooks<D>,
-      UseSortByHooks<D> {}
-  export interface Row<D extends object = {}> extends UseExpandedRowProps<D> {}
-  export interface TableInstance<D extends object = {}>
-    extends UseExpandedInstanceProps<D>,
-      UseFiltersInstanceProps<D>,
-      UseSortByInstanceProps<D> {}
-  export interface TableOptions<D extends object>
-    extends UseExpandedOptions<D>,
-      UseFiltersOptions<D>,
-      UseSortByOptions<D> {}
-  export interface TableState<D extends object = {}>
-    extends UseExpandedState<D>,
-      UseFiltersState<D>,
-      UseSortByState<D> {}
-}
-/*eslint-enable @typescript-eslint/no-empty-object-type */
 export default DataTable

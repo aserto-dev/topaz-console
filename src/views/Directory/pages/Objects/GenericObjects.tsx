@@ -1,7 +1,12 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useParams } from 'react-router'
-import { CellProps, Column } from 'react-table'
 import styled from 'styled-components'
+
+import {
+  ColumnDef,
+  getCoreRowModel,
+  useReactTable,
+} from '@tanstack/react-table'
 
 import {
   getNextPage,
@@ -13,11 +18,11 @@ import {
 } from '../../../../api/v3/directory'
 import NoObjectsImage from '../../../../assets/shapes.svg'
 import DataTable from '../../../../components/common/DataTable'
+import { useFetchMoreOnBottomReached } from '../../../../components/common/DataTable/hooks'
 import EmptyTablePlaceholder from '../../../../components/common/EmptyTablePlaceholder'
 import { Link } from '../../../../components/common/UndecoratedLink'
 import { V3Object } from '../../../../types/directory'
 import ObjectsHeader from './ObjectsHeader'
-import { useIsScrollable } from './useIsScrollable'
 import { FindButton, PageHeaderInput } from './UserObjects/styles'
 
 const Container = styled.div`
@@ -29,15 +34,10 @@ const Container = styled.div`
 const BreakDiv = styled.div`
   word-break: break-all;
 `
-type ObjectSummary = {
-  key: string
-  name?: null | string | undefined
-}
 
 const Objects: React.FC = () => {
   const { objectType: objectTypeName } = useParams()
   const safeObjectType = objectTypeName || ''
-  const [objects, setObjects] = useState<V3Object[]>([])
   const [searchKey, setSearchKey] = useState<string>('')
 
   const { data } = useDirectoryV3ObjectTypesList()
@@ -78,51 +78,57 @@ const Objects: React.FC = () => {
     },
   )
 
-  const listObjects = useMemo(
-    () => objectsData?.pages.map((page) => page.results || []).flat() ?? [],
-    [objectsData?.pages],
-  )
+  const [objects, setObjects] = useState<V3Object[]>([])
 
-  useEffect(() => {
-    setObjects(listObjects)
-  }, [listObjects])
+  const listObjects = useMemo(() => {
+    const objects =
+      objectsData?.pages.map((page) => page.results || []).flat() ?? []
+    setObjects(objects)
+    return objects
+  }, [objectsData?.pages, setObjects])
 
-  const fetchData = useIsScrollable({
-    fetchNextData: fetchMoreObjects,
-    hasMoreData: hasMoreObjects || false,
-    isFetching: isFetchingObjects,
-  })
-  useCallback(() => {
-    fetchData()
-  }, [fetchData])
-  const columns: Column<ObjectSummary>[] = [
+  const columns: ColumnDef<V3Object>[] = [
     {
-      Cell: ({ row }: CellProps<ObjectSummary>) => {
-        return <BreakDiv>{row.original.key}</BreakDiv>
+      cell: ({ row }) => {
+        return <BreakDiv>{row.original.id}</BreakDiv>
       },
-      Header: 'ID',
-      style: {
-        cellWidth: '50%',
+      header: 'ID',
+      meta: {
+        size: '50%',
       },
     },
 
     {
-      Cell: ({ row }: CellProps<ObjectSummary>) => {
+      cell: ({ row }) => {
         return (
           <Link
-            to={`/ui/directory/objects/${safeObjectType}/${encodeURIComponent(row.original.key)}`}
+            to={`/ui/directory/objects/${safeObjectType}/${encodeURIComponent(row.original.id)}`}
           >
-            <BreakDiv>{row.original.name}</BreakDiv>
+            <BreakDiv>{row.original.display_name || row.original.id}</BreakDiv>
           </Link>
         )
       },
-      Header: 'Name',
-
-      style: {
-        cellWidth: '50%',
+      header: 'Name',
+      meta: {
+        size: '50%',
       },
     },
   ]
+
+  const table = useReactTable({
+    columns: columns,
+    data: objects,
+    getCoreRowModel: getCoreRowModel(),
+  })
+
+  const fetchMoreOnBottomReached = useFetchMoreOnBottomReached({
+    getNext: fetchMoreObjects,
+    hasMore: hasMoreObjects,
+  })
+
+  if (isFetchingObjects) {
+    return null
+  }
 
   return (
     <>
@@ -142,9 +148,10 @@ const Objects: React.FC = () => {
             />
             <FindButton
               disabled={!searchKey}
-              onClick={() => {
-                setSearchKey(searchKey)
-                refetchObject()
+              onClick={async () => {
+                const data = (await refetchObject()).data
+                const result = data?.result ? [data.result] : []
+                setObjects(result)
               }}
             >
               &nbsp;Find&nbsp;
@@ -153,22 +160,9 @@ const Objects: React.FC = () => {
         </ObjectsHeader>
         {objects.length ? (
           <DataTable
-            columns={columns}
-            data={objects.map((object) => {
-              return { key: object.id, name: object.display_name || object.id }
-            })}
-            paging={{
-              dataLength: objects.length,
-              getNext: () => fetchMoreObjects(),
-              hasMore: () => !!hasMoreObjects,
-              loadingContent: [
-                {
-                  key: 'loading...',
-                  name: 'loading...',
-                },
-              ],
-            }}
-            sticky={true}
+            fetchMoreOnBottomReached={fetchMoreOnBottomReached}
+            isFetching={isFetchingObjects}
+            table={table}
           />
         ) : (
           <EmptyTablePlaceholder
