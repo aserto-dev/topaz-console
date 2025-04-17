@@ -1,7 +1,11 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { CellProps, Column, TableInstance } from 'react-table'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { keepPreviousData } from '@tanstack/react-query'
+import {
+  ColumnDef,
+  getCoreRowModel,
+  useReactTable,
+} from '@tanstack/react-table'
 
 import {
   getNextPage,
@@ -107,7 +111,7 @@ const RelationsTable: React.FC = () => {
     {
       object_id: objectId || '',
       object_type: objectType || '',
-      'page.size': 100,
+      'page.size': 5,
       relation: relation || '',
       subject_id: subjectId || '',
       subject_relation: subjectRelation || '',
@@ -121,8 +125,6 @@ const RelationsTable: React.FC = () => {
       },
     },
   )
-
-  const tableRef = useRef<null | TableInstance<V3Relation>>(null)
 
   const relations: V3Relation[] = useMemo(() => {
     return (
@@ -149,96 +151,71 @@ const RelationsTable: React.FC = () => {
     fetchData()
   }, [fetchData])
 
-  const columns: Column<V3Relation>[] = [
-    {
-      Cell: ({ row }: CellProps<V3Relation>) => {
-        return <div>{row.original.object_type}</div>
+  const columns: ColumnDef<V3Relation>[] = useMemo(() => {
+    return [
+      {
+        accessorKey: 'object_type',
+        size: 16,
       },
-      id: 'Object Type',
-      style: {
-        cellWidth: '16.66%',
+      {
+        cell: ({ row }) => {
+          return (
+            <Link
+              to={`/ui/directory/objects/${row.original.object_type}/${encodeURIComponent(
+                row.original.object_id,
+              )}`}
+            >
+              <BreakDiv>{row.original.object_id}</BreakDiv>
+            </Link>
+          )
+        },
+        id: 'Object Id',
       },
-    },
-    {
-      Cell: ({ row }: CellProps<V3Relation>) => {
-        return (
-          <Link
-            to={`/ui/directory/objects/${row.original.object_type}/${encodeURIComponent(
-              row.original.object_id,
-            )}`}
-          >
-            <BreakDiv>{row.original.object_id}</BreakDiv>
-          </Link>
-        )
+      {
+        accessorKey: 'relation',
       },
-      id: 'Object Id',
-      style: {
-        cellWidth: '16.66%',
+      {
+        cell: () => {
+          return <div></div>
+        },
+        id: 'delimiter',
+        size: 2,
       },
-    },
-    {
-      Cell: ({ row }: CellProps<V3Relation>) => {
-        return <div>{row.original.relation}</div>
+      {
+        cell: () => {
+          return <div></div>
+        },
+        id: 'blank',
+        size: 8,
       },
-      id: 'Relation',
-      style: {
-        cellWidth: '16.66%',
+      {
+        accessorKey: 'subject_type',
       },
-    },
-    {
-      Cell: () => {
-        return <div></div>
+      {
+        cell: ({ row }) => {
+          return (
+            <Link
+              to={`/ui/directory/objects/${row.original.subject_type}/${encodeURIComponent(
+                row.original.subject_id,
+              )}`}
+            >
+              <BreakDiv>{row.original.subject_id}</BreakDiv>
+            </Link>
+          )
+        },
+        id: 'Subject Id',
       },
-      id: 'delimiter',
-      style: {
-        cellWidth: '2px',
+      {
+        accessorKey: 'subject_relation',
       },
-    },
-    {
-      Cell: () => {
-        return <div></div>
-      },
-      id: 'blank',
-      style: {
-        cellWidth: '8px',
-      },
-    },
-    {
-      Cell: ({ row }: CellProps<V3Relation>) => {
-        return <div>{row.original.subject_type}</div>
-      },
-      id: 'Subject Type',
-      style: {
-        cellWidth: '16.66%',
-      },
-    },
-    {
-      Cell: ({ row }: CellProps<V3Relation>) => {
-        return (
-          <Link
-            to={`/ui/directory/objects/${row.original.subject_type}/${encodeURIComponent(
-              row.original.subject_id,
-            )}`}
-          >
-            <BreakDiv>{row.original.subject_id}</BreakDiv>
-          </Link>
-        )
-      },
-      id: 'Subject Id',
-      style: {
-        cellWidth: '16.66%',
-      },
-    },
-    {
-      Cell: ({ row }: CellProps<V3Relation>) => {
-        return <div>{row.original.subject_relation}</div>
-      },
-      id: 'Subject Relation',
-      style: {
-        cellWidth: '16.66%',
-      },
-    },
-  ]
+    ]
+  }, [])
+
+  const table = useReactTable({
+    columns: columns,
+    data: relationsList,
+    getCoreRowModel: getCoreRowModel(),
+  })
 
   return (
     <>
@@ -364,27 +341,7 @@ const RelationsTable: React.FC = () => {
       </SelectContainer>
       {isFetchingRelations || !!relations.length ? (
         <TableWrapper>
-          <DataTable
-            columns={columns}
-            data={relationsList}
-            mRef={tableRef}
-            paging={{
-              dataLength: relationsList.length,
-              getNext: () => fetchMoreRelations(),
-              hasMore: () => !!hasMoreRelations,
-              loadingContent: [
-                {
-                  object_id: 'loading...',
-                  object_type: 'loading...',
-                  relation: 'loading...',
-                  subject_id: 'loading...',
-                  subject_relation: 'loading...',
-                  subject_type: 'loading...',
-                },
-              ],
-            }}
-            sticky={true}
-          />
+          <DataTable table={table} />
         </TableWrapper>
       ) : (
         <EmptyTableContainer>
