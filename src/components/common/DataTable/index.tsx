@@ -5,6 +5,7 @@ import { flexRender, Row, Table } from '@tanstack/react-table'
 import { useVirtualizer } from '@tanstack/react-virtual'
 
 import { theme } from '../../../theme'
+import { StyledTable, TableContainer } from './styles'
 
 type DataTableProps<Data extends object> = {
   fetchMoreOnBottomReached?: (
@@ -14,8 +15,8 @@ type DataTableProps<Data extends object> = {
   table: Table<Data>
 }
 
-export const RowComponent = styled.tr<{ isExpanded?: boolean }>`
-  ${({ isExpanded }) => {
+const RowComponent = styled.tr<{ $isExpanded?: boolean }>`
+  ${({ $isExpanded: isExpanded }) => {
     if (isExpanded) {
       return css`
         background-color: ${theme.grey30};
@@ -50,7 +51,7 @@ const DataTable = <Data extends object>({
   })
 
   return (
-    <div className="tableWrapper">
+    <TableContainer>
       <div
         ref={tableContainerRef}
         className="container"
@@ -62,9 +63,10 @@ const DataTable = <Data extends object>({
         }}
         onScroll={(e) => fetchMoreOnBottomReached?.(e.currentTarget)}
       >
-        <table style={{ display: 'grid' }}>
+        <StyledTable style={{ display: 'grid' }}>
           <thead
             style={{
+              backgroundColor: theme.primaryBlack,
               display: 'grid',
               position: 'sticky',
               top: 0,
@@ -121,8 +123,8 @@ const DataTable = <Data extends object>({
                 <RowComponent
                   key={row.id}
                   ref={(node) => rowVirtualizer.measureElement(node)} //measure dynamic row height
+                  $isExpanded={row.getIsSelected()}
                   data-index={virtualRow.index} //needed for dynamic row height measurement
-                  isExpanded={row.getIsSelected()}
                   style={{
                     display: 'flex',
                     position: 'absolute',
@@ -150,10 +152,10 @@ const DataTable = <Data extends object>({
               )
             })}
           </tbody>
-        </table>
+        </StyledTable>
       </div>
       {isFetching && <div>...</div>}
-    </div>
+    </TableContainer>
   )
 }
 

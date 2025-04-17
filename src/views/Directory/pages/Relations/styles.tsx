@@ -92,10 +92,10 @@ export const FilterInput = styled(Input)`
 export const TableWrapper = styled.div`
   margin-top: 166px;
   table {
-    margin-left: 12px;
+    width: 100%;
   }
-  thead th {
-    display: none;
+  thead {
+    height: 0;
   }
   tbody tr {
     border: none;

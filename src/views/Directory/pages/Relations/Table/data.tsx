@@ -137,6 +137,7 @@ const RelationsTable: React.FC = () => {
         return <div>{row.original.object_type}</div>
       },
       id: 'Object Type',
+      size: 170,
     },
     {
       cell: ({ row }) => {
@@ -151,30 +152,35 @@ const RelationsTable: React.FC = () => {
         )
       },
       id: 'Object Id',
+      size: 180,
     },
     {
       cell: ({ row }) => {
         return <div>{row.original.relation}</div>
       },
       id: 'Relation',
+      size: 168,
     },
     {
       cell: () => {
         return <div></div>
       },
       id: 'delimiter',
+      size: 2,
     },
     {
       cell: () => {
         return <div></div>
       },
       id: 'blank',
+      size: 8,
     },
     {
       cell: ({ row }) => {
         return <div>{row.original.subject_type}</div>
       },
       id: 'Subject Type',
+      size: 170,
     },
     {
       cell: ({ row }) => {
@@ -189,12 +195,14 @@ const RelationsTable: React.FC = () => {
         )
       },
       id: 'Subject Id',
+      size: 190,
     },
     {
       cell: ({ row }) => {
         return <div>{row.original.subject_relation}</div>
       },
       id: 'Subject Relation',
+      size: 100,
     },
   ]
 
