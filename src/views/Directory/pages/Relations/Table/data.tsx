@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 
 import { keepPreviousData } from '@tanstack/react-query'
 import {
@@ -15,12 +15,12 @@ import {
 import { useDirectoryReaderV3RelationsListInfinite } from '../../../../../api/v3/directory'
 import NoObjectsImage from '../../../../../assets/shapes.svg'
 import DataTable from '../../../../../components/common/DataTable'
+import { useFetchMoreOnBottomReached } from '../../../../../components/common/DataTable/hooks'
 import EmptyTablePlaceholder from '../../../../../components/common/EmptyTablePlaceholder'
 import Select from '../../../../../components/common/Select'
 import { Link } from '../../../../../components/common/UndecoratedLink'
 import { useDirectoryDataContext } from '../../../../../services/DirectoryContextProvider/hooks'
 import { V3Relation } from '../../../../../types/directory'
-import { useIsScrollable } from '../../Directory/useIsScrollable'
 import {
   BreakDiv,
   EmptyTableContainer,
@@ -55,8 +55,6 @@ const RelationsTable: React.FC = () => {
     subjectRelation,
     subjectType,
   } = useDirectoryDataContext()
-
-  const [relationsList, setRelationsList] = useState<V3Relation[]>([])
 
   const { data: objectTypesData } = useDirectoryV3ObjectTypesList()
   const { data: objectRelationTypesData } = useDirectoryV3RelationTypesList({
@@ -111,7 +109,7 @@ const RelationsTable: React.FC = () => {
     {
       object_id: objectId || '',
       object_type: objectType || '',
-      'page.size': 5,
+      'page.size': 10,
       relation: relation || '',
       subject_id: subjectId || '',
       subject_relation: subjectRelation || '',
@@ -133,88 +131,82 @@ const RelationsTable: React.FC = () => {
     )
   }, [relationsData?.pages])
 
-  useEffect(() => {
-    setRelationsList(relations)
-  }, [relations])
-
-  useEffect(() => {
-    setIsFilter(false)
-  }, [setIsFilter])
-
-  const fetchData = useIsScrollable({
-    fetchNextData: fetchMoreRelations,
-    hasMoreData: hasMoreRelations || false,
-    isFetching: isFetchingRelations,
-  })
-
-  useCallback(() => {
-    fetchData()
-  }, [fetchData])
-
-  const columns: ColumnDef<V3Relation>[] = useMemo(() => {
-    return [
-      {
-        accessorKey: 'object_type',
-        size: 16,
+  const columns: ColumnDef<V3Relation>[] = [
+    {
+      cell: ({ row }) => {
+        return <div>{row.original.object_type}</div>
       },
-      {
-        cell: ({ row }) => {
-          return (
-            <Link
-              to={`/ui/directory/objects/${row.original.object_type}/${encodeURIComponent(
-                row.original.object_id,
-              )}`}
-            >
-              <BreakDiv>{row.original.object_id}</BreakDiv>
-            </Link>
-          )
-        },
-        id: 'Object Id',
+      id: 'Object Type',
+    },
+    {
+      cell: ({ row }) => {
+        return (
+          <Link
+            to={`/ui/directory/objects/${row.original.object_type}/${encodeURIComponent(
+              row.original.object_id,
+            )}`}
+          >
+            <BreakDiv>{row.original.object_id}</BreakDiv>
+          </Link>
+        )
       },
-      {
-        accessorKey: 'relation',
+      id: 'Object Id',
+    },
+    {
+      cell: ({ row }) => {
+        return <div>{row.original.relation}</div>
       },
-      {
-        cell: () => {
-          return <div></div>
-        },
-        id: 'delimiter',
-        size: 2,
+      id: 'Relation',
+    },
+    {
+      cell: () => {
+        return <div></div>
       },
-      {
-        cell: () => {
-          return <div></div>
-        },
-        id: 'blank',
-        size: 8,
+      id: 'delimiter',
+    },
+    {
+      cell: () => {
+        return <div></div>
       },
-      {
-        accessorKey: 'subject_type',
+      id: 'blank',
+    },
+    {
+      cell: ({ row }) => {
+        return <div>{row.original.subject_type}</div>
       },
-      {
-        cell: ({ row }) => {
-          return (
-            <Link
-              to={`/ui/directory/objects/${row.original.subject_type}/${encodeURIComponent(
-                row.original.subject_id,
-              )}`}
-            >
-              <BreakDiv>{row.original.subject_id}</BreakDiv>
-            </Link>
-          )
-        },
-        id: 'Subject Id',
+      id: 'Subject Type',
+    },
+    {
+      cell: ({ row }) => {
+        return (
+          <Link
+            to={`/ui/directory/objects/${row.original.subject_type}/${encodeURIComponent(
+              row.original.subject_id,
+            )}`}
+          >
+            <BreakDiv>{row.original.subject_id}</BreakDiv>
+          </Link>
+        )
       },
-      {
-        accessorKey: 'subject_relation',
+      id: 'Subject Id',
+    },
+    {
+      cell: ({ row }) => {
+        return <div>{row.original.subject_relation}</div>
       },
-    ]
-  }, [])
+      id: 'Subject Relation',
+    },
+  ]
 
   const table = useReactTable({
     columns: columns,
-    data: relationsList,
+    data: relations,
     getCoreRowModel: getCoreRowModel(),
+  })
+
+  const fetchMoreOnBottomReached = useFetchMoreOnBottomReached({
+    getNext: fetchMoreRelations,
+    hasMore: hasMoreRelations,
   })
 
   return (
@@ -341,7 +333,11 @@ const RelationsTable: React.FC = () => {
       </SelectContainer>
       {isFetchingRelations || !!relations.length ? (
         <TableWrapper>
-          <DataTable table={table} />
+          <DataTable
+            fetchMoreOnBottomReached={fetchMoreOnBottomReached}
+            isFetching={isFetchingRelations}
+            table={table}
+          />
         </TableWrapper>
       ) : (
         <EmptyTableContainer>

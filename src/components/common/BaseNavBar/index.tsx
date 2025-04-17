@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { ReactNode, useMemo } from 'react'
 import { Navbar } from 'react-bootstrap'
 import { NavLink, useMatch, useResolvedPath } from 'react-router'
 
@@ -29,7 +29,7 @@ const DEFAULT_EXPAND = 'xl'
 
 interface BaseNavLinkProps {
   end?: string
-  title: string
+  title: ReactNode
   to: string
 }
 
