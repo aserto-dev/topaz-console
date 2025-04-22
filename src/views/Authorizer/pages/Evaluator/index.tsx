@@ -20,7 +20,7 @@ import {
   V2QueryRequest,
   V2QueryResponse,
 } from '../../../../types/authorizer'
-import PolicyEvaluatorContent from './EvaluatorConent'
+import PolicyEvaluatorContent from './EvaluatorContent'
 
 type EvaluatorProps = {
   isRebac?: boolean
@@ -85,20 +85,22 @@ const Evaluator: React.FC<EvaluatorProps> = ({ isRebac, selectedModuleId }) => {
 
   const evaluatorContext = useContentPolicyEvaluatorContext()
 
-  const pathSelect = evaluatorContext.pathSelect
-  const request = evaluatorContext.request
-  const decisions = evaluatorContext.decisions
-  const resourceContext = evaluatorContext.resourceContext
-  const input = evaluatorContext.input
-  const query = evaluatorContext.query
-  const queryMetrics = evaluatorContext.queryMetrics
-  const queryTrace = evaluatorContext.queryTrace
-  const queryTraceLevel = evaluatorContext.queryTraceLevel
-  const queryTraceSummary = evaluatorContext.queryTraceSummary
-  const pathFreeText = evaluatorContext.pathFreeText
-  const options = evaluatorContext.options
-  const identity = evaluatorContext.identity
-  const type = evaluatorContext.type
+  const {
+    decisions,
+    identity,
+    input,
+    options,
+    pathFreeText,
+    pathSelect,
+    query,
+    queryMetrics,
+    queryTrace,
+    queryTraceLevel,
+    queryTraceSummary,
+    request,
+    resourceContext,
+    type,
+  } = evaluatorContext
 
   const { setPolicyContextError, setResourceContextError } =
     usePolicyEvaluatorErrorContext()
