@@ -11,6 +11,7 @@ import {
   usePolicyEvaluatorErrorContext,
   useRebacPolicyEvaluatorContext,
 } from '../../../../../../services/PolicyEvaluatorContextProvider/hooks'
+import { theme } from '../../../../../../theme'
 import { FieldContainer, ResourceTextArea } from '../styles'
 
 export const ResourceContext = () => {
@@ -58,6 +59,7 @@ export const ResourceContext = () => {
         $hasError={!!resourceContextError}
         placeholder='{ "id": "123" }'
         rows={10}
+        style={{ background: theme.primaryBlack }}
         value={resourceContext}
         onChange={(e: { target: { value: string } }) => {
           const value = e.target.value
