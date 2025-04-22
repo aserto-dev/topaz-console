@@ -6446,9 +6446,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"knip@npm:^5.50.4":
-  version: 5.50.4
-  resolution: "knip@npm:5.50.4"
+"knip@npm:^5.50.5":
+  version: 5.50.5
+  resolution: "knip@npm:5.50.5"
   dependencies:
     "@nodelib/fs.walk": "npm:^1.2.3"
     easy-table: "npm:1.2.0"
@@ -6470,7 +6470,7 @@ __metadata:
   bin:
     knip: bin/knip.js
     knip-bun: bin/knip-bun.js
-  checksum: 10c0/ea16cef934f656e6aacf0eb99d91ba52c601f057ba70de1040b6dc716cb890ac821c63989c5588617576f7c35d0dccdc343e6b1924ee5a1e8822f46c514c02b4
+  checksum: 10c0/17322b42a5b9aa5b79de9d807cf90ee0937e3e24f53289f58829c3d73700b66f4fb5b336d4579325eb8ff7f0cb82292bcb2af5791437f34ba285dd01a4efc8b2
   languageName: node
   linkType: hard
 
@@ -9191,7 +9191,7 @@ __metadata:
     eslint-plugin-react-refresh: "npm:^0.4.19"
     globals: "npm:^15.15.0"
     jsdom: "npm:^26.1.0"
-    knip: "npm:^5.50.4"
+    knip: "npm:^5.50.5"
     monaco-editor: "npm:^0.52.2"
     monaco-yaml: "npm:^5.3.1"
     msw: "npm:^2.7.4"
