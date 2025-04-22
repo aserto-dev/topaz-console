@@ -3,7 +3,7 @@ import { useStorage } from "../../services/StorageProvider/hooks"
 import { useBaseClient } from "./base"
 
 
-export const useInternalConfigClient = () => {
+export const useConfigClient = () => {
   const envConfig = useClientConfig()
   const [ apiKey ] = useStorage<string | undefined>('apiKey', undefined)
 

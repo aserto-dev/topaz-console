@@ -2,15 +2,15 @@ import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
 import { RpcStatus } from "../../types/directory"
 import { Configurations, QueryKeys } from "../../types/general"
-import { useInternalConfigClient } from "../clients/InternalConfigClient"
+import { useConfigClient } from "../clients/configClient"
 
-export const useInternalConfig = (
+export const useTopazConfig = (
   options?: Omit<
     UseQueryOptions<Configurations, RpcStatus, Configurations, QueryKeys[]>,
     'queryFn' | 'queryKey' | 'retry' | 'staleTime'
   >
 ) => {
-  const { get } = useInternalConfigClient()
+  const { get } = useConfigClient()
   return useQuery({
     queryFn: () => get<Configurations>({ path: 'config' }),
     queryKey: [QueryKeys.Config],
