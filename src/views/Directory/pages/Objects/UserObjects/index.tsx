@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { useParams } from 'react-router'
 
@@ -17,7 +17,6 @@ import { UndecoratedLink } from '../../../../../components/common/UndecoratedLin
 import { V3Object } from '../../../../../types/directory'
 import { parseAsUserProperties } from '../../../../../types/user'
 import ObjectsHeader from '../ObjectsHeader'
-import { useIsScrollable } from '../useIsScrollable'
 import {
   BoldSpan,
   Container,
@@ -78,14 +77,6 @@ const UserObjects: React.FC = () => {
       },
     },
   )
-  const fetchData = useIsScrollable({
-    fetchNextData: fetchNextUsersData,
-    hasMoreData: hasMoreUsers || false,
-    isFetching: isFetchingUsers,
-  })
-  useCallback(() => {
-    fetchData()
-  }, [fetchData])
 
   return (
     <Container>

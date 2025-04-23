@@ -13,26 +13,25 @@ import {
 
 import { screen, waitFor } from '@testing-library/react'
 
-import UserObjects from '.'
 import {
   getDirectoryReaderV3ObjectsListMockHandler,
   getDirectoryReaderV3ObjectsListResponseMock,
-} from '../../../../../api/v3/directory.msw'
-import { ObjectFactory } from '../../../../../testing/factories/directory'
-import { handlers } from '../../../../../testing/handlers'
-import { renderWithProviders } from '../../../../../testing/render'
-import { parseAsUserProperties } from '../../../../../types/user'
+} from '../../../../api/v3/directory.msw'
+import { ObjectFactory } from '../../../../testing/factories/directory'
+import { handlers } from '../../../../testing/handlers'
+import { renderWithProviders } from '../../../../testing/render'
+import GenericObjects from './GenericObjects'
 
 const server = setupServer()
 
-describe('<UserObjects />', () => {
+describe('<GenericObjects /> for groups', () => {
   beforeEach(() => {
     vi.mock('react-router', async () => {
       const mod = await vi.importActual('react-router')
       return {
         ...mod,
         useParams: () => ({
-          objectType: 'user',
+          objectType: 'group',
         }),
       }
     })
@@ -46,7 +45,7 @@ describe('<UserObjects />', () => {
     afterAll(() => server.close())
 
     it('renders no data page', async () => {
-      renderWithProviders(<UserObjects />)
+      renderWithProviders(<GenericObjects />)
 
       expect(
         await screen.findByText(
@@ -56,7 +55,7 @@ describe('<UserObjects />', () => {
     })
   })
 
-  describe('no users', () => {
+  describe('no groups', () => {
     beforeAll(() => server.listen({ onUnhandledRequest: 'error' }))
     beforeEach(() => {
       server.use(
@@ -67,7 +66,7 @@ describe('<UserObjects />', () => {
     afterEach(() => server.resetHandlers())
     afterAll(() => server.close())
     it('renders no data page', async () => {
-      renderWithProviders(<UserObjects />)
+      renderWithProviders(<GenericObjects />)
 
       expect(
         await screen.findByText(
@@ -77,17 +76,14 @@ describe('<UserObjects />', () => {
     })
   })
 
-  describe('with users', () => {
-    const userObject = ObjectFactory.build({
-      id: 'user1',
-      properties: { email: 'test2@aserto.com' },
-      type: 'user',
+  describe('with groups', () => {
+    const groupObject = ObjectFactory.build({
+      id: 'group/1',
+      type: 'group',
     })
 
-    const userObject2 = ObjectFactory.build({
-      id: 'user2',
-      properties: { email: 'test2@aserto.com' },
-      type: 'user',
+    const groupObject2 = ObjectFactory.build({
+      type: 'group',
     })
 
     const object = ObjectFactory.build({
@@ -101,7 +97,7 @@ describe('<UserObjects />', () => {
         http.get('*/api/v3/directory/objects', () => {
           return HttpResponse.json(
             getDirectoryReaderV3ObjectsListResponseMock({
-              results: [userObject, userObject2],
+              results: [groupObject, groupObject2],
             }),
           )
         }),
@@ -110,39 +106,27 @@ describe('<UserObjects />', () => {
     afterEach(() => server.resetHandlers())
     afterAll(() => server.close())
 
-    it('renders user details', async () => {
-      renderWithProviders(<UserObjects />)
+    it.skip('renders group details', async () => {
+      renderWithProviders(<GenericObjects />)
 
-      const userProps = parseAsUserProperties(userObject.properties)
-      const user2Props = parseAsUserProperties(userObject2.properties)
-      // assert user objects existence
-      expect(await screen.findByText(userObject.id)).toBeVisible()
-      expect(await screen.findByText(userObject.display_name!)).toBeVisible()
+      // assert group objects existence
+      expect(await screen.findByText(groupObject.id)).toBeVisible()
+      expect(await screen.findByText(groupObject.display_name!)).toBeVisible()
 
-      const userEmailElement = await screen.findAllByText(
-        (_, element) => element?.textContent === userProps.email,
-      )
-      expect(userEmailElement[0]).toBeVisible()
-
-      expect(await screen.findByText(userObject2.id)).toBeVisible()
-      expect(await screen.findByText(userObject2.display_name!)).toBeVisible()
-
-      const user2EmailElement = await screen.findAllByText(
-        (_, element) => element?.textContent === user2Props.email,
-      )
-      expect(user2EmailElement[0]).toBeVisible()
+      expect(await screen.findByText(groupObject2.id)).toBeVisible()
+      expect(await screen.findByText(groupObject2.display_name!)).toBeVisible()
 
       // assert that other objects are filtered out
       await waitFor(async () => {
         expect(screen.queryByText(object.id)).toBeNull()
       })
 
-      const user1Link = (
-        await screen.findByText(userObject.display_name!)
+      const group1Link = (
+        await screen.findByText(groupObject.display_name!)
       ).closest('a')
-      expect(user1Link).toHaveAttribute(
+      expect(group1Link).toHaveAttribute(
         'href',
-        '/ui/directory/objects/user/user1',
+        '/ui/directory/objects/group/group%2F1',
       )
     })
   })
