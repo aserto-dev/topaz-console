@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import userAvatar from '../../assets/generic-user-avatar.svg'
+import userAvatar from '../assets/generic-user-avatar.svg'
 import { V3ObjectProperties } from './directory'
 
 const UserPropertiesSchema = z.object({
@@ -11,14 +11,6 @@ const UserPropertiesSchema = z.object({
     .default(userAvatar)
     .transform((v) => (v === '' ? userAvatar : v)),
 })
-
-export type Ds0UserObject = {
-  display_name?: string;
-  email?: string;
-  id?: string;
-} & {
-  properties: UserProperties
-}
 
 type UserProperties = z.infer<typeof UserPropertiesSchema>
 

@@ -14,7 +14,8 @@ import userAvatar from '../../../../../assets/generic-user-avatar.svg'
 import NoUsersImage from '../../../../../assets/users.svg'
 import EmptyTablePlaceholder from '../../../../../components/common/EmptyTablePlaceholder'
 import { UndecoratedLink } from '../../../../../components/common/UndecoratedLink'
-import { V3Object, V3ObjectProperties } from '../../../../../types/directory'
+import { V3Object } from '../../../../../types/directory'
+import { parseAsUserProperties } from '../../../../../types/user'
 import ObjectsHeader from '../ObjectsHeader'
 import { useIsScrollable } from '../useIsScrollable'
 import {
@@ -121,10 +122,7 @@ const UserObjects: React.FC = () => {
             next={fetchNextUsersData}
           >
             {users.map((u) => {
-              const userProps = u.properties as V3ObjectProperties & {
-                email: string
-                picture: string
-              }
+              const userProps = parseAsUserProperties(u.properties)
 
               return (
                 <UndecoratedLink
