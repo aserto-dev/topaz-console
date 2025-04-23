@@ -1,4 +1,5 @@
 import React, { PropsWithChildren } from 'react'
+import { MemoryRouter } from 'react-router'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render, RenderOptions } from '@testing-library/react'
@@ -29,9 +30,13 @@ function getContextWrapper(
   return function Wrapper({ children }: PropsWithChildren) {
     return (
       <QueryClientProvider client={queryClient}>
-        <ConfigProvider>
-          <AuthProvider>{children}</AuthProvider>
-        </ConfigProvider>
+        <MemoryRouter
+          initialEntries={config.memoryRouterConfig?.initialEntries}
+        >
+          <ConfigProvider>
+            <AuthProvider>{children}</AuthProvider>
+          </ConfigProvider>
+        </MemoryRouter>
       </QueryClientProvider>
     )
   }

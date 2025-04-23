@@ -89,9 +89,7 @@ const Objects: React.FC = () => {
 
   const columns: ColumnDef<V3Object>[] = [
     {
-      cell: ({ row }) => {
-        return <BreakDiv>{row.original.id}</BreakDiv>
-      },
+      accessorKey: 'id',
       header: 'ID',
       meta: {
         size: '50%',

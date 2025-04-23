@@ -3,20 +3,15 @@ import React, { useCallback } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 
 import pen from '../../../../assets/edit_pen.svg'
-import EvaluateDisplayState from '../../../../components/common/EvaluateDisplayState'
 import PageHeader from '../../../../components/common/PageHeader'
 import PageHeaderContent from '../../../../components/common/PageHeaderContent'
-import {
-  useDirectoryDisplayState,
-  useDirectoryModelContext,
-} from '../../../../services/DirectoryContextProvider/hooks'
+import { useDirectoryModelContext } from '../../../../services/DirectoryContextProvider/hooks'
 import { EditButton, EditImage, Header } from './styles'
 
 const HeaderComponent: React.FC = () => {
   const { setVisible, visible } = useDirectoryModelContext()
   const queryClient = useQueryClient()
   const pathname = window.location.pathname
-  const displayState = useDirectoryDisplayState()
 
   const refresh = useCallback(() => {
     queryClient.refetchQueries({ type: 'active' })
@@ -32,12 +27,10 @@ const HeaderComponent: React.FC = () => {
       >
         <PageHeaderContent>
           {pathname === '/ui/directory/model' && (
-            <EvaluateDisplayState displayState={displayState.canAddObject}>
-              <EditButton hidden={visible} onClick={() => setVisible(true)}>
-                <EditImage alt="plus" src={pen}></EditImage>&nbsp;&nbsp;Edit
-                manifest
-              </EditButton>
-            </EvaluateDisplayState>
+            <EditButton hidden={visible} onClick={() => setVisible(true)}>
+              <EditImage alt="plus" src={pen}></EditImage>&nbsp;&nbsp;Edit
+              manifest
+            </EditButton>
           )}
         </PageHeaderContent>
       </PageHeader>

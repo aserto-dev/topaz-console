@@ -11,77 +11,74 @@ import { Row } from '../../../../components/common/Row'
 import SelectDirectory, {
   SelectOption,
 } from '../../../../components/common/SelectDirectory'
-import { useDirectoryDisplayState } from '../../../../services/DirectoryContextProvider/hooks'
 import { LeftContainer, SelectContainerDirectory } from './styles'
 
 export const DirectorySidebar: React.FC = () => {
   const navigate = useNavigate()
   const { data } = useDirectoryV3ObjectTypesList()
-  const displayState = useDirectoryDisplayState()
   const objectTypes = useMemo(() => {
     return data?.results || []
   }, [data?.results])
-  const verticalTabOptions: VerticalTabOptions[] = [
-    {
-      section: {
-        label: 'Model',
-        redirects: true,
-        value: '/ui/directory/model',
-      },
-    },
-    {
-      section: {
-        label: 'Relations',
-        redirects: true,
-        value: '/ui/directory/relations',
-      },
-    },
-  ]
 
-  if (objectTypes.length > 0) {
-    verticalTabOptions.push({
-      section: {
-        label: 'Objects',
-        redirects: true,
-        value: '/ui/directory/objects',
+  const verticalTabOptions: VerticalTabOptions[] = useMemo(() => {
+    const options: VerticalTabOptions[] = [
+      {
+        section: {
+          label: 'Model',
+          redirects: true,
+          value: '/ui/directory/model',
+        },
       },
-      subOptions: [
-        ...objectTypes.map((o) => {
-          return {
-            label: o.displayName || o.name,
-            redirects: true as const,
-            value: `/ui/directory/objects/${encodeURIComponent(o.name)}`,
-          }
-        }),
-      ],
-    })
-  }
-
-  verticalTabOptions.push({
-    section: {
-      label: 'Evaluator',
-      redirects: true,
-      value: '/ui/directory/evaluator',
-    },
-  })
-
-  verticalTabOptions.push({
-    section: {
-      label: 'API Browser',
-      redirects: true,
-      value: '/ui/directory/docs',
-    },
-  })
-
-  if (displayState.canDeleteDirectory.enabled) {
-    verticalTabOptions.push({
-      section: {
-        label: 'Danger Zone',
-        redirects: true,
-        value: '/ui/directory/danger',
+      {
+        section: {
+          label: 'Relations',
+          redirects: true,
+          value: '/ui/directory/relations',
+        },
       },
-    })
-  }
+    ]
+
+    if (objectTypes.length > 0) {
+      options.push({
+        section: {
+          label: 'Objects',
+          redirects: true,
+          value: '/ui/directory/objects',
+        },
+        subOptions: objectTypes.map((o) => ({
+          label: o.displayName || o.name,
+          redirects: true as const,
+          value: `/ui/directory/objects/${encodeURIComponent(o.name)}`,
+        })),
+      })
+    }
+
+    options.push(
+      {
+        section: {
+          label: 'Evaluator',
+          redirects: true,
+          value: '/ui/directory/evaluator',
+        },
+      },
+      {
+        section: {
+          label: 'API Browser',
+          redirects: true,
+          value: '/ui/directory/docs',
+        },
+      },
+      {
+        section: {
+          label: 'Danger Zone',
+          redirects: true,
+          value: '/ui/directory/danger',
+        },
+      },
+    )
+
+    return options
+  }, [objectTypes])
 
   const selectOptions = verticalTabOptions.map((o) => {
     return {

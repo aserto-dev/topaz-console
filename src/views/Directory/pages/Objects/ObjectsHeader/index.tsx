@@ -4,8 +4,6 @@ import { useNavigate, useParams } from 'react-router'
 import { useQueryClient } from '@tanstack/react-query'
 
 import plus from '../../../../../assets/plus.svg'
-import EvaluateDisplayState from '../../../../../components/common/EvaluateDisplayState'
-import { useDirectoryDisplayState } from '../../../../../services/DirectoryContextProvider/hooks'
 import { AddButton } from '../../../styles'
 import AddObjectModal from '../AddObjectModal'
 import { Header, SubHeader, TitleContainer } from './styles'
@@ -16,7 +14,6 @@ const ObjectsHeader: React.FC<React.ComponentProps<'div'>> = ({
 }) => {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
-  const displayState = useDirectoryDisplayState()
 
   const { objectType: objectTypeName } = useParams()
   const safeObjectType = objectTypeName || ''
@@ -42,15 +39,10 @@ const ObjectsHeader: React.FC<React.ComponentProps<'div'>> = ({
       />
       <TitleContainer>
         <SubHeader>
-          <EvaluateDisplayState displayState={displayState.canEditManifest}>
-            <AddButton
-              variant="secondary"
-              onClick={() => setShowAddModal(true)}
-            >
-              <img alt="plus" src={plus} />
-              Add
-            </AddButton>
-          </EvaluateDisplayState>
+          <AddButton variant="secondary" onClick={() => setShowAddModal(true)}>
+            <img alt="plus" src={plus} />
+            Add
+          </AddButton>
           {children}
         </SubHeader>
       </TitleContainer>

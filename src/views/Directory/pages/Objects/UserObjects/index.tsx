@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { useParams } from 'react-router'
 
@@ -14,9 +14,9 @@ import userAvatar from '../../../../../assets/generic-user-avatar.svg'
 import NoUsersImage from '../../../../../assets/users.svg'
 import EmptyTablePlaceholder from '../../../../../components/common/EmptyTablePlaceholder'
 import { UndecoratedLink } from '../../../../../components/common/UndecoratedLink'
-import { V3Object, V3ObjectProperties } from '../../../../../types/directory'
+import { V3Object } from '../../../../../types/directory'
+import { parseAsUserProperties } from '../../../../../types/user'
 import ObjectsHeader from '../ObjectsHeader'
-import { useIsScrollable } from '../useIsScrollable'
 import {
   BoldSpan,
   Container,
@@ -77,14 +77,6 @@ const UserObjects: React.FC = () => {
       },
     },
   )
-  const fetchData = useIsScrollable({
-    fetchNextData: fetchNextUsersData,
-    hasMoreData: hasMoreUsers || false,
-    isFetching: isFetchingUsers,
-  })
-  useCallback(() => {
-    fetchData()
-  }, [fetchData])
 
   return (
     <Container>
@@ -121,10 +113,7 @@ const UserObjects: React.FC = () => {
             next={fetchNextUsersData}
           >
             {users.map((u) => {
-              const userProps = u.properties as V3ObjectProperties & {
-                email: string
-                picture: string
-              }
+              const userProps = parseAsUserProperties(u.properties)
 
               return (
                 <UndecoratedLink

@@ -6,14 +6,12 @@ import { QueryKey } from '@tanstack/react-query'
 import { useDirectoryReaderV3ObjectGet } from '../../api/v3/directory'
 import { SelectOption } from '../../components/common/Select'
 import { V3CheckRequest } from '../../types/directory'
-import { DirectoryContext, DisplayStateMap } from './hooks'
+import { DirectoryContext } from './hooks'
 
 const DirectoryContextProvider = ({
   children,
-  displayState,
 }: {
   children: React.ReactNode
-  displayState: DisplayStateMap
 }) => {
   // model State
   const location: { state: V3CheckRequest } = useLocation()
@@ -135,7 +133,6 @@ const DirectoryContextProvider = ({
         subjectRelation,
         subjectType: dataSubjectType,
       },
-      displayState: displayState,
       evaluator: {
         objectInstance,
         objectType,
@@ -186,7 +183,6 @@ const DirectoryContextProvider = ({
       subjectId,
       relationsQueryKey,
       setRelationsQueryKey,
-      displayState,
     ],
   )
 

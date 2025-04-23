@@ -5334,6 +5334,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fishery@npm:^2.2.3":
+  version: 2.2.3
+  resolution: "fishery@npm:2.2.3"
+  dependencies:
+    lodash.mergewith: "npm:^4.6.2"
+  checksum: 10c0/ffa8aa5074d7bebf009932c202208a7423e7ba05706af885f9799a87d7e76c6b124d7efb1c3cd742e093756f1e35578889dbc77df44c378ab386b5e7d1707726
+  languageName: node
+  linkType: hard
+
 "flat-cache@npm:^4.0.0":
   version: 4.0.1
   resolution: "flat-cache@npm:4.0.1"
@@ -6579,6 +6588,13 @@ __metadata:
   version: 4.6.2
   resolution: "lodash.merge@npm:4.6.2"
   checksum: 10c0/402fa16a1edd7538de5b5903a90228aa48eb5533986ba7fa26606a49db2572bf414ff73a2c9f5d5fd36b31c46a5d5c7e1527749c07cbcf965ccff5fbdf32c506
+  languageName: node
+  linkType: hard
+
+"lodash.mergewith@npm:^4.6.2":
+  version: 4.6.2
+  resolution: "lodash.mergewith@npm:4.6.2"
+  checksum: 10c0/4adbed65ff96fd65b0b3861f6899f98304f90fd71e7f1eb36c1270e05d500ee7f5ec44c02ef979b5ddbf75c0a0b9b99c35f0ad58f4011934c4d4e99e5200b3b5
   languageName: node
   linkType: hard
 
@@ -9189,6 +9205,7 @@ __metadata:
     eslint-plugin-react: "npm:^7.37.5"
     eslint-plugin-react-hooks: "npm:^5.1.0"
     eslint-plugin-react-refresh: "npm:^0.4.19"
+    fishery: "npm:^2.2.3"
     globals: "npm:^15.15.0"
     jsdom: "npm:^26.1.0"
     knip: "npm:^5.50.5"

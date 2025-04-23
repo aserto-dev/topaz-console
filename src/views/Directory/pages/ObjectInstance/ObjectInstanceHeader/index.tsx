@@ -16,8 +16,6 @@ import BinImg from '../../../../../assets/bin.svg'
 import EditImg from '../../../../../assets/edit_pen.svg'
 import line from '../../../../../assets/line.svg'
 import Breadcrumb from '../../../../../components/common/Breadcrumb'
-import EvaluateDisplayState from '../../../../../components/common/EvaluateDisplayState'
-import { useDirectoryDisplayState } from '../../../../../services/DirectoryContextProvider/hooks'
 import { useShowError } from '../../../../../services/ErrorModalProvider'
 import { V3Object } from '../../../../../types/directory'
 import {
@@ -57,8 +55,6 @@ const ObjectInstanceHeader: React.FC<{ object?: V3Object }> = ({ object }) => {
     safeObjectType,
     safeObjectId,
   )
-
-  const displayState = useDirectoryDisplayState()
 
   const { mutateAsync: deleteObjectMutation } =
     useDirectoryWriterV3ObjectDelete({
@@ -134,19 +130,17 @@ const ObjectInstanceHeader: React.FC<{ object?: V3Object }> = ({ object }) => {
         ]}
         variant="small"
       />
-      <EvaluateDisplayState displayState={displayState.canEditObject}>
-        <HeaderButtonContainer>
-          <ImageButton onClick={() => setShowEditModal(true)}>
-            <img alt="" src={EditImg} />
-            Edit
-          </ImageButton>
-          <img alt="separator" height={27} src={line} />
-          <ImageButton onClick={() => setShowDeleteModal(true)}>
-            <img alt="delete" src={BinImg} />
-            Delete
-          </ImageButton>
-        </HeaderButtonContainer>
-      </EvaluateDisplayState>
+      <HeaderButtonContainer>
+        <ImageButton onClick={() => setShowEditModal(true)}>
+          <img alt="" src={EditImg} />
+          Edit
+        </ImageButton>
+        <img alt="separator" height={27} src={line} />
+        <ImageButton onClick={() => setShowDeleteModal(true)}>
+          <img alt="delete" src={BinImg} />
+          Delete
+        </ImageButton>
+      </HeaderButtonContainer>
     </ObjectHeaderContainer>
   )
 }

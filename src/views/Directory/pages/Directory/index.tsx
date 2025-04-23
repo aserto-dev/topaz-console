@@ -9,19 +9,7 @@ import HeaderComponent from './Header'
 
 const Frame: React.FC = () => {
   return (
-    <DirectoryContextProvider
-      displayState={{
-        canAddAssertion: { enabled: true, visible: true },
-        canAddObject: { enabled: true, visible: true },
-        canAddRelation: { enabled: true, visible: true },
-        canDeleteDirectory: { enabled: true, visible: true },
-        canEditAssertion: { enabled: true, visible: true },
-        canEditManifest: { enabled: true, visible: true },
-        canEditObject: { enabled: true, visible: true },
-        canRemoveAssertion: { enabled: true, visible: true },
-        canRemoveRelation: { enabled: true, visible: true },
-      }}
-    >
+    <DirectoryContextProvider>
       <PaddedContent>
         <Grid>
           <HeaderComponent />

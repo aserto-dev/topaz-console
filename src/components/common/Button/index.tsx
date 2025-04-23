@@ -10,13 +10,7 @@ import {
 } from './styles'
 
 interface ButtonProps extends BootstrapButtonProps {
-  displayState?: DisplayState
   variant?: Variant
-}
-
-type DisplayState = {
-  enabled?: boolean
-  visible?: boolean
 }
 
 type Variant =
@@ -38,19 +32,10 @@ const getButtonFromVariant = (variant: Variant) => {
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ displayState, variant = 'primary', ...props }, ref) => {
+  ({ variant = 'primary', ...props }, ref) => {
     const ButtonComponent = getButtonFromVariant(variant)
-    if (!displayState) {
-      return <ButtonComponent ref={ref} {...props} />
-    }
-    if (displayState.visible) {
-      if (displayState.enabled) {
-        return <ButtonComponent ref={ref} {...props} />
-      }
-      return <ButtonComponent ref={ref} disabled {...props} />
-    }
-
-    return null
+    return <ButtonComponent ref={ref} {...props} />
   },
 )
+
 export default Button

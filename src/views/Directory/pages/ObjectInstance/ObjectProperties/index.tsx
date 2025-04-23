@@ -9,8 +9,6 @@ import {
 } from '../../../../../api/v3/directory'
 import Button from '../../../../../components/common/Button'
 import CodeEditor from '../../../../../components/common/CodeEditor'
-import EvaluateDisplayState from '../../../../../components/common/EvaluateDisplayState'
-import { useDirectoryDisplayState } from '../../../../../services/DirectoryContextProvider/hooks'
 import { useShowError } from '../../../../../services/ErrorModalProvider'
 import { useShowSuccessMessage } from '../../../../../services/SuccessBannerProvider/hooks'
 import { V3Object } from '../../../../../types/directory'
@@ -45,8 +43,6 @@ const ObjectProperties: React.FC<{ object?: V3Object }> = ({ object }) => {
         },
       },
     })
-
-  const displayState = useDirectoryDisplayState()
 
   const showSuccessMessage = useShowSuccessMessage()
   const showError = useShowError()
@@ -114,29 +110,27 @@ const ObjectProperties: React.FC<{ object?: V3Object }> = ({ object }) => {
       {object ? (
         <>
           <ControlsContainer>
-            <EvaluateDisplayState displayState={displayState.canEditObject}>
-              <ButtonsContainer>
-                <Button
-                  disabled={!modified || updatingObject}
-                  variant="secondary"
-                  onClick={resetCode}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  disabled={!modified || updatingObject}
-                  variant="primary"
-                  onClick={saveCode}
-                >
-                  Save
-                </Button>
-              </ButtonsContainer>
-            </EvaluateDisplayState>
+            <ButtonsContainer>
+              <Button
+                disabled={!modified || updatingObject}
+                variant="secondary"
+                onClick={resetCode}
+              >
+                Cancel
+              </Button>
+              <Button
+                disabled={!modified || updatingObject}
+                variant="primary"
+                onClick={saveCode}
+              >
+                Save
+              </Button>
+            </ButtonsContainer>
             {showErrorMessage ? <ErrorMessage>{error}</ErrorMessage> : <div />}
           </ControlsContainer>
           <CodeEditor
             hasError={!!error}
-            readOnly={updatingObject || !displayState.canEditObject.enabled}
+            readOnly={updatingObject}
             value={code}
             onValueChange={(c) => {
               setCode(c)
