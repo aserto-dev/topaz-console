@@ -119,7 +119,7 @@ describe('Modules', () => {
     renderWithProviders(<Modules />)
 
     await waitFor(() => {
-      expect(screen.queryByText('Module Name')).not.toBeInTheDocument()
+      expect(screen.queryByText('Module Name')).toBeNull()
     })
   })
 })
