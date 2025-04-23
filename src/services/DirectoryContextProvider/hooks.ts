@@ -2,20 +2,9 @@ import React, { useContext } from "react";
 
 import { QueryKey } from "@tanstack/react-query";
 
-import { DisplayState } from "../../components/common/EvaluateDisplayState";
 import { SelectOption } from "../../components/common/Select";
 
-export type DisplayStateMap = Readonly<{
-  canAddAssertion: DisplayState
-  canAddObject: DisplayState
-  canAddRelation: DisplayState
-  canDeleteDirectory: DisplayState
-  canEditAssertion: DisplayState
-  canEditManifest: DisplayState
-  canEditObject: DisplayState
-  canRemoveAssertion: DisplayState
-  canRemoveRelation: DisplayState
-}>
+
 
 type DataProps = {
   objectId: string | undefined
@@ -38,7 +27,6 @@ type DataProps = {
 
 type DirectoryContextProps = {
   data: DataProps
-  displayState: DisplayStateMap
   evaluator: EvaluatorProps
   model: ModelProps
 }
@@ -65,17 +53,12 @@ type ModelProps = {
   visible: boolean
 }
 
-const DEFAULT_STATE = {
-  enabled: false,
-  visible: true,
-} as const
 
 const useDirectoryContext = () => useContext(DirectoryContext)
 export const useDirectoryModelContext = () => useDirectoryContext().model
 export const useDirectoryEvaluatorContext = () =>
   useDirectoryContext().evaluator
 export const useDirectoryDataContext = () => useDirectoryContext().data
-export const useDirectoryDisplayState = () => useDirectoryContext().displayState
 
 
 export const DirectoryContext = React.createContext<DirectoryContextProps>({
@@ -95,17 +78,7 @@ export const DirectoryContext = React.createContext<DirectoryContextProps>({
     subjectRelation: undefined,
     subjectType: undefined,
   },
-  displayState: {
-    canAddAssertion: DEFAULT_STATE,
-    canAddObject: DEFAULT_STATE,
-    canAddRelation: DEFAULT_STATE,
-    canDeleteDirectory: DEFAULT_STATE,
-    canEditAssertion: DEFAULT_STATE,
-    canEditManifest: DEFAULT_STATE,
-    canEditObject: DEFAULT_STATE,
-    canRemoveAssertion: DEFAULT_STATE,
-    canRemoveRelation: DEFAULT_STATE,
-  },
+
   evaluator: {
     objectInstance: { label: '', value: '' },
     objectType: '',

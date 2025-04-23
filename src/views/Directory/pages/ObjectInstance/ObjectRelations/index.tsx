@@ -20,15 +20,11 @@ import {
 import BinImg from '../../../../../assets/bin.svg'
 import plus from '../../../../../assets/plus.svg'
 import DataTable from '../../../../../components/common/DataTable'
-import EvaluateDisplayState from '../../../../../components/common/EvaluateDisplayState'
 import {
   Link,
   UndecoratedLink,
 } from '../../../../../components/common/UndecoratedLink'
-import {
-  useDirectoryDataContext,
-  useDirectoryDisplayState,
-} from '../../../../../services/DirectoryContextProvider/hooks'
+import { useDirectoryDataContext } from '../../../../../services/DirectoryContextProvider/hooks'
 import { useShowError } from '../../../../../services/ErrorModalProvider'
 import {
   V3GetRelationsResponseObjects,
@@ -387,8 +383,6 @@ const ObjectRelations: React.FC<{
     ],
   )
 
-  const displayState = useDirectoryDisplayState()
-
   const [rowSelection, setRowSelection] = useState({})
 
   const table = useReactTable({
@@ -431,14 +425,12 @@ const ObjectRelations: React.FC<{
 
         <RelationsContainer>
           {!!relationType && (
-            <EvaluateDisplayState displayState={displayState.canAddRelation}>
-              <AddButton
-                variant="secondary"
-                onClick={() => setShowAddRelationModal(true)}
-              >
-                <img alt="plus" src={plus}></img>&nbsp;&nbsp;Add a relation
-              </AddButton>
-            </EvaluateDisplayState>
+            <AddButton
+              variant="secondary"
+              onClick={() => setShowAddRelationModal(true)}
+            >
+              <img alt="plus" src={plus}></img>&nbsp;&nbsp;Add a relation
+            </AddButton>
           )}
           <RelationCardsContainer>
             {relationInstancesData.length
@@ -472,20 +464,17 @@ const ObjectRelations: React.FC<{
                             </CardDetails>
                           )}
                         </div>
-                        <EvaluateDisplayState
-                          displayState={displayState.canRemoveRelation}
+
+                        <ImageButton
+                          className="left-auto"
+                          onClick={(e) => {
+                            e.preventDefault()
+                            r.removeRelation()
+                          }}
                         >
-                          <ImageButton
-                            className="left-auto"
-                            onClick={(e) => {
-                              e.preventDefault()
-                              r.removeRelation()
-                            }}
-                          >
-                            {' '}
-                            <img alt="delete" src={BinImg} />
-                          </ImageButton>
-                        </EvaluateDisplayState>
+                          {' '}
+                          <img alt="delete" src={BinImg} />
+                        </ImageButton>
                       </RelationCard>
                     </UndecoratedLink>
                   )
