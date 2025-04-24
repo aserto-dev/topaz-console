@@ -1,4 +1,4 @@
-import * as monaco from 'monaco-editor'
+import { editor } from 'monaco-editor/esm/vs/editor/editor.api'
 import React from 'react'
 
 import Editor, { Monaco } from '@monaco-editor/react'
@@ -6,8 +6,6 @@ import Editor, { Monaco } from '@monaco-editor/react'
 import { theme } from '../../../theme'
 import YamlWorker from './yaml.worker.js?worker'
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 self.MonacoEnvironment = {
   getWorker: function (workerId, label) {
     const getWorkerModule = (moduleUrl: string, label: string) => {
@@ -88,13 +86,10 @@ type MonacoEditorProps = {
   beforeMount?: (monaco: Monaco) => void
   defaultLanguage: string
   defaultValue?: string
-  layoutOptions?: monaco.editor.IStandaloneEditorConstructionOptions
+  layoutOptions?: editor.IStandaloneEditorConstructionOptions
   modelPath?: string
-  onMount?: (
-    editor: monaco.editor.IStandaloneCodeEditor,
-    monaco: Monaco,
-  ) => void
-  themeRules?: monaco.editor.ITokenThemeRule[]
+  onMount?: (editor: editor.IStandaloneCodeEditor, monaco: Monaco) => void
+  themeRules?: editor.ITokenThemeRule[]
 }
 
 const MonacoEditor: React.FC<MonacoEditorProps> = ({

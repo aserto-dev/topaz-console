@@ -1,15 +1,16 @@
 import { Suspense } from 'react'
+import { lazy } from 'react'
 import { Navigate, Route, Routes } from 'react-router'
 
-import DirectoryApiDocs from './pages/ApiDocs'
-import DangerZone from './pages/DangerZone'
-import Frame from './pages/Directory'
-import Directory from './pages/Directory'
-import DirectoryEvaluator from './pages/Evaluator'
-import Model from './pages/Model'
-import ObjectInstance from './pages/ObjectInstance'
-import Objects from './pages/Objects'
-import Relations from './pages/Relations'
+const DirectoryApiDocs = lazy(() => import('./pages/ApiDocs'))
+const DangerZone = lazy(() => import('./pages/DangerZone'))
+const Frame = lazy(() => import('./pages/Directory'))
+const Directory = lazy(() => import('./pages/Directory'))
+const DirectoryEvaluator = lazy(() => import('./pages/Evaluator'))
+const Model = lazy(() => import('./pages/Model'))
+const ObjectInstance = lazy(() => import('./pages/ObjectInstance'))
+const Objects = lazy(() => import('./pages/Objects'))
+const Relations = lazy(() => import('./pages/Relations'))
 
 const DirectoryBrowser = () => {
   return (

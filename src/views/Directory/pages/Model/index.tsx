@@ -1,13 +1,13 @@
 import 'allotment/dist/style.css'
 import { Allotment } from 'allotment'
-import React from 'react'
+import React, { Suspense } from 'react'
 import styled from 'styled-components'
 
 import { useManifestData } from '../../../../api/directory/parsers/manifest'
 import Delayed from '../../../../components/common/Delayed'
 import { useDirectoryModelContext } from '../../../../services/DirectoryContextProvider/hooks'
-import ModelEditor from './Editor'
-import ModelGraph from './Graph'
+const ModelEditor = React.lazy(() => import('./Editor'))
+const ModelGraph = React.lazy(() => import('./Graph'))
 
 const Container = styled.div`
   width: calc(100vw - 100px);
@@ -32,13 +32,17 @@ const Model: React.FC = () => {
       <Allotment>
         <Allotment.Pane minSize={400}>
           <Delayed waitBeforeShow={50}>
-            <ModelGraph></ModelGraph>
+            <Suspense fallback={<></>}>
+              <ModelGraph></ModelGraph>
+            </Suspense>
           </Delayed>
         </Allotment.Pane>
         <Allotment.Pane minSize={400} preferredSize="40%" visible={visible}>
-          <Delayed waitBeforeShow={150}>
-            {visible ? <ModelEditor></ModelEditor> : null}
-          </Delayed>
+          {visible ? (
+            <Suspense fallback={<></>}>
+              <ModelEditor></ModelEditor>
+            </Suspense>
+          ) : null}
         </Allotment.Pane>
       </Allotment>
     </Container>
