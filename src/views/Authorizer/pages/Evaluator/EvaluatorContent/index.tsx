@@ -1,4 +1,4 @@
-import { editor } from 'monaco-editor'
+import { editor } from 'monaco-editor/esm/vs/editor/editor.api'
 import React, { Dispatch, useEffect, useMemo, useRef, useState } from 'react'
 
 import { Monaco } from '@monaco-editor/react'

@@ -1,14 +1,16 @@
 import './index.css'
 
 import { Suspense } from 'react'
+import React from 'react'
 import { Navigate, Route, Routes } from 'react-router'
 
 import { PolicyEvaluatorContextProvider } from '../../services/PolicyEvaluatorContextProvider'
-import Frame from './Authorizer'
-import Authorizer from './Authorizer'
-import AuthorizerApiDocs from './pages/ApiDocs'
-import Evaluator from './pages/Evaluator'
-import Modules from './pages/Modules'
+
+const Frame = React.lazy(() => import('./Authorizer'))
+const Authorizer = React.lazy(() => import('./Authorizer'))
+const AuthorizerApiDocs = React.lazy(() => import('./pages/ApiDocs'))
+const Evaluator = React.lazy(() => import('./pages/Evaluator'))
+const Modules = React.lazy(() => import('./pages/Modules'))
 
 const PolicyInstanceDetails = () => {
   return (

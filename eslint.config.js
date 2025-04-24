@@ -9,7 +9,7 @@ import perfectionist from "eslint-plugin-perfectionist"
 
 
 export default tseslint.config(
-  { ignores: ['dist'] },
+  { ignores: ['dist', 'coverage'] },
   {
     settings: {
       react: {

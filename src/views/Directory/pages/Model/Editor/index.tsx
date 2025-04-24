@@ -1,5 +1,4 @@
-import * as monaco from 'monaco-editor'
-import { editor } from 'monaco-editor'
+import { editor } from 'monaco-editor/esm/vs/editor/editor.api'
 import { configureMonacoYaml, SchemasSettings } from 'monaco-yaml'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import YAML from 'yaml'
@@ -169,7 +168,7 @@ const ModelEditor: React.FC = () => {
 
   useEffect(() => {
     editorRef.current?.setValue(manifest)
-    const markers = monaco.editor
+    const markers = editor
       .getModelMarkers({ owner: 'yaml' })
       .filter((m) => m.severity > 4)
     setHasError(markers.length !== 0)

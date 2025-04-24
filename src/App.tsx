@@ -1,13 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.css'
-import React, { Suspense } from 'react'
+import { lazy, Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router'
 
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 import { NavBar } from './components/NavBar'
 
-const Directory = React.lazy(() => import('./views/Directory'))
-const Authorizer = React.lazy(() => import('./views/Authorizer'))
+const Directory = lazy(() => import('./views/Directory'))
+const Authorizer = lazy(() => import('./views/Authorizer'))
 
 function App() {
   return (
