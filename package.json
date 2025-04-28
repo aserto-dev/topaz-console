@@ -65,7 +65,7 @@
     "eslint-plugin-perfectionist": "^4.11.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.1.0",
-    "eslint-plugin-react-refresh": "^0.4.19",
+    "eslint-plugin-react-refresh": "^0.4.20",
     "fishery": "^2.2.3",
     "globals": "^15.15.0",
     "jsdom": "^26.1.0",
