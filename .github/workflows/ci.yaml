@@ -7,7 +7,7 @@ on:
       - v*
 
 env:
-  NODE_VERSION: 20.x
+  NODE_VERSION: 22.x
 
 jobs:
   release:
@@ -25,7 +25,7 @@ jobs:
       -
         uses: actions/checkout@v4
       -
-        name: Use Node.js 20.x
+        name: Setup node
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION })
