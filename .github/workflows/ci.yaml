@@ -12,16 +12,9 @@ env:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      -
-        name: Read Configuration
-        uses: hashicorp/vault-action@v3
-        id: vault
-        with:
-          url: ${{ vars.VAULT_ADDR }}
-          token: ${{ secrets.VAULT_TOKEN }}
-          secrets: |
-            kv/data/github  "READ_WRITE_TOKEN"    | READ_WRITE_TOKEN;
       -
         uses: actions/checkout@v4
       -
@@ -30,7 +23,7 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION })
       -
-        name: Get yarn cache directory path
+        name: Get yarn cache directory
         id: yarn-cache-dir
         run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
       -
@@ -52,28 +45,17 @@ jobs:
           NODE_OPTIONS: --max-old-space-size=4096
         run: |
           PUBLIC_URL="/public" yarn build
-          tar -czf build.tar.gz dist
+          tar -czf dist-topaz-console-${{ github.ref_name }}.tar.gz dist
       -
         name: Create Release
         id: create_release
-        uses: actions/create-release@v1
+        uses: ncipollo/release-action@v1
         env:
-          GITHUB_TOKEN: ${{ steps.vault.outputs.READ_WRITE_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
+          artifacts: "dist-topaz-console-${{ github.ref_name }}.tar.gz"
           draft: false
           prerelease: false
-      -
-        name: Add build to release
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build.tar.gz
-          asset_name: dist-topaz-console-${{ github.ref_name }}.tar.gz
-          asset_content_type: application/gzip
-        env:
-          GITHUB_TOKEN: ${{ steps.vault.outputs.READ_WRITE_TOKEN }}
 
   # Uncomment after go-topaz-ui is updated to fetch releases from topaz-console
   # trigger:
