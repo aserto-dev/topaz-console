@@ -46,13 +46,13 @@ types:
 
 
 export const handlers = [
-  http.get('https://localhost:8080/api/v2/config', () => {
+  http.get('/api/v2/config', () => {
     return new HttpResponse(
       JSON.stringify({
         authenticationType: 'anonymous',
         configs: [
           {
-            address: 'https://localhost:8080/api/v2/config',
+            address: '/api/v2/config',
             authorizerApiKey: '',
             authorizerServiceUrl: 'https://localhost:8383',
             configType: 'auto',
