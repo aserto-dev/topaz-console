@@ -21,7 +21,7 @@ jobs:
         name: Setup node
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ env.NODE_VERSION })
+          node-version: ${{ env.NODE_VERSION }}
       -
         name: Get yarn cache directory
         id: yarn-cache-dir
