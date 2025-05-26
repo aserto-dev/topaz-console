@@ -5483,12 +5483,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fishery@npm:^2.2.3":
-  version: 2.2.3
-  resolution: "fishery@npm:2.2.3"
+"fishery@npm:^2.3.1":
+  version: 2.3.1
+  resolution: "fishery@npm:2.3.1"
   dependencies:
     lodash.mergewith: "npm:^4.6.2"
-  checksum: 10c0/ffa8aa5074d7bebf009932c202208a7423e7ba05706af885f9799a87d7e76c6b124d7efb1c3cd742e093756f1e35578889dbc77df44c378ab386b5e7d1707726
+  checksum: 10c0/13c2835876991db386a970ae6590e0434f98ecdb60015ab5ebb265b4b8c419e2b0272c48567862fd3a10a594efe2f38c960127e6d9b5f463963064259276609a
   languageName: node
   linkType: hard
 
@@ -9428,7 +9428,7 @@ __metadata:
     eslint-plugin-react: "npm:^7.37.5"
     eslint-plugin-react-hooks: "npm:^5.1.0"
     eslint-plugin-react-refresh: "npm:^0.4.20"
-    fishery: "npm:^2.2.3"
+    fishery: "npm:^2.3.1"
     globals: "npm:^16.1.0"
     jsdom: "npm:^26.1.0"
     knip: "npm:^5.50.5"
