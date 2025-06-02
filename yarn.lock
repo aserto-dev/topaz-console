@@ -3381,12 +3381,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^19.0.4":
-  version: 19.1.2
-  resolution: "@types/react-dom@npm:19.1.2"
+"@types/react-dom@npm:^19.1.5":
+  version: 19.1.5
+  resolution: "@types/react-dom@npm:19.1.5"
   peerDependencies:
     "@types/react": ^19.0.0
-  checksum: 10c0/100c341cacba9ec8ae1d47ee051072a3450e9573bf8eeb7262490e341cb246ea0f95a07a1f2077e61cf92648f812a0324c602fcd811bd87b7ce41db2811510cd
+  checksum: 10c0/2a29e77cf6bb6e9f57bcfa54509c216cad2e16e244f0bd56369966ec88c072b9c91f6011d14f9e18fbfe2b801b18b86f616de75e5c8aef0be73c1f74abb33b49
   languageName: node
   linkType: hard
 
@@ -9508,7 +9508,7 @@ __metadata:
     "@types/node": "npm:^22.15.19"
     "@types/prismjs": "npm:^1"
     "@types/react": "npm:^19.1.2"
-    "@types/react-dom": "npm:^19.0.4"
+    "@types/react-dom": "npm:^19.1.5"
     "@types/react-syntax-highlighter": "npm:^15"
     "@vitejs/plugin-react-swc": "npm:^3.9.0"
     "@vitest/coverage-v8": "npm:^3.1.2"
