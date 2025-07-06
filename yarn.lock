@@ -2705,22 +2705,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-devtools@npm:5.76.0":
-  version: 5.76.0
-  resolution: "@tanstack/query-devtools@npm:5.76.0"
-  checksum: 10c0/2bee4a39c083a0260bd15e98f02d39f078d363430b74da313260ff37deb4b416d874e3a58f4691698f848076532eaf104ff2843a016aec6186dd1c39c5dd3d6f
+"@tanstack/query-devtools@npm:5.81.2":
+  version: 5.81.2
+  resolution: "@tanstack/query-devtools@npm:5.81.2"
+  checksum: 10c0/f942cba7bd3ecb471063cd472eeebb2ec76005feeb7e0f357b191da5ab9f769aa767bc88d4da82b2b39c4fcbb16dfed38ce3c77b6eea4d4c30405368c1120207
   languageName: node
   linkType: hard
 
-"@tanstack/react-query-devtools@npm:^5.76.1":
-  version: 5.76.1
-  resolution: "@tanstack/react-query-devtools@npm:5.76.1"
+"@tanstack/react-query-devtools@npm:^5.81.5":
+  version: 5.81.5
+  resolution: "@tanstack/react-query-devtools@npm:5.81.5"
   dependencies:
-    "@tanstack/query-devtools": "npm:5.76.0"
+    "@tanstack/query-devtools": "npm:5.81.2"
   peerDependencies:
-    "@tanstack/react-query": ^5.76.1
+    "@tanstack/react-query": ^5.81.5
     react: ^18 || ^19
-  checksum: 10c0/f15e462493c96fce50de7852358c1d2865bbfee59de4eff6b124e06c3afabfda05df121229e22f4e25014163edddb3492901d1302485268847ed2eabe26f5f2a
+  checksum: 10c0/6e0c416cea1ae86620be1da882605871ba4c7304cb4789074e59371226492c737e6f051d2bd70f9f1fd5065d9b0bbf56db0987df1e0bf2b35f8c1c66b5620d0c
   languageName: node
   linkType: hard
 
@@ -9315,7 +9315,7 @@ __metadata:
     "@monaco-editor/react": "npm:^4.7.0"
     "@popperjs/core": "npm:^2.11.8"
     "@tanstack/react-query": "npm:^5.81.2"
-    "@tanstack/react-query-devtools": "npm:^5.76.1"
+    "@tanstack/react-query-devtools": "npm:^5.81.5"
     "@tanstack/react-table": "npm:^8.21.3"
     "@tanstack/react-virtual": "npm:^3.13.6"
     "@testing-library/dom": "npm:^10.4.0"
