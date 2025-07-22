@@ -8164,20 +8164,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router@npm:^7.5.2":
-  version: 7.5.2
-  resolution: "react-router@npm:7.5.2"
+"react-router@npm:^7.7.0":
+  version: 7.7.0
+  resolution: "react-router@npm:7.7.0"
   dependencies:
     cookie: "npm:^1.0.1"
     set-cookie-parser: "npm:^2.6.0"
-    turbo-stream: "npm:2.4.0"
   peerDependencies:
     react: ">=18"
     react-dom: ">=18"
   peerDependenciesMeta:
     react-dom:
       optional: true
-  checksum: 10c0/5972ecb783e0ac0512c500b84bd4ff475665ba49c67b69e13b79dc24c7ee0496d523858058bb43c70147367688e0cc0d6d6d0f51cabfdebfbc5556d559bff457
+  checksum: 10c0/04b02b473a743978ec7b5292484706b87c74d3e8d407dba886204586ba2d7a224a5413f0a7969fb28899b8804f0e6b0fde1c2a4f957901eb8a9a6541a25630f2
   languageName: node
   linkType: hard
 
@@ -9365,7 +9364,7 @@ __metadata:
     react-bootstrap: "npm:^2.10.9"
     react-dom: "npm:^19.0.0"
     react-infinite-scroll-component: "npm:^6.1.0"
-    react-router: "npm:^7.5.2"
+    react-router: "npm:^7.7.0"
     react-select: "npm:^5.10.1"
     react-simple-code-editor: "npm:^0.14.1"
     react-syntax-highlighter: "npm:^15.6.1"
@@ -9507,13 +9506,6 @@ __metadata:
   version: 0.0.6
   resolution: "tunnel@npm:0.0.6"
   checksum: 10c0/e27e7e896f2426c1c747325b5f54efebc1a004647d853fad892b46d64e37591ccd0b97439470795e5262b5c0748d22beb4489a04a0a448029636670bfd801b75
-  languageName: node
-  linkType: hard
-
-"turbo-stream@npm:2.4.0":
-  version: 2.4.0
-  resolution: "turbo-stream@npm:2.4.0"
-  checksum: 10c0/e68b2569f1f16e6e9633d090c6024b2ae9f0e97bfeacb572451ca3732e120ebbb546f3bc4afc717c46cb57b5aea6104e04ef497f9912eef6a7641e809518e98a
   languageName: node
   linkType: hard
 
