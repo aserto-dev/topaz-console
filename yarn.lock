@@ -9090,9 +9090,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"styled-components@npm:^6.1.17":
-  version: 6.1.17
-  resolution: "styled-components@npm:6.1.17"
+"styled-components@npm:^6.1.19":
+  version: 6.1.19
+  resolution: "styled-components@npm:6.1.19"
   dependencies:
     "@emotion/is-prop-valid": "npm:1.2.2"
     "@emotion/unitless": "npm:0.8.1"
@@ -9106,7 +9106,7 @@ __metadata:
   peerDependencies:
     react: ">= 16.8.0"
     react-dom: ">= 16.8.0"
-  checksum: 10c0/87f35173c5fc2291ddba7ed8224d19fe6872d056a577f55fe130248f5ea23e5c48c012e881fa1ad93df60b56a12c1c2d553f628e204f090189221734927e50b0
+  checksum: 10c0/8d20427a5debe54bfa3b55f79af2a3577551ed7f1d1cd34df986b73fd01ac519f9081b7737cc1f76e12fbc483fa50551e55be0bc984296e623cc6a2364697cd8
   languageName: node
   linkType: hard
 
@@ -9370,7 +9370,7 @@ __metadata:
     react-simple-code-editor: "npm:^0.14.1"
     react-syntax-highlighter: "npm:^15.6.1"
     reactflow: "npm:^11.11.4"
-    styled-components: "npm:^6.1.17"
+    styled-components: "npm:^6.1.19"
     typescript: "npm:~5.8.3"
     typescript-eslint: "npm:^8.35.1"
     vite: "npm:^6.2.7"
