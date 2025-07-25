@@ -9377,7 +9377,7 @@ __metadata:
     vite-bundle-analyzer: "npm:^0.19.0"
     vitest: "npm:^3.1.2"
     yaml: "npm:^2.7.1"
-    zod: "npm:^3.25.67"
+    zod: "npm:^4.0.10"
   languageName: unknown
   linkType: soft
 
@@ -10387,10 +10387,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:^3.22.4, zod@npm:^3.25.67":
+"zod@npm:^3.22.4":
   version: 3.25.67
   resolution: "zod@npm:3.25.67"
   checksum: 10c0/80a0cab3033272c4ab9312198081f0c4ea88e9673c059aa36dc32024906363729db54bdb78f3dc9d5529bd1601f74974d5a56c0a23e40c6f04a9270c9ff22336
+  languageName: node
+  linkType: hard
+
+"zod@npm:^4.0.10":
+  version: 4.0.10
+  resolution: "zod@npm:4.0.10"
+  checksum: 10c0/8d1145e767c22b571a7967c198632f69ef15ce571b5021cdba84cf31d9af2ca40b033ea2fcbe5797cfd2da9c67b3a6ebe435938eabfbb1d1f3ab2f17f00f443b
   languageName: node
   linkType: hard
 
