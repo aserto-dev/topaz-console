@@ -6,7 +6,7 @@ export const ApiErrorResponseSchema = z.object({
     z.object({
       '@type': z.string(),
       domain: z.string(),
-      metadata: z.record(z.unknown()),
+      metadata: z.record(z.string(), z.unknown()),
       reason: z.string(),
     })
   ),
