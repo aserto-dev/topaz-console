@@ -9661,7 +9661,7 @@ __metadata:
     typescript: "npm:~5.8.3"
     typescript-eslint: "npm:^8.35.1"
     vite: "npm:^7.0.6"
-    vite-bundle-analyzer: "npm:^0.19.0"
+    vite-bundle-analyzer: "npm:^1.1.0"
     vitest: "npm:^3.1.2"
     yaml: "npm:^2.7.1"
     zod: "npm:^4.0.14"
@@ -10136,12 +10136,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-bundle-analyzer@npm:^0.19.0":
-  version: 0.19.0
-  resolution: "vite-bundle-analyzer@npm:0.19.0"
+"vite-bundle-analyzer@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "vite-bundle-analyzer@npm:1.1.0"
   bin:
     analyze: dist/bin.js
-  checksum: 10c0/c3719dd175d062f92c3b223aaaf6978c0817b226059fbc7c9f008109d9beea0e77f763cc4b9343357898ca5896d5268bf17b750f0ff6978ffceb1ed2a9f9d34a
+  checksum: 10c0/cc101f5e1560cf3555f0210d8e290c198eaaf915892a32227bf71759cb2366e9810c12027fc67b4e5184c60f3020f3ea5b1ef6cac26991bac165dcc5ff7b1d39
   languageName: node
   linkType: hard
 
