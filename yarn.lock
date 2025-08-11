@@ -3931,9 +3931,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"allotment@npm:^1.20.3":
-  version: 1.20.3
-  resolution: "allotment@npm:1.20.3"
+"allotment@npm:^1.20.4":
+  version: 1.20.4
+  resolution: "allotment@npm:1.20.4"
   dependencies:
     classnames: "npm:^2.3.0"
     eventemitter3: "npm:^5.0.0"
@@ -3944,7 +3944,7 @@ __metadata:
   peerDependencies:
     react: ^17.0.0 || ^18.0.0 || ^19.0.0
     react-dom: ^17.0.0 || ^18.0.0 || ^19.0.0
-  checksum: 10c0/be38923676b1128ecf5aba78335e9a3e52c43cf8fc635a30ec5d5947487a7ac474dfc73a37a0d679dd106b15a021343dce4f2aaed40063e114bf3e6b2a232ed9
+  checksum: 10c0/ae3a043cbdc92196833d10aa7a3e5f2be44f26a3617809dd42da3c3743c87373009f2c8419a01fd191ed820c6384fa6bb07d0972a75f2dfbea2860c6b44c0ac7
   languageName: node
   linkType: hard
 
@@ -9626,7 +9626,7 @@ __metadata:
     "@types/react-syntax-highlighter": "npm:^15"
     "@vitejs/plugin-react-swc": "npm:^3.9.0"
     "@vitest/coverage-v8": "npm:^3.1.2"
-    allotment: "npm:^1.20.3"
+    allotment: "npm:^1.20.4"
     bootstrap: "npm:^5.3.7"
     copy-to-clipboard: "npm:^3.3.3"
     eslint: "npm:^9.32.0"
