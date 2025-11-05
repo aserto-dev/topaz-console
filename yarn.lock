@@ -8381,9 +8381,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router@npm:^7.7.1":
-  version: 7.7.1
-  resolution: "react-router@npm:7.7.1"
+"react-router@npm:^7.9.5":
+  version: 7.9.5
+  resolution: "react-router@npm:7.9.5"
   dependencies:
     cookie: "npm:^1.0.1"
     set-cookie-parser: "npm:^2.6.0"
@@ -8393,7 +8393,7 @@ __metadata:
   peerDependenciesMeta:
     react-dom:
       optional: true
-  checksum: 10c0/e55fe74a2947939526c79e496ab1fc501fd8e89a191a20157d94cfe712d4d9d84f68627811cf1d477a36b98250fcad958bf1237fc41ff0a8b2de00ddc8c53e3b
+  checksum: 10c0/e961816b4096a6ca97fc53626fc6532014c0de4c45bf6c234b8205eb4f94be8f357d67819e4f4f58507f79ef9bda4c3f70031a8dd13c7045e3ad0ecb12f819e3
   languageName: node
   linkType: hard
 
@@ -9672,7 +9672,7 @@ __metadata:
     react-bootstrap: "npm:^2.10.10"
     react-dom: "npm:^19.0.0"
     react-infinite-scroll-component: "npm:^6.1.0"
-    react-router: "npm:^7.7.1"
+    react-router: "npm:^7.9.5"
     react-select: "npm:^5.10.1"
     react-simple-code-editor: "npm:^0.14.1"
     react-syntax-highlighter: "npm:^15.6.1"
