@@ -751,10 +751,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@faker-js/faker@npm:^9.7.0":
-  version: 9.7.0
-  resolution: "@faker-js/faker@npm:9.7.0"
-  checksum: 10c0/5a95147cbf0ae52909aea18346edb159efefe5e9800048d906317f1ec872c657256b43140f194d1308cb58074e57c619140ee96d26f57623b2957e5e74bbb3b8
+"@faker-js/faker@npm:^10.1.0":
+  version: 10.1.0
+  resolution: "@faker-js/faker@npm:10.1.0"
+  checksum: 10c0/3dc277245ec1bef8b839a9dc45b4ccb1688d21b8bde6531a849c1773193de30047e40e085b7e900c42c940911ecf1645b582ad3c85093df5bfdbddeb44a2b554
   languageName: node
   linkType: hard
 
@@ -9580,7 +9580,7 @@ __metadata:
   dependencies:
     "@codecov/vite-plugin": "npm:^1.9.1"
     "@eslint/js": "npm:^9.21.0"
-    "@faker-js/faker": "npm:^9.7.0"
+    "@faker-js/faker": "npm:^10.1.0"
     "@monaco-editor/react": "npm:^4.7.0"
     "@popperjs/core": "npm:^2.11.8"
     "@tanstack/react-query": "npm:^5.84.1"
