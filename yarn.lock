@@ -3391,12 +3391,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:>=16.9.11, @types/react@npm:^19.1.2":
+"@types/react@npm:*, @types/react@npm:>=16.9.11":
   version: 19.1.2
   resolution: "@types/react@npm:19.1.2"
   dependencies:
     csstype: "npm:^3.0.2"
   checksum: 10c0/76ffe71395c713d4adc3c759465012d3c956db00af35ab7c6d0d91bd07b274b7ce69caa0478c0760311587bd1e38c78ffc9688ebc629f2b266682a19d8750947
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^19.2.2":
+  version: 19.2.2
+  resolution: "@types/react@npm:19.2.2"
+  dependencies:
+    csstype: "npm:^3.0.2"
+  checksum: 10c0/f830b1204aca4634ce3c6cb3477b5d3d066b80a4dd832a4ee0069acb504b6debd2416548a43a11c1407c12bc60e2dc6cf362934a18fe75fe06a69c0a98cba8ab
   languageName: node
   linkType: hard
 
@@ -8393,10 +8402,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^19.0.0":
-  version: 19.1.0
-  resolution: "react@npm:19.1.0"
-  checksum: 10c0/530fb9a62237d54137a13d2cfb67a7db6a2156faed43eecc423f4713d9b20c6f2728b026b45e28fcd72e8eadb9e9ed4b089e99f5e295d2f0ad3134251bdd3698
+"react@npm:^19.2.0":
+  version: 19.2.0
+  resolution: "react@npm:19.2.0"
+  checksum: 10c0/1b6d64eacb9324725bfe1e7860cb7a6b8a34bc89a482920765ebff5c10578eb487e6b46b2f0df263bd27a25edbdae2c45e5ea5d81ae61404301c1a7192c38330
   languageName: node
   linkType: hard
 
@@ -9594,7 +9603,7 @@ __metadata:
     "@types/bootstrap": "npm:^5"
     "@types/node": "npm:^24.0.13"
     "@types/prismjs": "npm:^1"
-    "@types/react": "npm:^19.1.2"
+    "@types/react": "npm:^19.2.2"
     "@types/react-dom": "npm:^19.1.6"
     "@types/react-syntax-highlighter": "npm:^15"
     "@vitejs/plugin-react-swc": "npm:^3.9.0"
@@ -9621,7 +9630,7 @@ __metadata:
     prism-themes: "npm:^1.9.0"
     prismjs: "npm:^1.30.0"
     rapidoc: "npm:^9.3.8"
-    react: "npm:^19.0.0"
+    react: "npm:^19.2.0"
     react-bootstrap: "npm:^2.10.10"
     react-dom: "npm:^19.0.0"
     react-infinite-scroll-component: "npm:^6.1.0"
