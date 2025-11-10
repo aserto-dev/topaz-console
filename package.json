@@ -23,7 +23,7 @@
     "@tanstack/react-table": "^8.21.3",
     "@tanstack/react-virtual": "^3.13.12",
     "allotment": "^1.20.4",
-    "bootstrap": "^5.3.7",
+    "bootstrap": "^5.3.8",
     "copy-to-clipboard": "^3.3.3",
     "monaco-editor": "^0.52.2",
     "monaco-yaml": "^5.3.1",
