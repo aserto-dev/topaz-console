@@ -19,11 +19,11 @@
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",
     "@popperjs/core": "^2.11.8",
-    "@tanstack/react-query": "^5.84.1",
+    "@tanstack/react-query": "^5.90.7",
     "@tanstack/react-table": "^8.21.3",
     "@tanstack/react-virtual": "^3.13.12",
     "allotment": "^1.20.4",
-    "bootstrap": "^5.3.7",
+    "bootstrap": "^5.3.8",
     "copy-to-clipboard": "^3.3.3",
     "monaco-editor": "^0.52.2",
     "monaco-yaml": "^5.3.1",
@@ -41,14 +41,14 @@
     "reactflow": "^11.11.4",
     "styled-components": "^6.1.19",
     "yaml": "^2.7.1",
-    "zod": "^4.0.14"
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@codecov/vite-plugin": "^1.9.1",
     "@eslint/js": "^9.21.0",
     "@faker-js/faker": "^10.1.0",
     "@tanstack/react-query-devtools": "^5.81.5",
-    "@testing-library/dom": "^10.4.0",
+    "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
@@ -76,7 +76,7 @@
     "prettier": "^3.6.2",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.35.1",
-    "vite": "^7.2.0",
+    "vite": "^7.2.1",
     "vite-bundle-analyzer": "^1.1.0",
     "vitest": "^3.1.2"
   },
